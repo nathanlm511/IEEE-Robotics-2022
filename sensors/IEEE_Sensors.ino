@@ -1,4 +1,4 @@
-// This uses Serial Monitor to display Range Finder distance readings
+// This uses Serial Monitor to display Range Finder distance readings ghghgh
 
 // Include NewPing Library
 #include "NewPing.h"
@@ -44,19 +44,62 @@ float duration, distance1, distance2, distance3, distance4, distance5, distance6
 
 double calculatePD(double error_now, double error_last) {
   //P(error_now) + D(error_now-error_last)
+
+  double transError = calculateTranslationalError(((distance7 + distance8) / 2), ((distance3 + distance4) / 2), 6);
+  //Serial.print("Trans Error: ");
+  //Serial.println(transError);
+
+  //transError pos: move right
+  //transError neg: move left
+  double transThreshold = 1.5;
+  double avgRight = (distance7 + distance8) / 2;
+  double avgLeft = (distance3 + distance4) / 2;
+  //if (transError > transThreshold){
+  if((avgRight > avgLeft) && (avgRight - avgLeft) > transThreshold){
+    Serial.println("Move Right");
+    //calculateWheelSpeed
+  } else
+  //if (transError < (-1 * transThreshold)){
+  if((avgLeft > avgRight) && (avgLeft - avgRight) > transThreshold){
+    Serial.println("Move Left");
+    //calculateWheelSpeed
+  }
+  //double rotError = calculateRotationalError(distance7, distance8, 0);
+  
 }
 
 double calculateWheelSpeed(double T_Base, double translational_correction, double rotational_correction) {
   
 }
 
-double calculateTranslationalError(double distSensor1, double distSensor2, double desiredDist) {
+double calculateTranslationalError(double avgLeft, double avgRight, double desiredDist) {
   //get average of sensor distances first
   //average - desired
+
+  //go left
+  if (avgLeft > avgRight) {
+    return desiredDist - avgLeft;
+  } else //go right
+  if (avgLeft < avgRight) {
+    return avgRight - desiredDist;
+  }
 }
 
 double calculateRotationalError(double distSensor1, double distSensor2, double desiredAngle) {
   //right triangle math goes here
+  int threshold = 1;
+
+  //if this is pos: turn counter clockwise
+  //if this is neg: turn clockwise
+  int diff = distSensor1 - distSensor2;
+  
+  while (diff > threshold) {
+    Serial.println("Turn counter clockwise: decrease wheel speed of left wheels");
+  }
+  while (diff < (-1 * threshold)) {
+    Serial.println("Turn clockwise: decrease wheel speed of right wheels");
+  }
+  return 0.0; 
 }
 
 void setup() {
@@ -77,9 +120,10 @@ void loop() {
   distance8 = sonar8.ping_cm();
   
   // Send results to Serial Monitor
+  
   Serial.print("Distance1 = ");
   
-  if (distance1 >= 400 || distance1 <= 2) 
+  if (distance1 >= 400 || distance1 <= 1) 
   {
     Serial.println("Out of range");
   }
@@ -91,7 +135,7 @@ void loop() {
   // SENSOR 2
   Serial.print("Distance2 = ");
   
-  if (distance2 >= 400 || distance2 <= 2) 
+  if (distance2 >= 400 || distance2 <= 1) 
   {
     Serial.println("Out of range");
   }
@@ -104,7 +148,7 @@ void loop() {
   // SENSOR 3
   Serial.print("Distance3 = ");
   
-  if (distance3 >= 400 || distance3 <= 2) 
+  if (distance3 >= 400 || distance3 <= 1) 
   {
     Serial.println("Out of range");
   }
@@ -117,7 +161,7 @@ void loop() {
   // SENSOR 4
   Serial.print("Distance4 = ");
   
-  if (distance4 >= 400 || distance4 <= 2) 
+  if (distance4 >= 400 || distance4 <= 1) 
   {
     Serial.println("Out of range");
   }
@@ -130,7 +174,7 @@ void loop() {
   // SENSOR 5
   Serial.print("Distance5 = ");
   
-  if (distance5 >= 400 || distance5 <= 2) 
+  if (distance5 >= 400 || distance5 <= 1) 
   {
     Serial.println("Out of range");
   }
@@ -143,7 +187,7 @@ void loop() {
   // SENSOR 6
   Serial.print("Distance6 = ");
   
-  if (distance6 >= 400 || distance6 <= 2) 
+  if (distance6 >= 400 || distance6 <= 1) 
   {
     Serial.println("Out of range");
   }
@@ -156,7 +200,7 @@ void loop() {
   ///////////////// SENSOR 7
   Serial.print("Distance7 = ");
   
-  if (distance7 >= 400 || distance7 <= 2) 
+  if (distance7 >= 400 || distance7 <= 1) 
   {
     Serial.println("Out of range");
   }
@@ -170,7 +214,7 @@ void loop() {
   ///////////// SENSOR 8
   Serial.print("Distance8 = ");
   
-  if (distance8 >= 400 || distance8 <= 2) 
+  if (distance8 >= 400 || distance8 <= 1) 
   {
     Serial.println("Out of range");
   }
@@ -179,9 +223,9 @@ void loop() {
     Serial.print(distance8);
     Serial.println(" cm");
   }
+  
 
-
-
+    calculatePD(0,0);
 
   //double Speed_FR, Speed_FL, Speed_RR, Speed_RL;
   //double P, D;
