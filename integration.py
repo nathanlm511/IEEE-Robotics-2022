@@ -23,6 +23,9 @@ P = powerline pole
 import arm
 
 # variables to be used for readability when changing states
+import camera
+import navigation
+
 start_up = 0
 grab_beads = 1
 put_beads_in_catapult = 2
@@ -66,6 +69,7 @@ class PutBeadsInCatapult():
 
     def execute(self, robot):
         # move arm over and place beads in catapult
+        arm.beadsToCatapult()
         print("Place beads in catapult")
         robot.catapult_loaded = True
         robot.state = center_robot
@@ -80,7 +84,7 @@ class FireCatapult():
         if robot.net_on_right:
             # rotate catapult to right side
             pass
-        
+        arm.fireCatapult()
         print("Fire catapult")
 
         robot.catapult_loaded = False
@@ -105,6 +109,7 @@ class DetectNet():
     def execute(self, robot):
         # idealy, the below if statement will be replaced with a helper function used
         #  by the camera to tell if there is a net in the current position
+        camera.detectCam()
         print("Detecting net...")
         if self.net:
             print("Net detected")
@@ -121,6 +126,7 @@ class AlignWithTree():
 
     def execute(self, robot):
         # using camera, more precisely line up robot with first tree and move robot as close as possible
+        camera.treeAlign()
         print("Align with tree")
         robot.state = grab_beads
 '''
@@ -153,6 +159,7 @@ class CenterRobot():
         pass
 
     def execute(self, robot):
+        navigation.centreOnTrack()
         print("Center robot on track")
         robot.state = move_cup_net
 
