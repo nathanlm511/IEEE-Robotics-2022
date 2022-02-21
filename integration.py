@@ -20,11 +20,12 @@ P = powerline pole
 |                                                     |
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 '''
-import arm
+
 
 # variables to be used for readability when changing states
 import camera
 import navigation
+import arm
 
 start_up = 0
 grab_beads = 1
@@ -41,6 +42,7 @@ detect_net = 8
 # turn_2 = 12
 return_to_start = 9
 
+
 # arbitrary class currently being used for readability, it may be
 # decided later on to put something here
 class Startup():
@@ -50,6 +52,7 @@ class Startup():
     def execute(self, robot):
         print("Start")
         robot.state = move_cup_net
+
 
 # arm
 class GrabBeads():
@@ -61,6 +64,7 @@ class GrabBeads():
         arm.Bead_Grabbing()
         print("Grab Beads")
         robot.state = put_beads_in_catapult
+
 
 # arm
 class PutBeadsInCatapult():
@@ -109,7 +113,7 @@ class DetectNet():
     def execute(self, robot):
         # idealy, the below if statement will be replaced with a helper function used
         #  by the camera to tell if there is a net in the current position
-        camera.detectCam()
+        camera.detectNet()
         print("Detecting net...")
         if self.net:
             print("Net detected")
@@ -118,6 +122,7 @@ class DetectNet():
             print("No net detected")
             # move to next cup/net location?
             robot.state = move_cup_net
+
 
 # camera/navigation
 class AlignWithTree():
@@ -195,27 +200,34 @@ class MoveCupNet():
     def execute(self, robot):
         if robot.next_net_location == 1:
             print("Move to net at location 1/Start position")
+            navigation.moveToStart()
         if robot.next_net_location == 2:
             print("Move to tree 1")
+            navigation.toTree1()
             if robot.next_tree < 3:
                 robot.state = align_with_tree
                 robot.next_tree += 1
         elif robot.next_net_location == 3:
             print("Move to location 3")
+            navigation.toLoc3()
             if robot.catapult_loaded:
                 robot.state = detect_net
         elif robot.next_net_location == 4:
             if robot.forward:
                 print("Turn1")
+                navigation.turn1()
             else:
                 print("Turn2 (Turn1 in reverse)")
+                navigation.turn2()
         elif robot.next_net_location == 5:
             print("Move to location 5")
+            navigation.toLoc5()
             if robot.catapult_loaded:
                 robot.state = detect_net
         elif robot.next_net_location == 6:
             if robot.forward:
                 print("Move to location 6")
+                navigation.toLoc6()
             else:
                 print("Robot is going backwards and is already at position 6")
             if robot.catapult_loaded:
@@ -225,22 +237,26 @@ class MoveCupNet():
                 print("Robot is already at position 6, so if\n\tcatapult is loaded, check for net at location 7")
             else:
                 print("Move to location 7")
+                navigation.toLoc7()
             if robot.catapult_loaded:
                 robot.state = look_at_right_side
         elif robot.next_net_location == 8:
             print("Move to tree 2")
+            navigation.toTree2()
             if robot.next_tree < 3:
                 robot.state = align_with_tree
                 robot.next_tree += 1
         elif robot.next_net_location == 9:
             if robot.forward:
                 print("Move to location 9")
+                navigation.toLoc9()
             else:
                 print("Robot already at location 9")
             if robot.catapult_loaded:
                 robot.state = detect_net
         elif robot.next_net_location == 10:
             print("If catapult is loaded, check for net at location 10")
+
             if robot.catapult_loaded:
                 robot.state = look_at_right_side
             
