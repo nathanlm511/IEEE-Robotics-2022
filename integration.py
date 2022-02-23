@@ -32,7 +32,7 @@ grab_beads = 1
 put_beads_in_catapult = 2
 fire_catapult = 3
 center_robot = 4
-move_cup_net = 5
+nav = 5
 align_with_tree = 6
 look_at_right_side = 7
 detect_net = 8
@@ -47,7 +47,7 @@ class Startup():
 
     def execute(self, robot):
         print("Start")
-        robot.state = move_cup_net
+        robot.state = nav
 
 
 # arm
@@ -117,7 +117,7 @@ class DetectNet():
         else:
             print("No net detected")
             # move to next cup/net location?
-            robot.state = move_cup_net
+            robot.state = nav
 
 
 # camera/navigation
@@ -139,7 +139,7 @@ class CenterRobot():
     def execute(self, robot):
         navigation.centreOnTrack()
         print("Center robot on track")
-        robot.state = move_cup_net
+        robot.state = nav
 
 # navigation
 class Navigation():
