@@ -148,17 +148,24 @@ class Navigation():
 
     def execute(self, robot):
         if robot.next_location == 1:
-            print("Move to net at location 1/Start position")
-            navigation.moveToStart()
-        if robot.next_location == 2:
-            print("Move to tree 1")
-            navigation.toTree1()
+            print("Reverse to position 1")
+            navigation.reverseTo1()
+        elif robot.next_location == 2:
+            if robot.forward:
+                print("Forward to tree 1")
+                navigation.forwardTree1()
+            else:
+                navigation.reverseTree1()
             if robot.next_tree < 3:
                 robot.state = align_with_tree
                 robot.next_tree += 1
         elif robot.next_location == 3:
-            print("Move to location 3")
-            navigation.toLoc3()
+            if robot.forward:
+                print("Forward to location 3")
+                navigation.forwardTo3()
+            else:
+                print("Reverse to location 3")
+                navigation.reverseTo3()
             if robot.catapult_loaded:
                 robot.state = detect_net
         elif robot.next_location == 4:
@@ -169,14 +176,18 @@ class Navigation():
                 print("Turn2 (Turn1 in reverse)")
                 navigation.turn2()
         elif robot.next_location == 5:
-            print("Move to location 5")
-            navigation.toLoc5()
+            if robot.forward:
+                print("Forward to location 5")
+                navigation.forwardTo5()
+            else:
+                print("Reverse to location 5")
+                navigation.reverseTo5()
             if robot.catapult_loaded:
                 robot.state = detect_net
         elif robot.next_location == 6:
             if robot.forward:
-                print("Move to location 6")
-                navigation.toLoc6()
+                print("Forward to location 6")
+                navigation.forwardTo6()
             else:
                 print("Robot is going backwards and is already at position 6")
             if robot.catapult_loaded:
@@ -185,27 +196,29 @@ class Navigation():
             if robot.forward:
                 print("Robot is already at position 6, so if\n\tcatapult is loaded, check for net at location 7")
             else:
-                print("Move to location 7")
-                navigation.toLoc7()
+                print("Reverse to location 7")
+                navigation.reverseTo7()
             if robot.catapult_loaded:
                 robot.state = look_at_right_side
         elif robot.next_location == 8:
-            print("Move to tree 2")
-            navigation.toTree2()
+            if robot.forward:
+                print("Forward to tree 1")
+                navigation.forwardTree2()
+            else:
+                navigation.reverseTree2()
             if robot.next_tree < 3:
                 robot.state = align_with_tree
                 robot.next_tree += 1
         elif robot.next_location == 9:
             if robot.forward:
-                print("Move to location 9")
-                navigation.toLoc9()
+                print("Forward to location 9")
+                navigation.forwardTo9()
             else:
-                print("Robot already at location 9")
+                print("Robot already at location 9, do nothing")
             if robot.catapult_loaded:
                 robot.state = detect_net
         elif robot.next_location == 10:
             print("If catapult is loaded, check for net at location 10")
-
             if robot.catapult_loaded:
                 robot.state = look_at_right_side
             
@@ -253,11 +266,11 @@ class RobotFSM():
         self.forward = True
         self.state = 0
 
+def main():
+    robot = RobotFSM()
 
-robot = RobotFSM()
-
-while True:
-    robot.states[robot.state].execute(robot)
-    if robot.state == return_to_start:
-        print("Success!")
-        break
+    while True:
+        robot.states[robot.state].execute(robot)
+        if robot.state == return_to_start:
+            print("Success!")
+            break
