@@ -7,39 +7,35 @@ Rough quick reference for competition board
 1,3,5,6,7,910 = Net/Cup
 4 = Turn
 P = powerline pole
-2,8 = Trees
+2T,8T = Trees
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 |                                    |          |     |
 |    10                 P    7       |          |1    |
 |""""""""""""         """"""""""""""""          |     |
-|                                               |2    |
+|                                               |2T   |
 |                                               |3    |
 |                                               |     |
 |""""""""""""         """""""""""""""""""""""""""     |
-|    9   8             P     6              5  4      |
+|    9   8T             P     6              5  4     |
 |                                                     |
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 '''
 
 
-# variables to be used for readability when changing states
 import camera
 import navigation
 import arm
 
+# variables to be used for readability when changing states
 start_up = 0
 grab_beads = 1
 put_beads_in_catapult = 2
 fire_catapult = 3
-# move_tree_1 = 4
-# move_tree_2 = 5
 center_robot = 4
 move_cup_net = 5
 align_with_tree = 6
 look_at_right_side = 7
 detect_net = 8
-# turn_1 = 11
-# turn_2 = 12
 return_to_start = 9
 
 
@@ -134,29 +130,6 @@ class AlignWithTree():
         camera.treeAlign()
         print("Align with tree")
         robot.state = grab_beads
-'''
-# navigation
-class MoveTree1():
-    def __init__(self):
-        pass
-
-    def execute(self, robot):
-        print("Move to first tree")
-        robot.state = align_with_tree
-        pass
-
-# navigation
-class MoveTree2():
-    def __init__(self):
-        pass
-
-    def execute(self, robot):
-        # should be able to move to this location from net locations 2-4
-        # by default, the robot moves to this state after net location 4
-        print("Move to second tree")
-        robot.state = 8
-        pass
-'''
 
 # navigation
 class CenterRobot():
@@ -168,63 +141,39 @@ class CenterRobot():
         print("Center robot on track")
         robot.state = move_cup_net
 
-        # if robot.catapult_loaded and robot.next_tree == 2:
-        #     # if catapult is loaded, move to the next net location
-        #     pass
-
-'''
 # navigation
-class Turn1():
+class Navigation():
     def __init__(self):
         pass
 
     def execute(self, robot):
-        # Turn1 should only ever be made after checking the first net location
-        print("Make first turn")
-
-# navigation
-class Turn2():
-    def __init__(self):
-        pass
-
-    def execute(self, robot):
-        # turn2 should be able to be made from net locations 3-7
-        pass
-'''
-
-# navigation
-class MoveCupNet():
-    def __init__(self):
-        pass
-
-    def execute(self, robot):
-        if robot.next_net_location == 1:
+        if robot.next_location == 1:
             print("Move to net at location 1/Start position")
             navigation.moveToStart()
-        if robot.next_net_location == 2:
+        if robot.next_location == 2:
             print("Move to tree 1")
             navigation.toTree1()
             if robot.next_tree < 3:
                 robot.state = align_with_tree
                 robot.next_tree += 1
-        elif robot.next_net_location == 3:
+        elif robot.next_location == 3:
             print("Move to location 3")
             navigation.toLoc3()
             if robot.catapult_loaded:
                 robot.state = detect_net
-        elif robot.next_net_location == 4:
+        elif robot.next_location == 4:
             if robot.forward:
                 print("Turn1")
                 navigation.turn1()
             else:
                 print("Turn2 (Turn1 in reverse)")
                 navigation.turn2()
-        elif robot.next_net_location == 5:
+        elif robot.next_location == 5:
             print("Move to location 5")
             navigation.toLoc5()
             if robot.catapult_loaded:
                 robot.state = detect_net
-        elif robot.next_net_location == 6:
+        elif robot.next_location == 6:
             if robot.forward:
                 print("Move to location 6")
                 navigation.toLoc6()
@@ -232,7 +181,7 @@ class MoveCupNet():
                 print("Robot is going backwards and is already at position 6")
             if robot.catapult_loaded:
                 robot.state = detect_net
-        elif robot.next_net_location == 7:
+        elif robot.next_location == 7:
             if robot.forward:
                 print("Robot is already at position 6, so if\n\tcatapult is loaded, check for net at location 7")
             else:
@@ -240,13 +189,13 @@ class MoveCupNet():
                 navigation.toLoc7()
             if robot.catapult_loaded:
                 robot.state = look_at_right_side
-        elif robot.next_net_location == 8:
+        elif robot.next_location == 8:
             print("Move to tree 2")
             navigation.toTree2()
             if robot.next_tree < 3:
                 robot.state = align_with_tree
                 robot.next_tree += 1
-        elif robot.next_net_location == 9:
+        elif robot.next_location == 9:
             if robot.forward:
                 print("Move to location 9")
                 navigation.toLoc9()
@@ -254,22 +203,22 @@ class MoveCupNet():
                 print("Robot already at location 9")
             if robot.catapult_loaded:
                 robot.state = detect_net
-        elif robot.next_net_location == 10:
+        elif robot.next_location == 10:
             print("If catapult is loaded, check for net at location 10")
 
             if robot.catapult_loaded:
                 robot.state = look_at_right_side
             
-        if robot.next_net_location == 10:
+        if robot.next_location == 10:
             robot.forward = not robot.forward
         
-        if robot.next_net_location == 1:
+        if robot.next_location == 1:
             robot.state = return_to_start
         
         if robot.forward:
-            robot.next_net_location += 1
+            robot.next_location += 1
         else:
-            robot.next_net_location -= 1
+            robot.next_location -= 1
         
         
 # navigation
@@ -278,7 +227,6 @@ class ReturnToStart():
         pass
 
     def execute(self, robot):
-        # should be able to return to starting point from net locations 2-5
         pass
 
 class RobotFSM():
@@ -287,18 +235,18 @@ class RobotFSM():
                         GrabBeads(),
                         PutBeadsInCatapult(),
                         FireCatapult(),
-                        # MoveTree1(),
-                        # MoveTree2(),
                         CenterRobot(),
-                        MoveCupNet(),
+                        Navigation(),
                         AlignWithTree(),
                         LookAtRightSide(),
                         DetectNet(),
+                        # MoveTree1(),
+                        # MoveTree2(),
                         # Turn1(),
                         # Turn2(),
                         ReturnToStart()]
         self.catapult_loaded = False
-        self.next_net_location = 2
+        self.next_location = 2
         self.arm_on_right = False
         self.net_on_right = False
         self.next_tree = 1
