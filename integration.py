@@ -127,7 +127,12 @@ class AlignWithTree():
 
     def execute(self, robot):
         # using camera, more precisely line up robot with first tree and move robot as close as possible
-        camera.treeAlign()
+        dir = camera.treeAlign()
+        while dir != "Good":
+            if dir == "F":
+                pass
+            elif dir == "B":
+                pass
         print("Align with tree")
         robot.state = grab_beads
 
