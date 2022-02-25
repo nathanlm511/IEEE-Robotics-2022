@@ -100,10 +100,10 @@ if use_TPU:
 CWD_PATH = os.getcwd()
 
 # Path to .tflite file, which contains the model that is used for object detection
-PATH_TO_CKPT = './model_4.tflite'
+PATH_TO_CKPT = './net_model.tflite'
 
 # Path to label map file
-PATH_TO_LABELS = './label_map.txt'
+PATH_TO_LABELS = './net_label_map.txt'
 
 # Load the label map
 with open(PATH_TO_LABELS, 'r') as f:
