@@ -5,4 +5,6 @@ def detectNet():
 def treeAlign():
     pass
 
+def netAlign():
+    pass
 
