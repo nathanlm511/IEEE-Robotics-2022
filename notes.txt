@@ -1,0 +1,2 @@
+make loop for camera alignment. camera tells motors forwads, backwards or good
+
