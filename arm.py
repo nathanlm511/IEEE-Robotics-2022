@@ -183,7 +183,7 @@ def releaseBracelets():
     time.sleep(1)
     servoTest(2, 160, 65)
     
-def launch():
+def launchBracelets():
     complete = False
 
     while not complete:
@@ -232,7 +232,7 @@ holdServo.angle = 0
 baseServo.angle = 180
 time.sleep(1)
 
-def arm():
+def retrieveBracelets():
     startPosition()
     time.sleep(1)
     straightUp()

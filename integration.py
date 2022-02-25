@@ -57,9 +57,9 @@ class GrabBeads():
 
     def execute(self, robot):
         # move arm to grab beads
-        arm.Bead_Grabbing()
+        arm.retrieveBracelets()
         print("Grab Beads")
-        robot.state = put_beads_in_catapult
+        robot.state = navigation
 
 
 # arm
@@ -84,7 +84,7 @@ class FireCatapult():
         if robot.net_on_right:
             # rotate catapult to right side
             pass
-        arm.fireCatapult()
+        arm.launchBracelets()
         print("Fire catapult")
 
         robot.catapult_loaded = False
@@ -97,6 +97,7 @@ class LookAtRightSide():
 
     def execute(self, robot):
         # aim arm at right side of robot for camera to detect net
+        arm.lookRight()
         robot.arm_on_right = True
         
         robot.state = detect_net
