@@ -38,9 +38,6 @@ look_at_right_side = 7
 detect_net = 8
 return_to_start = 9
 
-#this is a test comment
-
-
 # arbitrary class currently being used for readability, it may be
 # decided later on to put something here
 class Startup():
