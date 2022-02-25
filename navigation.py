@@ -9,7 +9,9 @@ def centreOnTrack():
 
 
 def forwardTree1():
-    pass
+    while "read from arduino" != "S":
+        # move forward
+        break
 
 def forwardTo3():
     pass
