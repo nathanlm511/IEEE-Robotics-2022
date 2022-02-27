@@ -1,10 +1,10 @@
 def detectNet():
-    pass
+    return True
 
 
 def treeAlign():
-    pass
+    return "Good"
 
 def netAlign():
-    pass
+    return "Good"
 
