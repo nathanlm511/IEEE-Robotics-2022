@@ -29,11 +29,10 @@ import arm
 # variables to be used for readability when changing states
 start_up = 0
 grab_beads = 1
-put_beads_in_catapult = 2
-fire_catapult = 3
-center_robot = 4
-nav = 5
-align_with_tree = 6
+fire_catapult = 2
+nav = 4
+align_with_tree = 5
+align_with_net = 6
 look_at_right_side = 7
 detect_net = 8
 return_to_start = 9
@@ -45,9 +44,8 @@ class Startup():
         pass
 
     def execute(self, robot):
-        print("Start")
+        # print("Start")
         robot.state = nav
-
 
 # arm
 class GrabBeads():
@@ -55,13 +53,14 @@ class GrabBeads():
         pass
 
     def execute(self, robot):
-        # move arm to grab beads
+        # move arm to grab beads and loads catapult
         arm.retrieveBracelets()
-        print("Grab Beads")
+        robot.catapult_loaded = True
+        # print("Grab Beads")
         robot.state = navigation
 
-
-# arm
+'''
+arm
 class PutBeadsInCatapult():
     def __init__(self):
         pass
@@ -73,6 +72,7 @@ class PutBeadsInCatapult():
         robot.catapult_loaded = True
         robot.state = center_robot
         pass
+'''
 
 # arm
 class FireCatapult():
@@ -83,11 +83,16 @@ class FireCatapult():
         if robot.net_on_right:
             # rotate catapult to right side
             pass
+        if robot.net_on_right:
+            arm.captapultSwingRight()
+        # print("Fire catapult")
         arm.launchBracelets()
-        print("Fire catapult")
+        # swing catapult back to the left??
+        arm.lookLeft()
+        robot.arm_on_right = False
 
         robot.catapult_loaded = False
-        robot.state = center_robot
+        robot.state = nav
 
 # camera/arm
 class LookAtRightSide():
@@ -104,21 +109,20 @@ class LookAtRightSide():
 # camera
 class DetectNet():
     def __init__(self):
-        self.net = True # place holder for logic in execute
+        pass
 
     def execute(self, robot):
-        # idealy, the below if statement will be replaced with a helper function used
-        #  by the camera to tell if there is a net in the current position
-        camera.detectNet()
-        print("Detecting net...")
-        if self.net:
-            print("Net detected")
+        # print("Detecting net...")
+        if camera.detectNet():
+            # print("Net detected")
+            robot.net_on_right = robot.arm_on_right
             robot.state = fire_catapult
         else:
-            print("No net detected")
+            # print("No net detected")
             # move to next cup/net location?
+            if robot.arm_on_right:
+                arm.lookLeft()
             robot.state = nav
-
 
 # camera/navigation
 class AlignWithTree():
@@ -128,15 +132,35 @@ class AlignWithTree():
     def execute(self, robot):
         # using camera, more precisely line up robot with first tree and move robot as close as possible
         dir = camera.treeAlign()
+        # change this to use serial read/write with arduino
         while dir != "Good":
+            print("Stuck in loop?")
             if dir == "F":
                 pass
             elif dir == "B":
                 pass
-        print("Align with tree")
+        # print("Align with tree")
         robot.state = grab_beads
 
-# navigation
+class AlignWithNet():
+    def __init__(self):
+        pass
+
+    def execute(self, robot):
+        # using camera, more precisely line up robot with first tree and move robot as close as possible
+        dir = camera.netAlign()
+        # change this to use serial read/write with arduino
+        while dir != "Good":
+            print("Stuck in loop?")
+            if dir == "F":
+                pass
+            elif dir == "B":
+                pass
+        # print("Align with tree")
+        robot.state = fire_catapult
+
+'''
+navigation
 class CenterRobot():
     def __init__(self):
         pass
@@ -145,6 +169,7 @@ class CenterRobot():
         navigation.centreOnTrack()
         print("Center robot on track")
         robot.state = nav
+'''
 
 # navigation
 class Navigation():
@@ -153,11 +178,12 @@ class Navigation():
 
     def execute(self, robot):
         if robot.next_location == 1:
-            print("Reverse to position 1")
+            # print("Reverse to position 1")
             navigation.reverseTo1()
+            robot.state = return_to_start
         elif robot.next_location == 2:
             if robot.forward:
-                print("Forward to tree 1")
+                # print("Forward to tree 1")
                 navigation.forwardTree1()
             else:
                 navigation.reverseTree1()
@@ -166,48 +192,49 @@ class Navigation():
                 robot.next_tree += 1
         elif robot.next_location == 3:
             if robot.forward:
-                print("Forward to location 3")
+                # print("Forward to location 3")
                 navigation.forwardTo3()
             else:
-                print("Reverse to location 3")
+                # print("Reverse to location 3")
                 navigation.reverseTo3()
             if robot.catapult_loaded:
                 robot.state = detect_net
         elif robot.next_location == 4:
             if robot.forward:
-                print("Turn1")
+                # print("Turn1")
                 navigation.turn1()
             else:
-                print("Turn2 (Turn1 in reverse)")
+                # print("Turn2 (Turn1 in reverse)")
                 navigation.turn2()
         elif robot.next_location == 5:
             if robot.forward:
-                print("Forward to location 5")
+                # print("Forward to location 5")
                 navigation.forwardTo5()
             else:
-                print("Reverse to location 5")
+                # print("Reverse to location 5")
                 navigation.reverseTo5()
             if robot.catapult_loaded:
                 robot.state = detect_net
         elif robot.next_location == 6:
             if robot.forward:
-                print("Forward to location 6")
+                # print("Forward to location 6")
                 navigation.forwardTo6()
-            else:
-                print("Robot is going backwards and is already at position 6")
+            # else:
+                # print("Robot is going backwards and is already at position 6")
             if robot.catapult_loaded:
                 robot.state = detect_net
         elif robot.next_location == 7:
-            if robot.forward:
-                print("Robot is already at position 6, so if\n\tcatapult is loaded, check for net at location 7")
-            else:
-                print("Reverse to location 7")
+            # if robot.forward:
+            #     print("Robot is already at position 6, so if\n\tcatapult is loaded, check for net at location 7")
+            # else:
+            if not robot.forward:
+                # print("Reverse to location 7")
                 navigation.reverseTo7()
             if robot.catapult_loaded:
                 robot.state = look_at_right_side
         elif robot.next_location == 8:
             if robot.forward:
-                print("Forward to tree 1")
+                # print("Forward to tree 1")
                 navigation.forwardTree2()
             else:
                 navigation.reverseTree2()
@@ -216,22 +243,17 @@ class Navigation():
                 robot.next_tree += 1
         elif robot.next_location == 9:
             if robot.forward:
-                print("Forward to location 9")
+                # print("Forward to location 9")
                 navigation.forwardTo9()
-            else:
-                print("Robot already at location 9, do nothing")
+            # else:
+                # print("Robot already at location 9, do nothing")
             if robot.catapult_loaded:
                 robot.state = detect_net
         elif robot.next_location == 10:
-            print("If catapult is loaded, check for net at location 10")
+            # print("If catapult is loaded, check for net at location 10")
             if robot.catapult_loaded:
                 robot.state = look_at_right_side
-            
-        if robot.next_location == 10:
-            robot.forward = not robot.forward
-        
-        if robot.next_location == 1:
-            robot.state = return_to_start
+                robot.forward = not robot.forward
         
         if robot.forward:
             robot.next_location += 1
@@ -251,11 +273,12 @@ class RobotFSM():
     def __init__(self):
         self.states =  [Startup(),
                         GrabBeads(),
-                        PutBeadsInCatapult(),
+                        # PutBeadsInCatapult(),
                         FireCatapult(),
-                        CenterRobot(),
+                        # CenterRobot(),
                         Navigation(),
                         AlignWithTree(),
+                        AlignWithNet(),
                         LookAtRightSide(),
                         DetectNet(),
                         # MoveTree1(),
