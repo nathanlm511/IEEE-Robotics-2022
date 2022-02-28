@@ -103,16 +103,16 @@ def backwards():
 	pi.write(DIR2, 1)
 	pi.write(DIR3, 0)
 	pi.write(DIR4, 1)
-	frequency = 500 # 0 (off) to 1-125M
-	duty_cycle = 0 # 0 (off) to 1M (fully on)
-	pi.hardware_PWM(STEP1, frequency, duty_cycle)
-	# Disable all motor drivers
-	pi.write(EN1, 1)
-	pi.write(EN2, 1)
-	pi.write(EN3, 1)
-	pi.write(EN4, 1)
-	sleep(1)
-	pi.stop()
+# 	frequency = 500 # 0 (off) to 1-125M
+# 	duty_cycle = 0 # 0 (off) to 1M (fully on)
+# 	pi.hardware_PWM(STEP1, frequency, duty_cycle)
+# 	# Disable all motor drivers
+# 	pi.write(EN1, 1)
+# 	pi.write(EN2, 1)
+# 	pi.write(EN3, 1)
+# 	pi.write(EN4, 1)
+# 	sleep(1)
+# 	pi.stop()
 
 # turns off motors
 def turnOffMotors():

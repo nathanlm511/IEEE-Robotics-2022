@@ -178,6 +178,7 @@ class Navigation():
         pass
 
     def execute(self, robot):
+        print("Next location: " + str(robot.next_location))
         if robot.next_location == 1:
             # print("Reverse to position 1")
             navigation.reverseTo1()
@@ -299,7 +300,6 @@ def main(time_expired, robot_active):
     robot = RobotFSM()
     
     while not time_expired:
-        print("Robot state: " + str(robot.state))
         robot.states[robot.state].execute(robot)
         if robot.state == return_to_start:
             print("Success!")
