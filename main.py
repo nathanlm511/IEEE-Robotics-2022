@@ -91,7 +91,7 @@ class OLEDThread(threading.Thread):
 
    def run(self):
       print("Starting " + self.name)
-      OLED()
+      # OLED()
       print("Exiting "+ self.name)
 
 class SpeakerThread(threading.Thread):
