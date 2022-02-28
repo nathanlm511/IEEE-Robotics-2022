@@ -124,7 +124,7 @@ def forwardTo9():
     steppermotortest.stopMoving()
 
 def reverseTree2():
-    ser.write("8B")
+    ser.write(b"8B\n")
     ser.reset_input_buffer()
     line = ser.readline().decode('utf-8').rstrip()
    
@@ -140,7 +140,7 @@ def reverseTree2():
     steppermotortest.stopMoving()
 
 def reverseTo7():
-    ser.write("7B")
+    ser.write(b"7B\n")
     ser.reset_input_buffer()
     line = ser.readline().decode('utf-8').rstrip()
    
@@ -156,7 +156,7 @@ def reverseTo7():
     steppermotortest.stopMoving()
 
 def reverseTo5():
-    ser.write("5B")
+    ser.write(b"5B\n")
     ser.reset_input_buffer()
     line = ser.readline().decode('utf-8').rstrip()
    
@@ -172,7 +172,7 @@ def reverseTo5():
     steppermotortest.stopMoving()
 
 def turn2():
-    ser.write("4B")
+    ser.write(b"4B\n")
     ser.reset_input_buffer()
     line = ser.readline().decode('utf-8').rstrip()
    
@@ -187,7 +187,7 @@ def turn2():
     steppermotortest.stopMoving()
 
 def reverseTo3():
-    ser.write("3B")
+    ser.write(b"3B\n")
     ser.reset_input_buffer()
     line = ser.readline().decode('utf-8').rstrip()
    
@@ -203,7 +203,7 @@ def reverseTo3():
     steppermotortest.stopMoving()
 
 def reverseTree1():
-    ser.write("2B")
+    ser.write(b"2B\n")
     ser.reset_input_buffer()
     line = ser.readline().decode('utf-8').rstrip()
    
@@ -219,7 +219,7 @@ def reverseTree1():
     steppermotortest.stopMoving()
 
 def reverseTo1():
-    ser.write("1B")
+    ser.write(b"1B\n")
     ser.reset_input_buffer()
     line = ser.readline().decode('utf-8').rstrip()
    
