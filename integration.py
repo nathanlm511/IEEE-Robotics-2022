@@ -31,12 +31,12 @@ import steppermotortest
 start_up = 0
 grab_beads = 1
 fire_catapult = 2
-nav = 4
-align_with_tree = 5
-align_with_net = 6
-look_at_right_side = 7
-detect_net = 8
-return_to_start = 9
+nav = 3
+align_with_tree = 4
+align_with_net = 5
+look_at_right_side = 6
+detect_net = 7
+return_to_start = 8
 
 # arbitrary class currently being used for readability, it may be
 # decided later on to put something here
