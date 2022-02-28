@@ -1,7 +1,7 @@
 from time import sleep
 import pigpio
 # import serial
-from arm import *
+# from arm import *
 
 # ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
 # ser.reset_input_buffer()

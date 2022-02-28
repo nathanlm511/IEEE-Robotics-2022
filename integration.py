@@ -24,7 +24,7 @@ P = powerline pole
 
 import camera
 import navigation
-import arm
+# import arm
 import steppermotortest
 
 # variables to be used for readability when changing states
@@ -55,7 +55,7 @@ class GrabBeads():
 
     def execute(self, robot):
         # move arm to grab beads and loads catapult
-        arm.retrieveBracelets()
+        # arm.retrieveBracelets()
         robot.catapult_loaded = True
         # print("Grab Beads")
         robot.state = navigation
@@ -84,12 +84,12 @@ class FireCatapult():
         if robot.net_on_right:
             # rotate catapult to right side
             pass
-        if robot.net_on_right:
-            arm.captapultSwingRight()
+        # if robot.net_on_right:
+            # arm.captapultSwingRight()
         # print("Fire catapult")
-        arm.launchBracelets()
+        # arm.launchBracelets()
         # swing catapult back to the left??
-        arm.lookLeft()
+        # arm.lookLeft()
         robot.arm_on_right = False
 
         robot.catapult_loaded = False
@@ -102,7 +102,7 @@ class LookAtRightSide():
 
     def execute(self, robot):
         # aim arm at right side of robot for camera to detect net
-        arm.lookRight()
+        # arm.lookRight()
         robot.arm_on_right = True
         
         robot.state = detect_net
@@ -121,8 +121,8 @@ class DetectNet():
         else:
             # print("No net detected")
             # move to next cup/net location?
-            if robot.arm_on_right:
-                arm.lookLeft()
+            # if robot.arm_on_right:
+                # arm.lookLeft()
             robot.state = nav
 
 # camera/navigation
