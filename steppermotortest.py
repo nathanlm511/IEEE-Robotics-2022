@@ -1,10 +1,10 @@
 from time import sleep
 import pigpio
-import serial
+# import serial
 from arm import *
 
-ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
-ser.reset_input_buffer()
+# ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+# ser.reset_input_buffer()
 
 # define digital IO pins
 STEP1 = 12 # PWM signal
@@ -127,29 +127,29 @@ def turnOffMotors():
 	sleep(1)
 	pi.stop()
 
-try:
-	while True:
+# try:
+# 	while True:
 
-		try:
-			line = ser.readline().decode('utf-8').rstrip()
-			print(line)
-			if line == "F":
-				forwards()
-			elif line == "S":
-				print("STOP!")
-				stopMoving()
-			elif line == "A":
-				print("Executing arm code")
-				arm()
-				launch()
-				deinitialize()
-			elif line == "C":
-				clockwise()
-			elif line == "Fl":
-				ser.reset_input_buffer()
-		except:
-			pass
-		sleep(0.025)
+# 		try:
+# 			line = ser.readline().decode('utf-8').rstrip()
+# 			print(line)
+# 			if line == "F":
+# 				forwards()
+# 			elif line == "S":
+# 				print("STOP!")
+# 				stopMoving()
+# 			elif line == "A":
+# 				print("Executing arm code")
+# 				arm()
+# 				launch()
+# 				deinitialize()
+# 			elif line == "C":
+# 				clockwise()
+# 			elif line == "Fl":
+# 				ser.reset_input_buffer()
+# 		except:
+# 			pass
+# 		sleep(0.025)
 #        ser.reset_input_buffer()
 #try:
 #    while True:
@@ -195,16 +195,16 @@ try:
 #            pi.write(DIR4, 1)
 #        else:
 #            pass
-except KeyboardInterrupt:
-	print('\nCtrl-C pressed. Stopping PIGPIO and exiting...')
-finally:
-	frequency = 500 # 0 (off) to 1-125M
-	duty_cycle = 0 # 0 (off) to 1M (fully on)
-	pi.hardware_PWM(STEP1, frequency, duty_cycle)
-	# Disable all motor drivers
-	pi.write(EN1, 1)
-	pi.write(EN2, 1)
-	pi.write(EN3, 1)
-	pi.write(EN4, 1)
-	sleep(1)
-	pi.stop()
+# except KeyboardInterrupt:
+# 	print('\nCtrl-C pressed. Stopping PIGPIO and exiting...')
+# finally:
+# 	frequency = 500 # 0 (off) to 1-125M
+# 	duty_cycle = 0 # 0 (off) to 1M (fully on)
+# 	pi.hardware_PWM(STEP1, frequency, duty_cycle)
+# 	# Disable all motor drivers
+# 	pi.write(EN1, 1)
+# 	pi.write(EN2, 1)
+# 	pi.write(EN3, 1)
+# 	pi.write(EN4, 1)
+# 	sleep(1)
+# 	pi.stop()
