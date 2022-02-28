@@ -354,30 +354,53 @@ void loop() {
         }
       }
       else {
-        // this movement will be a little more complicated due to the turn prior to it going in reverse
-        Serial.println("B");
+        while (dists[0] > 12 && dists[1] > 12) {
+          Serial.println("F");
+          dists = ping_sensors();
+        }
       }
     }
     else if (pos == '4') {
       // put while loop here or make sequential commands for turning
+        int turn_signals = 0
       if (dir == 'F') {
         // this movement needs to be fleshed out for the turn
+        while (dists[0] <= 14 && dists[1] <= 14) {
+          Serial.println("B");
+          dists = ping_sensors();
+        }
+        Serial.println("C");
+        delay(1000)
+        while (abs(dists[2] - dists[3]) > 1) {
+          dists = ping_sensors();
+        }
+        Serial.println("S")
       }
       else {
         // this movement needs to be fleshed out for the turn
+        while (dists[4] <= 14 && dists[5] <= 14) {
+          Serial.println("B");
+          dists = ping_sensors();
+        }
+        Serial.println("CC");
+        delay(1000)
+        while (abs(dists[2] - dists[3]) > 1) {
+          dists = ping_sensors();
+        }
+        Serial.println("S")
       }
     }
     else if (pos == '5') {
       float* dists = ping_sensors();
       if (dir == 'F') {
         // this movement will be a little more complicated due to the turn prior to it going forwards
-        while (dists[4] <= 45 && dists[5] <= 45) {
-          Serial.println("F");
+        while (dists[4] > 3 && dists[5] > 3) {
+          Serial.println("B");
           dists = ping_sensors();
         }
       }
       else {
-        while (dists[4] > 45 && dists[5] > 45) {
+        while (dists[4] > 3 && dists[5] > 3) {
           Serial.println("B");
           dists = ping_sensors();
         }

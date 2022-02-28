@@ -25,6 +25,7 @@ P = powerline pole
 import camera
 import navigation
 import arm
+import steppermotortest
 
 # variables to be used for readability when changing states
 start_up = 0
@@ -303,3 +304,4 @@ def main(time_expired, robot_active):
             print("Success!")
             robot_active = False
             break
+    steppermotortest.turnOffMotors()

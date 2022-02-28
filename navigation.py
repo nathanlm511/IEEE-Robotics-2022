@@ -43,11 +43,36 @@ def forwardTo3():
 
 
 def turn1():
-    pass
+    ser.write("4F")
+    ser.reset_input_buffer()
+    line = ser.readline().decode('utf-8').rstrip()
+   
+    while line != "S":
+        if line == "F":
+            steppermotortest.forwards()
+        elif line == "C":
+            steppermotortest.clockwise()
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+    
+    steppermotortest.stopMoving()
 
 
 def forwardTo5():
-    pass
+    ser.write("5F")
+    ser.reset_input_buffer()
+    line = ser.readline().decode('utf-8').rstrip()
+   
+    while line != "S":
+        if line == "B":
+            steppermotortest.backwards()
+        else:
+            # code should not be here
+            print("Error: robot not moving as expected")
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+    
+    steppermotortest.stopMoving()
 
 
 def forwardTo6():
@@ -147,10 +172,35 @@ def reverseTo5():
     steppermotortest.stopMoving()
 
 def turn2():
-    pass
+    ser.write("4B")
+    ser.reset_input_buffer()
+    line = ser.readline().decode('utf-8').rstrip()
+   
+    while line != "S":
+        if line == "F":
+            steppermotortest.forwards()
+        elif line == "CC":
+            steppermotortest.counterClockwise()
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+    
+    steppermotortest.stopMoving()
 
 def reverseTo3():
-    pass
+    ser.write("3B")
+    ser.reset_input_buffer()
+    line = ser.readline().decode('utf-8').rstrip()
+   
+    while line != "S":
+        if line == "B":
+            steppermotortest.backwards()
+        else:
+            # code should not be here
+            print("Error: robot not moving as expected")
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+    
+    steppermotortest.stopMoving()
 
 def reverseTree1():
     ser.write("2B")
