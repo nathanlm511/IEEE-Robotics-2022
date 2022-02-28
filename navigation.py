@@ -11,16 +11,12 @@ ser.reset_input_buffer()
 
 
 def forwardTree1():
-    # ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
-    #ser.reset_input_buffer()
     reading= True
+    # read until something is read
     while reading:
         ser.write(b'2F\n')
         ser.reset_input_buffer()
-        # sleep(0.5)
-        print('about to read')
         line = ser.readline().decode('utf-8').rstrip()
-        # print(b'2F\n')
         print(f'received from arduino: {line}')
         print(line)
         if line:
@@ -42,10 +38,16 @@ def forwardTree1():
 #forwardTree1()
 
 def forwardTo3():
-    ser.write(b'3F\n')
-    ser.reset_input_buffer()
-    line = ser.readline().decode('utf-8').rstrip()
-   
+    reading= True
+    # read until something is read
+    while reading:
+        ser.write(b'3F\n')
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+        print(f'received from arduino: {line}')
+        print(line)
+        if line:
+            break   
     while line != "S":
         if line == "F":
             steppermotortest.forwards()
@@ -59,10 +61,16 @@ def forwardTo3():
 
 
 def turn1():
-    ser.write(b'4F\n')
-    ser.reset_input_buffer()
-    line = ser.readline().decode('utf-8').rstrip()
-   
+    reading= True
+    # read until something is read
+    while reading:
+        ser.write(b'4F\n')
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+        print(f'received from arduino: {line}')
+        print(line)
+        if line:
+            break
     while line != "S":
         if line == "F":
             steppermotortest.forwards()
@@ -75,10 +83,16 @@ def turn1():
 
 
 def forwardTo5():
-    ser.write(b'5F\n')
-    ser.reset_input_buffer()
-    line = ser.readline().decode('utf-8').rstrip()
-   
+    reading= True
+    # read until something is read
+    while reading:
+        ser.write(b'5F\n')
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+        print(f'received from arduino: {line}')
+        print(line)
+        if line:
+            break   
     while line != "S":
         if line == "B":
             steppermotortest.backwards()
@@ -92,10 +106,16 @@ def forwardTo5():
 
 
 def forwardTo6():
-    ser.write(b'6F\n')
-    ser.reset_input_buffer()
-    line = ser.readline().decode('utf-8').rstrip()
-   
+    reading= True
+    # read until something is read
+    while reading:
+        ser.write(b'6F\n')
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+        print(f'received from arduino: {line}')
+        print(line)
+        if line:
+            break
     while line != "S":
         if line == "F":
             steppermotortest.forwards()
@@ -108,10 +128,16 @@ def forwardTo6():
     steppermotortest.stopMoving()
 
 def forwardTree2():
-    ser.write(b'8F\n')
-    ser.reset_input_buffer()
-    line = ser.readline().decode('utf-8').rstrip()
-   
+    reading= True
+    # read until something is read
+    while reading:
+        ser.write(b'8F\n')
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+        print(f'received from arduino: {line}')
+        print(line)
+        if line:
+            break
     while line != "S":
         if line == "F":
             steppermotortest.forwards()
@@ -124,10 +150,16 @@ def forwardTree2():
     steppermotortest.stopMoving()
 
 def forwardTo9():
-    ser.write(b'9F\n')
-    ser.reset_input_buffer()
-    line = ser.readline().decode('utf-8').rstrip()
-   
+    reading= True
+    # read until something is read
+    while reading:
+        ser.write(b'9F\n')
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+        print(f'received from arduino: {line}')
+        print(line)
+        if line:
+            break
     while line != "S":
         if line == "F":
             steppermotortest.forwards()
@@ -140,10 +172,16 @@ def forwardTo9():
     steppermotortest.stopMoving()
 
 def reverseTree2():
-    ser.write(b'8B\n')
-    ser.reset_input_buffer()
-    line = ser.readline().decode('utf-8').rstrip()
-   
+    reading= True
+    # read until something is read
+    while reading:
+        ser.write(b'8B\n')
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+        print(f'received from arduino: {line}')
+        print(line)
+        if line:
+            break
     while line != "S":
         if line == "B":
             steppermotortest.backwards()
@@ -156,10 +194,16 @@ def reverseTree2():
     steppermotortest.stopMoving()
 
 def reverseTo7():
-    ser.write(b'7B\n')
-    ser.reset_input_buffer()
-    line = ser.readline().decode('utf-8').rstrip()
-   
+    reading= True
+    # read until something is read
+    while reading:
+        ser.write(b'7B\n')
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+        print(f'received from arduino: {line}')
+        print(line)
+        if line:
+            break
     while line != "S":
         if line == "B":
             steppermotortest.backwards()
@@ -172,10 +216,16 @@ def reverseTo7():
     steppermotortest.stopMoving()
 
 def reverseTo5():
-    ser.write(b'5B\n')
-    ser.reset_input_buffer()
-    line = ser.readline().decode('utf-8').rstrip()
-   
+    reading= True
+    # read until something is read
+    while reading:
+        ser.write(b'5B\n')
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+        print(f'received from arduino: {line}')
+        print(line)
+        if line:
+            break
     while line != "S":
         if line == "B":
             steppermotortest.backwards()
@@ -188,10 +238,16 @@ def reverseTo5():
     steppermotortest.stopMoving()
 
 def turn2():
-    ser.write(b'4B\n')
-    ser.reset_input_buffer()
-    line = ser.readline().decode('utf-8').rstrip()
-   
+    reading= True
+    # read until something is read
+    while reading:
+        ser.write(b'4B\n')
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+        print(f'received from arduino: {line}')
+        print(line)
+        if line:
+            break
     while line != "S":
         if line == "F":
             steppermotortest.forwards()
@@ -203,10 +259,16 @@ def turn2():
     steppermotortest.stopMoving()
 
 def reverseTo3():
-    ser.write(b'3B\n')
-    ser.reset_input_buffer()
-    line = ser.readline().decode('utf-8').rstrip()
-   
+    reading= True
+    # read until something is read
+    while reading:
+        ser.write(b'3B\n')
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+        print(f'received from arduino: {line}')
+        print(line)
+        if line:
+            break
     while line != "S":
         if line == "B":
             steppermotortest.backwards()
@@ -219,10 +281,16 @@ def reverseTo3():
     steppermotortest.stopMoving()
 
 def reverseTree1():
-    ser.write(b'2B\n')
-    ser.reset_input_buffer()
-    line = ser.readline().decode('utf-8').rstrip()
-   
+    reading= True
+    # read until something is read
+    while reading:
+        ser.write(b'2B\n')
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+        print(f'received from arduino: {line}')
+        print(line)
+        if line:
+            break
     while line != "S":
         if line == "B":
             steppermotortest.backwards()
@@ -235,10 +303,16 @@ def reverseTree1():
     steppermotortest.stopMoving()
 
 def reverseTo1():
-    ser.write(b'1B\n')
-    ser.reset_input_buffer()
-    line = ser.readline().decode('utf-8').rstrip()
-   
+    reading= True
+    # read until something is read
+    while reading:
+        ser.write(b'1B\n')
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+        print(f'received from arduino: {line}')
+        print(line)
+        if line:
+            break
     while line != "S":
         if line == "B":
             steppermotortest.backwards()

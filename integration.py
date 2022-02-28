@@ -299,6 +299,7 @@ def main(time_expired, robot_active):
     robot = RobotFSM()
     
     while not time_expired:
+        print("Robot state: " + str(robot.state))
         robot.states[robot.state].execute(robot)
         if robot.state == return_to_start:
             print("Success!")
