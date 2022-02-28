@@ -1,3 +1,3 @@
-make loop for camera alignment. camera tells motors forwads, backwards or good
+need to work on arduino/navigation code for turning and positions after turns
 
-add netAlign class
+commented out while loop from steppermotortest.py, where do we need to put motor turn off function
