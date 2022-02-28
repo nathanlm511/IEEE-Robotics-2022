@@ -294,11 +294,12 @@ class RobotFSM():
         self.forward = True
         self.state = 0
 
-def main():
+def main(time_expired, robot_active):
     robot = RobotFSM()
 
-    while True:
+    while not time_expired:
         robot.states[robot.state].execute(robot)
         if robot.state == return_to_start:
             print("Success!")
+            robot_active = False
             break

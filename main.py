@@ -4,6 +4,10 @@ import os
 import time
 from pygame import mixer
 
+time_expired = False
+global robot_active
+start_time = time.time()
+
 def Speaker():
     # for i in range(20):
         # print("Play sound")
@@ -11,6 +15,9 @@ def Speaker():
    mixer.init()
    sound = mixer.Sound('TechTriump.wav')
    sound.play()
+   while not time_expired:
+      # wait until time expires
+      pass
 
 def OLED():
     # for i in range(20):
@@ -72,6 +79,10 @@ def OLED():
    disp.image(image)
    disp.display()
 
+   while not time_expired:
+      # wait until time expires
+      pass
+
 
 class OLEDThread(threading.Thread):
    def __init__(self, name):
@@ -100,8 +111,10 @@ class IntegrationThread(threading.Thread):
 
    def run(self):
       print("Starting " + self.name)
-      integration.main()
+      integration.main(time_expired, robot_active)
       print("Exiting "+ self.name)
+
+robot_active=True
 
 thread1 = IntegrationThread("integration thread")
 thread2 = OLEDThread("OLED thread")
@@ -110,3 +123,15 @@ thread3 = SpeakerThread("speaker thread")
 thread1.start()
 thread2.start()
 thread3.start()
+
+# The timer probably wont work***********************
+# currently set to 10 seconds for testing purposes
+while time.time() - start_time < 10 and robot_active:
+   pass
+
+if robot_active and time.time() - start_time >= 10:
+   time_expired = True
+   print("Time expired!")
+   thread1.join()
+   thread2.join()
+   thread3.join()
