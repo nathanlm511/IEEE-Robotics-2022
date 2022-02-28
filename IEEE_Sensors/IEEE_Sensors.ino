@@ -312,8 +312,9 @@ void loop() {
   */
 
   if (Serial.available()) {
-    pos = Serial.read();
-    dir = Serial.read();
+    String something = Serial.readStringUntil('\n');
+    pos = something.charAt(0);
+    dir = something.charAt(1);
     while (Serial.read() >= 0) {} // clears the rest of the input buffer on the arduino
 
     //    Serial.print("pos ");
