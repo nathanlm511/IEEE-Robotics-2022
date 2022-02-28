@@ -58,7 +58,7 @@ class GrabBeads():
         # arm.retrieveBracelets()
         robot.catapult_loaded = True
         # print("Grab Beads")
-        robot.state = navigation
+        robot.state = nav
 
 '''
 arm
@@ -297,7 +297,7 @@ class RobotFSM():
 
 def main(time_expired, robot_active):
     robot = RobotFSM()
-
+    
     while not time_expired:
         robot.states[robot.state].execute(robot)
         if robot.state == return_to_start:
