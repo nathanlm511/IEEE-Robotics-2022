@@ -13,7 +13,7 @@ def Speaker():
         # print("Play sound")
        
    mixer.init()
-   sound = mixer.Sound('TechTriump.wav')
+   sound = mixer.Sound('TechTriumph.wav')
    sound.play()
    while not time_expired:
       # wait until time expires
