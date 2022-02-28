@@ -13,6 +13,8 @@ def forwardTree1():
     ser.write(b"2F\n")
     ser.reset_input_buffer()
     line = ser.readline().decode('utf-8').rstrip()
+    print(b"2F\n")
+    print(line)
    
     while line != "S":
         if line == "F":
