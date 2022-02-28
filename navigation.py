@@ -1,20 +1,45 @@
-'''
-This file contains skeleton code for most navigation that is done by
-the robot on the competition board. This file is not complete and will
-likely need to be expanded.
-'''
+from cv2 import stereoCalibrate
+import steppermotortest
+import serial
 
-def centreOnTrack():
-    pass
+ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+ser.reset_input_buffer()
+
+# def centreOnTrack():
+#     pass
 
 
 def forwardTree1():
-    while "read from arduino" != "S":
-        # move forward
-        break
+    ser.write("2F")
+    ser.reset_input_buffer()
+    line = ser.readline().decode('utf-8').rstrip()
+   
+    while line != "S":
+        if line == "F":
+            steppermotortest.forwards()
+        else:
+            # code should not be here
+            print("Error: robot not moving as expected")
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+    
+    steppermotortest.stopMoving()
 
 def forwardTo3():
-    pass
+    ser.write("3F")
+    ser.reset_input_buffer()
+    line = ser.readline().decode('utf-8').rstrip()
+   
+    while line != "S":
+        if line == "F":
+            steppermotortest.forwards()
+        else:
+            # code should not be here
+            print("Error: robot not moving as expected")
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+    
+    steppermotortest.stopMoving()
 
 
 def turn1():
@@ -26,39 +51,135 @@ def forwardTo5():
 
 
 def forwardTo6():
-    pass
-
+    ser.write("6F")
+    ser.reset_input_buffer()
+    line = ser.readline().decode('utf-8').rstrip()
+   
+    while line != "S":
+        if line == "F":
+            steppermotortest.forwards()
+        else:
+            # code should not be here
+            print("Error: robot not moving as expected")
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+    
+    steppermotortest.stopMoving()
 
 def forwardTree2():
-    pass
+    ser.write("8F")
+    ser.reset_input_buffer()
+    line = ser.readline().decode('utf-8').rstrip()
+   
+    while line != "S":
+        if line == "F":
+            steppermotortest.forwards()
+        else:
+            # code should not be here
+            print("Error: robot not moving as expected")
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+    
+    steppermotortest.stopMoving()
 
 def forwardTo9():
-    pass
-
+    ser.write("9F")
+    ser.reset_input_buffer()
+    line = ser.readline().decode('utf-8').rstrip()
+   
+    while line != "S":
+        if line == "F":
+            steppermotortest.forwards()
+        else:
+            # code should not be here
+            print("Error: robot not moving as expected")
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+    
+    steppermotortest.stopMoving()
 
 def reverseTree2():
-    pass
-
+    ser.write("8B")
+    ser.reset_input_buffer()
+    line = ser.readline().decode('utf-8').rstrip()
+   
+    while line != "S":
+        if line == "B":
+            steppermotortest.backwards()
+        else:
+            # code should not be here
+            print("Error: robot not moving as expected")
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+    
+    steppermotortest.stopMoving()
 
 def reverseTo7():
-    pass
-
+    ser.write("7B")
+    ser.reset_input_buffer()
+    line = ser.readline().decode('utf-8').rstrip()
+   
+    while line != "S":
+        if line == "B":
+            steppermotortest.backwards()
+        else:
+            # code should not be here
+            print("Error: robot not moving as expected")
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+    
+    steppermotortest.stopMoving()
 
 def reverseTo5():
-    pass
-
+    ser.write("5B")
+    ser.reset_input_buffer()
+    line = ser.readline().decode('utf-8').rstrip()
+   
+    while line != "S":
+        if line == "B":
+            steppermotortest.backwards()
+        else:
+            # code should not be here
+            print("Error: robot not moving as expected")
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+    
+    steppermotortest.stopMoving()
 
 def turn2():
     pass
 
-
 def reverseTo3():
     pass
 
-
 def reverseTree1():
-    pass
-
+    ser.write("2B")
+    ser.reset_input_buffer()
+    line = ser.readline().decode('utf-8').rstrip()
+   
+    while line != "S":
+        if line == "B":
+            steppermotortest.backwards()
+        else:
+            # code should not be here
+            print("Error: robot not moving as expected")
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+    
+    steppermotortest.stopMoving()
 
 def reverseTo1():
-    pass
+    ser.write("1B")
+    ser.reset_input_buffer()
+    line = ser.readline().decode('utf-8').rstrip()
+   
+    while line != "S":
+        if line == "B":
+            steppermotortest.backwards()
+        else:
+            # code should not be here
+            print("Error: robot not moving as expected")
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+    
+    steppermotortest.stopMoving()
