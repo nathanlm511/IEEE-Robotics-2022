@@ -316,10 +316,10 @@ void loop() {
     dir = Serial.read();
     while (Serial.read() >= 0) {} // clears the rest of the input buffer on the arduino
 
-//    Serial.print("pos ");
-//    Serial.println(pos);
-//    Serial.print("dir ");
-//    Serial.println(dir);
+    //    Serial.print("pos ");
+    //    Serial.println(pos);
+    //    Serial.print("dir ");
+    //    Serial.println(dir);
 
     if (pos == '1') {
       float* dists = ping_sensors();
@@ -361,8 +361,9 @@ void loop() {
       }
     }
     else if (pos == '4') {
+      float* dists = ping_sensors();
       // put while loop here or make sequential commands for turning
-        int turn_signals = 0
+      int turn_signals = 0;
       if (dir == 'F') {
         // this movement needs to be fleshed out for the turn
         while (dists[0] <= 14 && dists[1] <= 14) {
@@ -370,11 +371,10 @@ void loop() {
           dists = ping_sensors();
         }
         Serial.println("C");
-        delay(1000)
+        delay(1000);
         while (abs(dists[2] - dists[3]) > 1) {
           dists = ping_sensors();
         }
-        Serial.println("S")
       }
       else {
         // this movement needs to be fleshed out for the turn
@@ -383,11 +383,10 @@ void loop() {
           dists = ping_sensors();
         }
         Serial.println("CC");
-        delay(1000)
+        delay(1000);
         while (abs(dists[2] - dists[3]) > 1) {
           dists = ping_sensors();
         }
-        Serial.println("S")
       }
     }
     else if (pos == '5') {
