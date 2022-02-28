@@ -10,7 +10,8 @@ ser.reset_input_buffer()
 
 
 def forwardTree1():
-    ser.write(b'2F\n')
+    ser.write(b'2')
+    ser.write(b'F')
     ser.reset_input_buffer()
     line = ser.readline().decode('utf-8').rstrip()
     print(b"2F\n")
