@@ -305,3 +305,6 @@ def main(time_expired, robot_active):
             robot_active = False
             break
     steppermotortest.turnOffMotors()
+    print('motors off')
+    
+#main(False, True)

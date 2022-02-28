@@ -2,22 +2,11 @@ import integration
 import threading
 import os
 import time
-from pygame import mixer
+import steppermotortest
 
 time_expired = False
 global robot_active
 start_time = time.time()
-
-def Speaker():
-    # for i in range(20):
-        # print("Play sound")
-       
-   mixer.init()
-   sound = mixer.Sound('TechTriumph.wav')
-   sound.play()
-   while not time_expired:
-      # wait until time expires
-      pass
 
 def OLED():
     # for i in range(20):
@@ -92,17 +81,6 @@ class OLEDThread(threading.Thread):
    def run(self):
       print("Starting " + self.name)
       # OLED()
-      print("Exiting "+ self.name)
-
-class SpeakerThread(threading.Thread):
-   def __init__(self, name):
-      threading.Thread.__init__(self)
-      self.name = name
-
-   def run(self):
-      print("Starting " + self.name)
-      Speaker()
-      print("Exiting "+ self.name)
 
 class IntegrationThread(threading.Thread):
    def __init__(self, name):
@@ -118,11 +96,9 @@ robot_active=True
 
 thread1 = IntegrationThread("integration thread")
 thread2 = OLEDThread("OLED thread")
-thread3 = SpeakerThread("speaker thread")
 
 thread1.start()
 thread2.start()
-thread3.start()
 
 # The timer probably wont work***********************
 # currently set to 10 seconds for testing purposes
@@ -135,8 +111,8 @@ try:
       print("Time expired!")
 except KeyboardInterrupt:
    time_expired = True
+   steppermotortest.turnOffMotors()
    print("\nCtrl-C pressed. Stopping PIGPIO and exiting...")
 
 thread1.join()
 thread2.join()
-thread3.join()
