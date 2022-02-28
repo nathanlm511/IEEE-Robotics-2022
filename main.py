@@ -1,9 +1,16 @@
 import integration
 import threading
+import os
+import time
+from pygame import mixer
 
 def Speaker():
-    for i in range(20):
-        print("Play sound")
+    # for i in range(20):
+        # print("Play sound")
+       
+   mixer.init()
+   sound = mixer.Sound('TechTriump.wav')
+   sound.play()
 
 def OLED():
     for i in range(20):
