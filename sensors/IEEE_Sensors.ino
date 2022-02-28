@@ -29,7 +29,7 @@
 #define ECHO_PIN_8 36
 
 // Maximum distance we want to ping for (in centimeters).
-#define MAX_DISTANCE 400  
+#define MAX_DISTANCE 400
 
 // NewPing setup of pins and maximum distance.
 NewPing sonar1(TRIGGER_PIN_1, ECHO_PIN_1, MAX_DISTANCE);
@@ -41,174 +41,401 @@ NewPing sonar6(TRIGGER_PIN_6, ECHO_PIN_6, MAX_DISTANCE);
 NewPing sonar7(TRIGGER_PIN_7, ECHO_PIN_7, MAX_DISTANCE);
 NewPing sonar8(TRIGGER_PIN_8, ECHO_PIN_8, MAX_DISTANCE);
 float duration, distance1, distance2, distance3, distance4, distance5, distance6, distance7, distance8;
+// int stopper, tree1Bit;
+int pos, dir;
 
 double calculatePD(double error_now, double error_last) {
-  //P(error_now) + D(error_now-error_last)
+	//P(error_now) + D(error_now-error_last)
 
-  //double transError = calculateTranslationalError(((distance7 + distance8) / 2), ((distance3 + distance4) / 2), 6);
-  //Serial.print("Trans Error: ");
-  //Serial.println(transError);
+	double transError = calculateTranslationalError(((distance7 + distance8) / 2), ((distance3 + distance4) / 2), 6);
+	//Serial.print("Trans Error: ");
+	//Serial.println(transError);
 
-  double transThreshold = 1.5;
-  double avgRight = (distance7 + distance8) / 2;
-  double avgLeft = (distance3 + distance4) / 2;
-  translationalCorrection(avgRight, avgLeft, transThreshold);
-  
+	//transError pos: move right
+	//transError neg: move left
+	double transThreshold = 1.5;
+	double avgRight = (distance7 + distance8) / 2;
+	double avgLeft = (distance3 + distance4) / 2;
+	//if (transError > transThreshold){
+	if ((avgRight > avgLeft) && (avgRight - avgLeft) > transThreshold) {
+		Serial.println("Move Right");
+		//calculateWheelSpeed
+	} else
+		//if (transError < (-1 * transThreshold)){
+		if ((avgLeft > avgRight) && (avgLeft - avgRight) > transThreshold) {
+			Serial.println("Move Left");
+			//calculateWheelSpeed
+		}
+	//double rotError = calculateRotationalError(distance7, distance8, 0);
 
-  //double rotError = calculateRotationalError(distance7, distance8, 0);
-  double rotDiff = distance7 - distance8;
-  double rotThreshold = 1.0;
-  rotationalCorrection(rotDiff, rotThreshold);
-}
-
-//Temporary? simple implementation
-void translationalCorrection(double avgRight, double avgLeft, double transThreshold) {
-  if((avgRight > avgLeft) && (avgRight - avgLeft) > transThreshold){
-    Serial.println("Move Right");
-    //calculateWheelSpeed?
-  } else
-  if((avgLeft > avgRight) && (avgLeft - avgRight) > transThreshold){
-    Serial.println("Move Left");
-    //calculateWheelSpeed?
-  }
-}
-
-//Temporary? simple implementation
-void rotationalCorrection(double rotDiff, double rotThreshold) {
-  if (rotDiff > rotThreshold) {
-    Serial.println("Turn counter clockwise");
-  } else
-  if (rotDiff < (-1 * rotThreshold)) {
-    Serial.println("Turn clockwise");
-  }
 }
 
 double calculateWheelSpeed(double T_Base, double translational_correction, double rotational_correction) {
-  
+
 }
 
-/*
 double calculateTranslationalError(double avgLeft, double avgRight, double desiredDist) {
-  //get average of sensor distances first
-  //average - desired
+	//get average of sensor distances first
+	//average - desired
 
-  //go left
-  if (avgLeft > avgRight) {
-    return desiredDist - avgLeft;
-  } else //go right
-  if (avgLeft < avgRight) {
-    return avgRight - desiredDist;
-  }
+	//go left
+	if (avgLeft > avgRight) {
+		return desiredDist - avgLeft;
+	} else //go right
+		if (avgLeft < avgRight) {
+			return avgRight - desiredDist;
+		}
 }
 
 double calculateRotationalError(double distSensor1, double distSensor2, double desiredAngle) {
-  //right triangle math goes here
+	//right triangle math goes here
+	int threshold = 1;
+
+	//if this is pos: turn counter clockwise
+	//if this is neg: turn clockwise
+	int diff = distSensor1 - distSensor2;
+
+	while (diff > threshold) {
+		Serial.println("Turn counter clockwise: decrease wheel speed of left wheels");
+	}
+	while (diff < (-1 * threshold)) {
+		Serial.println("Turn clockwise: decrease wheel speed of right wheels");
+	}
+	return 0.0;
 }
-*/
+
+float* ping_sensors() {
+		float distances[8] = {sonar1.ping_cm(),
+													sonar2.ping_cm(),
+													sonar3.ping_cm(),
+													sonar4.ping_cm(),
+													sonar5.ping_cm(),
+													sonar6.ping_cm(),
+													sonar7.ping_cm(),
+													sonar8.ping_cm()};
+		return distances;
+}
 
 void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
+	// put your setup code here, to run once:
+	Serial.begin(9600);
+	// stopper = 0;
+	// tree1Bit = 0;
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  // Send ping, get distance in cm
-  distance1 = sonar1.ping_cm();
-  distance2 = sonar2.ping_cm();
-  distance3 = sonar3.ping_cm();
-  distance4 = sonar4.ping_cm();
-  distance5 = sonar5.ping_cm();
-  distance6 = sonar6.ping_cm();
-  distance7 = sonar7.ping_cm();
-  distance8 = sonar8.ping_cm();
-  
-  // Send results to Serial Monitor
-  //SENSOR 1
-  Serial.print("Distance1 = ");
-  if (distance1 >= 400 || distance1 <= 1) {
-    Serial.println("Out of range");
-  } else {
-    Serial.print(distance1);
-    Serial.println(" cm");
-  }
+/*
+	// put your main code here, to run repeatedly:
+	Send ping, get distance in cm
+	distance1 = sonar1.ping_cm();
+	distance2 = sonar2.ping_cm();
+	distance3 = sonar3.ping_cm();
+	distance4 = sonar4.ping_cm();
+	distance5 = sonar5.ping_cm();
+	distance6 = sonar6.ping_cm();
+	distance7 = sonar7.ping_cm();
+	distance8 = sonar8.ping_cm();
+*/
 
-  // SENSOR 2
-  Serial.print("Distance2 = ");
-  if (distance2 >= 400 || distance2 <= 1) {
-    Serial.println("Out of range");
-  } else {
-    Serial.print(distance2);
-    Serial.println(" cm");
-  }
+	// Send results to Serial Monitor
+	/*
+		Serial.print("Distance1 = ");
 
-  // SENSOR 3
-  Serial.print("Distance3 = ");
-  if (distance3 >= 400 || distance3 <= 1) {
-    Serial.println("Out of range");
-  } else {
-    Serial.print(distance3);
-    Serial.println(" cm");
-  }
+		if (distance1 >= 400 || distance1 <= 1)
+		{
+		Serial.println("Out of range");
+		}
+		else
+		{
+		Serial.print(distance1);
+		Serial.println(" cm");
+		}
+		// SENSOR 2
+		Serial.print("Distance2 = ");
 
-  // SENSOR 4
-  Serial.print("Distance4 = ");
-  if (distance4 >= 400 || distance4 <= 1) {
-    Serial.println("Out of range");
-  } else {
-    Serial.print(distance4);
-    Serial.println(" cm");
-  }
+		if (distance2 >= 400 || distance2 <= 1)
+		{
+		Serial.println("Out of range");
+		}
+		else
+		{
+		Serial.print(distance2);
+		Serial.println(" cm");
+		}
 
-  // SENSOR 5
-  Serial.print("Distance5 = ");
-  if (distance5 >= 400 || distance5 <= 1) {
-    Serial.println("Out of range");
-  } else {
-    Serial.print(distance5);
-    Serial.println(" cm");
-  }
+		// SENSOR 3
+		Serial.print("Distance3 = ");
 
-  // SENSOR 6
-  Serial.print("Distance6 = ");
-  if (distance6 >= 400 || distance6 <= 1) {
-    Serial.println("Out of range");
-  } else {
-    Serial.print(distance6);
-    Serial.println(" cm");
-  }
+		if (distance3 >= 400 || distance3 <= 1)
+		{
+		Serial.println("Out of range");
+		}
+		else
+		{
+		Serial.print(distance3);
+		Serial.println(" cm");
+		}
 
-  // SENSOR 7
-  Serial.print("Distance7 = ");
-  if (distance7 >= 400 || distance7 <= 1) {
-    Serial.println("Out of range");
-  } else {
-    Serial.print(distance7);
-    Serial.println(" cm");
-  }
+		// SENSOR 4
+		Serial.print("Distance4 = ");
+
+		if (distance4 >= 400 || distance4 <= 1)
+		{
+		Serial.println("Out of range");
+		}
+		else
+		{
+		Serial.print(distance4);
+		Serial.println(" cm");
+		}
+
+		// SENSOR 5
+		Serial.print("Distance5 = ");
+
+		if (distance5 >= 400 || distance5 <= 1)
+		{
+		Serial.println("Out of range");
+		}
+		else
+		{
+		Serial.print(distance5);
+		Serial.println(" cm");
+		}
+
+		// SENSOR 6
+		Serial.print("Distance6 = ");
+
+		if (distance6 >= 400 || distance6 <= 1)
+		{
+		Serial.println("Out of range");
+		}
+		else
+		{
+		Serial.print(distance6);
+		Serial.println(" cm");
+		}
+
+		///////////////// SENSOR 7
+		Serial.print("Distance7 = ");
+
+		if (distance7 >= 400 || distance7 <= 1)
+		{
+		Serial.println("Out of range");
+		}
+		else
+		{
+		Serial.print(distance7);
+		Serial.println(" cm");
+		}
 
 
-  // SENSOR 8
-  Serial.print("Distance8 = ");
-  if (distance8 >= 400 || distance8 <= 1) {
-    Serial.println("Out of range");
-  } else {
-    Serial.print(distance8);
-    Serial.println(" cm");
-  }
-  
-  //Call Main Calculation Body
-  calculatePD(0,0);
+		///////////// SENSOR 8
+		Serial.print("Distance8 = ");
 
-  //double Speed_FR, Speed_FL, Speed_RR, Speed_RL;
-  //double P, D;
-  //double T_Base;
-  //Grab the state (from pi)
-  //Switch/If Statement for all the states (since we're not using multiple files)
-  //Find corresponding T_Base (set value per state)
-  //Calculate the error (translational and rotational, depending on state)
-  //Calculate the speed per wheel with errors and T_Base
-  //output speed, set T_Last to T_E
+		if (distance8 >= 400 || distance8 <= 1)
+		{
+		Serial.println("Out of range");
+		}
+		else
+		{
+		Serial.print(distance8);
+		Serial.println(" cm");
+		}
 
-  delay(2000);
+
+		calculatePD(0,0);
+	*/
+
+	//double Speed_FR, Speed_FL, Speed_RR, Speed_RL;
+	//double P, D;
+	//double T_Base;
+	//Grab the state (from pi)
+	//Switch/If Statement for all the states (since we're not using multiple files)
+	//Find corresponding T_Base (set value per state)
+	//Calculate the error (translational and rotational, depending on state)
+	//Calculate the speed per wheel with errors and T_Base
+	//output speed, set T_Last to T_E
+
+/*
+	Serial.print("Sensor1: ");
+	Serial.println(distance1);
+	Serial.print("Sensor2: ");
+	Serial.println(distance2);
+	Serial.print("Sensor3: ");
+	Serial.println(distance3);
+	Serial.print("Sensor4: ");
+	Serial.println(distance4);
+	Serial.print("Sensor5: ");
+	Serial.println(distance5);
+	Serial.print("Sensor6: ");
+	Serial.println(distance6);
+	Serial.print("Sensor7: ");
+	Serial.println(distance7);
+	Serial.print("Sensor8: ");
+	Serial.println(distance8);
+	Serial.println("/////////////////////////////////////");
+	delay(5000);
+*/
+	
+/*
+	if (distance1 < 15) {
+		//Serial.flush();
+		Serial.println("S");
+		delay(50);
+		if (tree1Bit == 0) {
+			//Serial.flush();
+			Serial.println("A");
+			tree1Bit = 1;
+			delay(50);
+		}
+		
+		if (stopper == 0) {
+			stopper = 1;
+			while (stopper < 164) {
+				//Serial.flush();
+				Serial.println("C");
+				stopper = stopper + 1;
+				delay(50);
+				
+			}
+			//Serial.flush();
+			Serial.println("S");
+			Serial.println("Fl");
+		}
+	}
+	else {
+		//Serial.flush();
+		Serial.println("F");
+	}
+	delay(50);
+*/
+	
+	if (Serial.available()) {
+		pos = Serial.read();
+		dir = Serial.read();
+		while (Serial.read() >= 0) {} // clears the rest of the input buffer on the arduino
+		
+		Serial.print("pos ");
+		Serial.println(pos);
+		Serial.print("dir ");
+		Serial.println(dir);
+		
+		if (pos == '1') {
+			float* dists = ping_sensors();
+			if (dir == 'B') {
+				while (dists[3] > 10 && dists[4] > 10) {
+					Serial.println("B");
+					dists = ping_sensors();
+				}
+			}
+		}
+		else if (pos == '2') {
+			float* dists = ping_sensors();
+			if (dir == 'F') {
+				while (dists[0] > 14 && dists[1] > 14) {
+					Serial.println("F");
+					dists = ping_sensors();
+				}
+			}
+			else {
+				while (dists[0] <= 14 && dists[1] <= 14) {
+					Serial.println("B");
+					dists = ping_sensors();
+				}
+			}
+		}
+		else if (pos == '3') {
+			float* dists = ping_sensors();
+			if (dir == 'F') {
+				while (dists[0] > 12 && dists[1] > 12) {
+					Serial.println("F");
+					dists = ping_sensors();
+				}
+			}
+			else {
+				// this movement will be a little more complicated due to the turn prior to it going in reverse
+				Serial.println("B");
+			}
+		}
+		else if (pos == '4') {
+			// put while loop here or make sequential commands for turning
+			if (dir == 'F') {
+				// this movement needs to be fleshed out for the turn
+			}
+			else {
+				// this movement needs to be fleshed out for the turn
+			}
+		}
+		else if (pos == '5') {
+			float* dists = ping_sensors();
+			if (dir == 'F') {
+				// this movement will be a little more complicated due to the turn prior to it going forwards
+				while (dists[4] <= 45 && dists[5] <= 45) {
+					Serial.println("F")
+					dists = ping_sensors();
+				}
+			}
+			else {
+				while (dists[4] > 45 && dists[5] > 45) {
+					Serial.println("B");
+					dists = ping_sensors();
+				}
+			}
+		}
+		else if (pos == '6') {
+			float* dists = ping_sensors();
+			if (dir == 'F') {
+				while (dists[4] <= 58 && dists[5] <= 58) {
+					Serial.println("F")
+					dists = ping_sensors();
+				}
+			}
+			else {
+				// do nothing
+			}
+		}
+		else if (pos == '7') {
+			float* dists = ping_sensors();
+			if (dir == 'F') {
+				// do nothing
+			}
+			else {
+				// may need some work here to take account for the gap
+				while (dists[4] > 58 && dists[5] > 58) {
+					Serial.println("B")
+					dists = ping_sensors();
+				}
+			}
+		}
+		else if (pos == '8') {
+			float* dists = ping_sensors();
+			if (dir == 'F') {
+			// may need some work here to take account for the gap
+				while (dists[0] > 33 && dists[1] > 33) {
+					Serial.println("F")
+					dists = ping_sensors();
+				}
+			}
+			else {
+				while (dists[0] <= 33 && dists[1] <= 33) {
+					Serial.println("B")
+					dists = ping_sensors();
+				}
+			}
+		}
+		else if (pos == '9') {
+			float* dists = ping_sensors();
+			if (dir == 'F') {
+				while (dists[0] > 24 && dists[1] > 24) {
+					Serial.println("F")
+					dists = ping_sensors();
+				}
+			}
+			else {
+				// do nothing
+			}
+		}
+		Serial.println("S");
+	}
+	delay(1000);
 }
