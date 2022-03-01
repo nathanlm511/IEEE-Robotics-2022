@@ -397,7 +397,7 @@ void loop() {
           ////dists = ping_sensors();
         }
         Serial.println("CC");
-        delay(1000);
+        delay(2000);
         while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 1) {
           ////dists = ping_sensors();
         }
