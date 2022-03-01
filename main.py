@@ -4,7 +4,7 @@ import os
 import time
 import steppermotortest
 
-time_expired = False
+global time_expired
 global robot_active
 start_time = time.time()
 
@@ -93,26 +93,30 @@ class IntegrationThread(threading.Thread):
       print("Exiting "+ self.name)
 
 robot_active=True
+time_expired = False
 
-thread1 = IntegrationThread("integration thread")
-thread2 = OLEDThread("OLED thread")
+# thread1 = IntegrationThread("integration thread")
+# thread2 = OLEDThread("OLED thread")
 
-thread1.start()
-thread2.start()
+# thread1.start()
+# thread2.start()
 
 # The timer probably wont work***********************
 # currently set to 10 seconds for testing purposes
 try:
+   integration.main(time_expired, )
    while time.time() - start_time < 10 and robot_active:
       pass
 
    if robot_active and time.time() - start_time >= 10:
       time_expired = True
       print("Time expired!")
+      
 except KeyboardInterrupt:
    time_expired = True
    steppermotortest.turnOffMotors()
    print("\nCtrl-C pressed. Stopping PIGPIO and exiting...")
+   print('motors off')
 
-thread1.join()
-thread2.join()
+# thread1.join()
+# thread2.join()
