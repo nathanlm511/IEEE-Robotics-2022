@@ -104,14 +104,14 @@ time_expired = False
 # The timer probably wont work***********************
 # currently set to 10 seconds for testing purposes
 try:
-   integration.main(time_expired, )
+   integration.main(time_expired, robot_active)
    while time.time() - start_time < 10 and robot_active:
       pass
 
    if robot_active and time.time() - start_time >= 10:
       time_expired = True
       print("Time expired!")
-      
+
 except KeyboardInterrupt:
    time_expired = True
    steppermotortest.turnOffMotors()
