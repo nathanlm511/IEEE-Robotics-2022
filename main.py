@@ -5,7 +5,7 @@ import time
 import steppermotortest
 
 global time_expired
-global robot_active
+global robot_activeS
 start_time = time.time()
 
 def OLED():

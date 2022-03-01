@@ -60,7 +60,10 @@ def servoTest(servoNum, startAngle, stopAngle):
             print(stop)
 
 def startPosition():
-    servoTest(4, 15, 20)
+#     servos[4].angle = 15
+#     servos[3].angle = 120
+#     servos[2].angle = 120
+    servoTest(4, 25, 15)
     time.sleep(1)
     servoTest(3, 110, 120)
     servoTest(2, 100, 80)
@@ -110,52 +113,53 @@ def intoBracelets():
     time.sleep(0.5)
     servoTest(3, 85, 90)
     time.sleep(0.5)
-    servoTest(1, 165, 150)
+    #servoTest(1, 165, 150)
     
 def grabBracelets():
-    servoTest(4, 125, 125)
+    servoTest(4, 125, 115)
     servoTest(2, 80, 80)
     servoTest(3, 90, 90)
     servoTest(1, 150, 150)
     servoTest(0, 0,100)   
 
 def removeBracelets():
-    servoTest(4, 125, 125)
+    servoTest(4, 115, 115)
     servoTest(2, 80, 80)
     servoTest(3, 90, 75)
     servoTest(1, 150, 150)
     servoTest(0, 100,100)
 
 def rotateToCatapult():
-    servoTest(4, 125, 60)
+    servoTest(4, 115, 50)
     servoTest(2, 80, 80)
 
-def dropToCatapultStage1():
-    #servoTest(4, 60, 60)
-    servoTest(2, 80, 65)
-    servoTest(3, 75, 90)
-    servoTest(1, 150, 120)
-
-def dropToCatapultStage2():
-    #servoTest(4, 60, 60)
-    servoTest(2, 65, 125)
+# def dropToCatapultStage1():
+#     #servoTest(4, 60, 60)
+#     servoTest(2, 80, 65)
+#     servoTest(3, 75, 90)
+#     servoTest(1, 150, 120)
+# 
+# def dropToCatapultStage2():
+#     #servoTest(4, 60, 60)
+#     servoTest(2, 65, 125)
  
-def dropToCatapultStage3():
+def dropToCatapult():
     #servoTest(4, 60, 60)
-    servoTest(2, 65, 160)
-    servoTest(3, 90, 70)
-
-def dropToCatapultStage4():
-    #servoTest(4, 60, 60)
-    #servoTest(2, 65, 160)
+    servoTest(2, 80, 160)
     #servoTest(3, 90, 70)
-    servoTest(1, 120, 145)
+
+# def dropToCatapultStage4():
+#     #servoTest(4, 60, 60)
+#     #servoTest(2, 65, 160)
+#     #servoTest(3, 90, 70)
+#     servoTest(1, 120, 145)
+    
 
 # drop braclets into the catapult
 def releaseBracelets():
     servoTest(0, 100,0)
     time.sleep(1)
-    servoTest(2, 160, 65)
+    servoTest(2, 160, 80)
 
 # swing catapult to launch left
 def catapultSwingLeft():
@@ -198,13 +202,33 @@ def retrieveBracelets():
     time.sleep(1)
     rotateToCatapult()
     time.sleep(1)
-    dropToCatapultStage1()
+    dropToCatapult()
+#     time.sleep(1)
+#     dropToCatapultStage2()
+#     time.sleep(1)
+#     dropToCatapultStage3()
+#     time.sleep(1)
+#     dropToCatapultStage4()
     time.sleep(1)
-    dropToCatapultStage2()
+    releaseBracelets()
     time.sleep(1)
-    dropToCatapultStage3()
+    lookLeft()
     time.sleep(1)
-    dropToCatapultStage4()
+    
+def retrieveBracelets2():    
+    lookLeft()
+    time.sleep(1)
+    lineUpBracelets()
+    time.sleep(1)
+    intoBracelets()
+    time.sleep(1)
+    grabBracelets()
+    time.sleep(1)
+    removeBracelets()
+    time.sleep(1)
+    rotateToCatapult()
+    time.sleep(1)
+    dropToCatapult()
     time.sleep(1)
     releaseBracelets()
     time.sleep(1)
