@@ -99,10 +99,10 @@ def backwards():
 	duty_cycle = 500000
 	pi.hardware_PWM(STEP1, frequency, duty_cycle)
 
-	pi.write(DIR1, 0)
-	pi.write(DIR2, 1)
-	pi.write(DIR3, 0)
-	pi.write(DIR4, 1)
+	pi.write(DIR1, 1)
+	pi.write(DIR2, 0)
+	pi.write(DIR3, 1)
+	pi.write(DIR4, 0)
 # 	frequency = 500 # 0 (off) to 1-125M
 # 	duty_cycle = 0 # 0 (off) to 1M (fully on)
 # 	pi.hardware_PWM(STEP1, frequency, duty_cycle)
