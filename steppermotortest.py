@@ -73,6 +73,11 @@ def stopMoving():
 	frequency = 0
 	duty_cycle = 0
 	pi.hardware_PWM(STEP1, frequency, duty_cycle)
+	
+def forwardSmall():
+    forwards()
+    sleep(0.25)
+    stopMoving()
 
 def clockwise():
 	frequency = 750
@@ -103,6 +108,11 @@ def backwards():
 	pi.write(DIR2, 0)
 	pi.write(DIR3, 1)
 	pi.write(DIR4, 0)
+
+def backwardsSmall():
+    backwards()
+    sleep(0.25)
+    stopMoving()
 # 	frequency = 500 # 0 (off) to 1-125M
 # 	duty_cycle = 0 # 0 (off) to 1M (fully on)
 # 	pi.hardware_PWM(STEP1, frequency, duty_cycle)
