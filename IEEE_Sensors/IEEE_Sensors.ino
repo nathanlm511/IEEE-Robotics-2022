@@ -105,15 +105,23 @@ double calculateRotationalError(double distSensor1, double distSensor2, double d
 }
 
 float* ping_sensors() {
-  float distances[8] = {sonar1.ping_cm(),
-                        sonar2.ping_cm(),
-                        sonar3.ping_cm(),
-                        sonar4.ping_cm(),
-                        sonar5.ping_cm(),
-                        sonar6.ping_cm(),
-                        sonar7.ping_cm(),
-                        sonar8.ping_cm()
-                       };
+    distance1 = sonar1.ping_cm();
+    distance2 = sonar2.ping_cm();
+    distance3 = sonar3.ping_cm();
+    distance4 = sonar4.ping_cm();
+    distance5 = sonar5.ping_cm();
+    distance6 = sonar6.ping_cm();
+    distance7 = sonar7.ping_cm();
+    distance8 = sonar8.ping_cm();
+  float distances[8] = {distance1,
+  distance2,
+  distance3,
+  distance4,
+  distance5,
+  distance6,
+  distance7,
+  distance8};
+  
   return distances;
 }
 
@@ -311,107 +319,112 @@ void loop() {
     delay(50);
   */
 
-  if (Serial.available()) {
+  if (Serial.available() > 0) {
     String something = Serial.readStringUntil('\n');
     pos = something.charAt(0);
     dir = something.charAt(1);
-    while (Serial.read() >= 0) {} // clears the rest of the input buffer on the arduino
+//    Serial.print("You sent me: ");
+//    Serial.print(pos);
+//    Serial.println(dir);
+//    Serial.println(" It worked!");    
+//    while (Serial.read() >= 0) {} // clears the rest of the input buffer on the arduino
 
     //    Serial.print("pos ");
     //    Serial.println(pos);
     //    Serial.print("dir ");
     //    Serial.println(dir);
-
     if (pos == '1') {
-      float* dists = ping_sensors();
+      //float* ////dists = ping_sensors();
       if (dir == 'B') {
-        while (dists[3] > 10 && dists[4] > 10) {
+        while (sonar4.ping_cm() > 10 && sonar5.ping_cm() > 10) {
           Serial.println("B");
-          dists = ping_sensors();
+          ////dists = ping_sensors();
         }
       }
     }
     else if (pos == '2') {
-      float* dists = ping_sensors();
+      //float* ////dists = ping_sensors();
+      Serial.print("A");
       if (dir == 'F') {
-        while (dists[0] > 14 && dists[1] > 14) {
+        Serial.print("B");
+        while (sonar1.ping_cm() > 14 && sonar2.ping_cm() > 14) {
           Serial.println("F");
-          dists = ping_sensors();
+          ////dists = ping_sensors();
         }
       }
       else {
-        while (dists[0] <= 14 && dists[1] <= 14) {
+        while (sonar1.ping_cm() <= 14 && sonar2.ping_cm() <= 14) {
           Serial.println("B");
-          dists = ping_sensors();
+          ////dists = ping_sensors();
         }
       }
     }
     else if (pos == '3') {
-      float* dists = ping_sensors();
+      //float* ////dists = ping_sensors();
       if (dir == 'F') {
-        while (dists[0] > 12 && dists[1] > 12) {
+        while (sonar1.ping_cm() > 12 && sonar2.ping_cm() > 12) {
           Serial.println("F");
-          dists = ping_sensors();
+          ////dists = ping_sensors();
         }
       }
       else {
-        while (dists[0] > 12 && dists[1] > 12) {
+        while (sonar1.ping_cm() > 12 && sonar2.ping_cm() > 12) {
           Serial.println("F");
-          dists = ping_sensors();
+          ////dists = ping_sensors();
         }
       }
     }
     else if (pos == '4') {
-      float* dists = ping_sensors();
+      //float* ////dists = ping_sensors();
       // put while loop here or make sequential commands for turning
       int turn_signals = 0;
       if (dir == 'F') {
         // this movement needs to be fleshed out for the turn
-        while (dists[0] <= 14 && dists[1] <= 14) {
+        while (sonar1.ping_cm() <= 14 && sonar2.ping_cm() <= 14) {
           Serial.println("B");
-          dists = ping_sensors();
+          ////dists = ping_sensors();
         }
         Serial.println("C");
-        delay(1000);
-        while (abs(dists[2] - dists[3]) > 1) {
-          dists = ping_sensors();
+        delay(2000);
+        while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 1) {
+          ////dists = ping_sensors();
         }
       }
       else {
         // this movement needs to be fleshed out for the turn
-        while (dists[4] <= 14 && dists[5] <= 14) {
+        while (sonar5.ping_cm() <= 14 && sonar6.ping_cm() <= 14) {
           Serial.println("B");
-          dists = ping_sensors();
+          ////dists = ping_sensors();
         }
         Serial.println("CC");
         delay(1000);
-        while (abs(dists[2] - dists[3]) > 1) {
-          dists = ping_sensors();
+        while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 1) {
+          ////dists = ping_sensors();
         }
       }
     }
     else if (pos == '5') {
-      float* dists = ping_sensors();
+      //float* ////dists = ping_sensors();
       if (dir == 'F') {
         // this movement will be a little more complicated due to the turn prior to it going forwards
-        while (dists[4] > 3 && dists[5] > 3) {
+        while (sonar5.ping_cm() > 3 && sonar6.ping_cm() > 3) {
           Serial.println("B");
-          dists = ping_sensors();
+          ////dists = ping_sensors();
         }
       }
       else {
-        while (dists[4] > 3 && dists[5] > 3) {
+        while (sonar5.ping_cm() > 3 && sonar6.ping_cm() > 3) {
           Serial.println("B");
-          dists = ping_sensors();
+          ////dists = ping_sensors();
         }
       }
     }
     else if (pos == '6') {
-      float* dists = ping_sensors();
+      //float* ////dists = ping_sensors();
       if (dir == 'F') {
-        while (dists[4] <= 58 && dists[5] <= 58) {
+        while (sonar5.ping_cm() <= 58 && sonar6.ping_cm() <= 58) {
           Serial.println("F");
-          dists = ping_sensors();
+          ////dists = ping_sensors();
         }
       }
       else {
@@ -419,40 +432,40 @@ void loop() {
       }
     }
     else if (pos == '7') {
-      float* dists = ping_sensors();
+      //float* ////dists = ping_sensors();
       if (dir == 'F') {
         // do nothing
       }
       else {
         // may need some work here to take account for the gap
-        while (dists[4] > 58 && dists[5] > 58) {
+        while (sonar5.ping_cm() > 58 && sonar6.ping_cm() > 58) {
           Serial.println("B");
-          dists = ping_sensors();
+          ////dists = ping_sensors();
         }
       }
     }
     else if (pos == '8') {
-      float* dists = ping_sensors();
+      //float* ////dists = ping_sensors();
       if (dir == 'F') {
         // may need some work here to take account for the gap
-        while (dists[0] > 33 && dists[1] > 33) {
+        while (sonar1.ping_cm() > 33 && sonar2.ping_cm() > 33) {
           Serial.println("F");
-          dists = ping_sensors();
+          ////dists = ping_sensors();
         }
       }
       else {
-        while (dists[0] <= 33 && dists[1] <= 33) {
+        while (sonar1.ping_cm() <= 33 && sonar2.ping_cm() <= 33) {
           Serial.println("B");
-          dists = ping_sensors();
+          ////dists = ping_sensors();
         }
       }
     }
     else if (pos == '9') {
-      float* dists = ping_sensors();
+      //float* ////dists = ping_sensors();
       if (dir == 'F') {
-        while (dists[0] > 24 && dists[1] > 24) {
+        while (sonar1.ping_cm() > 24 && sonar2.ping_cm() > 24) {
           Serial.println("F");
-          dists = ping_sensors();
+          ////dists = ping_sensors();
         }
       }
       else {
@@ -461,5 +474,4 @@ void loop() {
     }
     Serial.println("S");
   }
-  delay(1000);
 }
