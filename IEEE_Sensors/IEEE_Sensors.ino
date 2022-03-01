@@ -338,23 +338,24 @@ void loop() {
       if (dir == 'B') {
         while (sonar4.ping_cm() > 10 && sonar5.ping_cm() > 10) {
           Serial.println("B");
+          delay(50);
           ////dists = ping_sensors();
         }
       }
     }
     else if (pos == '2') {
       //float* ////dists = ping_sensors();
-      Serial.print("A");
       if (dir == 'F') {
-        Serial.print("B");
-        while (sonar1.ping_cm() > 14 && sonar2.ping_cm() > 14) {
+        while (sonar1.ping_cm() > 13 && sonar2.ping_cm() > 13) {
           Serial.println("F");
+          delay(50);
           ////dists = ping_sensors();
         }
       }
       else {
-        while (sonar1.ping_cm() <= 14 && sonar2.ping_cm() <= 14) {
+        while (sonar1.ping_cm() <= 13 && sonar2.ping_cm() <= 13) {
           Serial.println("B");
+          delay(50);
           ////dists = ping_sensors();
         }
       }
@@ -364,12 +365,14 @@ void loop() {
       if (dir == 'F') {
         while (sonar1.ping_cm() > 12 && sonar2.ping_cm() > 12) {
           Serial.println("F");
+          delay(50);
           ////dists = ping_sensors();
         }
       }
       else {
         while (sonar1.ping_cm() > 12 && sonar2.ping_cm() > 12) {
           Serial.println("F");
+          delay(50);
           ////dists = ping_sensors();
         }
       }
@@ -380,12 +383,13 @@ void loop() {
       int turn_signals = 0;
       if (dir == 'F') {
         // this movement needs to be fleshed out for the turn
-        while (sonar1.ping_cm() <= 14 && sonar2.ping_cm() <= 14) {
+        while (sonar1.ping_cm() <= 17 && sonar2.ping_cm() <= 17) {
           Serial.println("B");
+          delay(50);
           ////dists = ping_sensors();
         }
         Serial.println("C");
-        delay(2000);
+        delay(4000);
         while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 1) {
           ////dists = ping_sensors();
         }
@@ -394,10 +398,11 @@ void loop() {
         // this movement needs to be fleshed out for the turn
         while (sonar5.ping_cm() <= 14 && sonar6.ping_cm() <= 14) {
           Serial.println("B");
+          delay(50);
           ////dists = ping_sensors();
         }
         Serial.println("CC");
-        delay(2000);
+        delay(4000);
         while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 1) {
           ////dists = ping_sensors();
         }
@@ -409,12 +414,14 @@ void loop() {
         // this movement will be a little more complicated due to the turn prior to it going forwards
         while (sonar5.ping_cm() > 3 && sonar6.ping_cm() > 3) {
           Serial.println("B");
+          delay(50);
           ////dists = ping_sensors();
         }
       }
       else {
         while (sonar5.ping_cm() > 3 && sonar6.ping_cm() > 3) {
           Serial.println("B");
+          delay(50);
           ////dists = ping_sensors();
         }
       }
@@ -424,6 +431,7 @@ void loop() {
       if (dir == 'F') {
         while (sonar5.ping_cm() <= 58 && sonar6.ping_cm() <= 58) {
           Serial.println("F");
+          delay(50);
           ////dists = ping_sensors();
         }
       }
@@ -440,6 +448,7 @@ void loop() {
         // may need some work here to take account for the gap
         while (sonar5.ping_cm() > 58 && sonar6.ping_cm() > 58) {
           Serial.println("B");
+          delay(50);
           ////dists = ping_sensors();
         }
       }
@@ -450,12 +459,14 @@ void loop() {
         // may need some work here to take account for the gap
         while (sonar1.ping_cm() > 33 && sonar2.ping_cm() > 33) {
           Serial.println("F");
+          delay(50);
           ////dists = ping_sensors();
         }
       }
       else {
         while (sonar1.ping_cm() <= 33 && sonar2.ping_cm() <= 33) {
           Serial.println("B");
+          delay(50);
           ////dists = ping_sensors();
         }
       }
@@ -465,6 +476,7 @@ void loop() {
       if (dir == 'F') {
         while (sonar1.ping_cm() > 24 && sonar2.ping_cm() > 24) {
           Serial.println("F");
+          delay(50);
           ////dists = ping_sensors();
         }
       }
