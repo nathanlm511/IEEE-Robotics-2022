@@ -15,7 +15,7 @@ def forwardTree1():
     # read until something is read
     while reading:
         ser.write(b'2F\n')
-        ser.reset_input_buffer()
+        #ser.reset_input_buffer()
         line = ser.readline().decode('utf-8').rstrip()
         print(f'received from arduino: {line}')
         if line:
@@ -40,7 +40,7 @@ def forwardTo3():
     # read until something is read
     while reading:
         ser.write(b'3F\n')
-        ser.reset_input_buffer()
+        #ser.reset_input_buffer()
         line = ser.readline().decode('utf-8').rstrip()
         print(f'received from arduino: {line}')
         print(line)
@@ -62,7 +62,7 @@ def turn1():
     # read until something is read
     while reading:
         ser.write(b'4F\n')
-        ser.reset_input_buffer()
+        #ser.reset_input_buffer()
         line = ser.readline().decode('utf-8').rstrip()
         print(f'received from arduino: {line}')
         print(line)
@@ -85,7 +85,7 @@ def forwardTo5():
     # read until something is read
     while reading:
         ser.write(b'5F\n')
-        ser.reset_input_buffer()
+        #ser.reset_input_buffer()
         line = ser.readline().decode('utf-8').rstrip()
         print(f'received from arduino: {line}')
         print(line)
@@ -107,7 +107,7 @@ def forwardTo6():
     # read until something is read
     while reading:
         ser.write(b'6F\n')
-        ser.reset_input_buffer()
+        #ser.reset_input_buffer()
         line = ser.readline().decode('utf-8').rstrip()
         print(f'received from arduino: {line}')
         print(line)
@@ -128,7 +128,7 @@ def forwardTree2():
     # read until something is read
     while reading:
         ser.write(b'8F\n')
-        ser.reset_input_buffer()
+        #ser.reset_input_buffer()
         line = ser.readline().decode('utf-8').rstrip()
         print(f'received from arduino: {line}')
         print(line)
@@ -149,7 +149,7 @@ def forwardTo9():
     # read until something is read
     while reading:
         ser.write(b'9F\n')
-        ser.reset_input_buffer()
+        #ser.reset_input_buffer()
         line = ser.readline().decode('utf-8').rstrip()
         print(f'received from arduino: {line}')
         print(line)
@@ -170,7 +170,7 @@ def reverseTree2():
     # read until something is read
     while reading:
         ser.write(b'8B\n')
-        ser.reset_input_buffer()
+        #ser.reset_input_buffer()
         line = ser.readline().decode('utf-8').rstrip()
         print(f'received from arduino: {line}')
         print(line)
@@ -191,7 +191,7 @@ def reverseTo7():
     # read until something is read
     while reading:
         ser.write(b'7B\n')
-        ser.reset_input_buffer()
+        #ser.reset_input_buffer()
         line = ser.readline().decode('utf-8').rstrip()
         print(f'received from arduino: {line}')
         print(line)
@@ -212,7 +212,7 @@ def reverseTo5():
     # read until something is read
     while reading:
         ser.write(b'5B\n')
-        ser.reset_input_buffer()
+        #ser.reset_input_buffer()
         line = ser.readline().decode('utf-8').rstrip()
         print(f'received from arduino: {line}')
         print(line)
@@ -233,7 +233,7 @@ def turn2():
     # read until something is read
     while reading:
         ser.write(b'4B\n')
-        ser.reset_input_buffer()
+        #ser.reset_input_buffer()
         line = ser.readline().decode('utf-8').rstrip()
         print(f'received from arduino: {line}')
         print(line)
@@ -253,7 +253,7 @@ def reverseTo3():
     # read until something is read
     while reading:
         ser.write(b'3B\n')
-        ser.reset_input_buffer()
+        #ser.reset_input_buffer()
         line = ser.readline().decode('utf-8').rstrip()
         print(f'received from arduino: {line}')
         print(line)
@@ -274,7 +274,7 @@ def reverseTree1():
     # read until something is read
     while reading:
         ser.write(b'2B\n')
-        ser.reset_input_buffer()
+        #ser.reset_input_buffer()
         line = ser.readline().decode('utf-8').rstrip()
         print(f'received from arduino: {line}')
         print(line)
@@ -295,7 +295,7 @@ def reverseTo1():
     # read until something is read
     while reading:
         ser.write(b'1B\n')
-        ser.reset_input_buffer()
+        #ser.reset_input_buffer()
         line = ser.readline().decode('utf-8').rstrip()
         print(f'received from arduino: {line}')
         print(line)
