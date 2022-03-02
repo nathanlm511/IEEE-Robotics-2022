@@ -324,4 +324,5 @@ def main(time_expired, robot_active):
             print("Success!")
             robot_active = False
             break
+    arm.deinitialize()
     steppermotortest.turnOffMotors()

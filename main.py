@@ -114,6 +114,7 @@ try:
 
 except KeyboardInterrupt:
    time_expired = True
+   arm.deinitialize()
    steppermotortest.turnOffMotors()
    print("\nCtrl-C pressed. Stopping PIGPIO and exiting...")
    print('motors off')
