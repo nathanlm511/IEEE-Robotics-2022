@@ -181,6 +181,7 @@ class Navigation():
         pass
 
     def execute(self, robot):
+        print(robot.next_location)
         if robot.next_location == 1:
             # print("Reverse to position 1")
             # navigation.reverseTo1()
@@ -271,8 +272,8 @@ class Navigation():
             # print("If catapult is loaded, check for net at location 10")
             if robot.catapult_loaded:
                 robot.state = look_at_right_side
-                robot.forward = not robot.forward
-        
+            robot.forward = False
+        print(f"Robot forward: {robot.forward}")
         if robot.forward:
             robot.next_location += 1
         else:
