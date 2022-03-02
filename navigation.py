@@ -1,3 +1,4 @@
+import string
 from cv2 import stereoCalibrate
 import steppermotortest
 import serial
@@ -307,6 +308,61 @@ def reverseTo1():
         else:
             # code should not be here
             print("Error: robot not moving as expected")
+        line = ser.readline().decode('utf-8').rstrip()
+    
+    steppermotortest.stopMoving()
+
+def navigate(robot):
+    reading= True
+    # read until something is read
+    stringToSend = ''
+    if robot.next_location == 1:
+        stringToSend += '1'
+    elif robot.next_location == 1:
+        stringToSend += '2'
+    elif robot.next_location == 1:
+        stringToSend += '3'
+    elif robot.next_location == 1:
+        stringToSend += '4'
+    elif robot.next_location == 1:
+        stringToSend += '5'
+    elif robot.next_location == 1:
+        stringToSend += '6'
+    elif robot.next_location == 1:
+        stringToSend += '7'
+    elif robot.next_location == 1:
+        stringToSend += '8'
+    elif robot.next_location == 1:
+        stringToSend += '9'
+
+    if robot.forwards:
+        stringToSend += 'F'
+    else:
+        stringToSend += 'B'
+
+    stringToSend += '\n'
+    
+    
+    
+    while reading:
+        ser.write(stringToSend.encode('utf-8'))
+        ser.reset_input_buffer()
+        line = ser.readline().decode('utf-8').rstrip()
+        # print(f'received from arduino: {line}')
+        # print(line)
+        if line:
+            break
+
+    while line != "S":
+        if line == "F":
+            steppermotortest.forwards()
+        elif line == "B":
+            steppermotortest.backwards()
+        elif line == "C":
+            steppermotortest.clockwise()
+        elif line == "CC":
+            steppermotortest.counterClockwise()
+
         line = ser.readline().decode('utf-8').rstrip()
     
     steppermotortest.stopMoving()
