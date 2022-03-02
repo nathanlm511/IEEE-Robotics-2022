@@ -183,46 +183,56 @@ class Navigation():
     def execute(self, robot):
         if robot.next_location == 1:
             # print("Reverse to position 1")
-            navigation.reverseTo1()
+            # navigation.reverseTo1()
+            navigation.navigate(robot)
             robot.state = return_to_start
         elif robot.next_location == 2:
             if robot.forward:
                 # print("Forward to tree 1")
-                navigation.forwardTree1()
+                # navigation.forwardTree1()
+                navigation.navigate(robot)
             else:
-                navigation.reverseTree1()
+                # navigation.reverseTree1()
+                navigation.navigate(robot)
             if robot.next_tree < 3:
                 robot.state = align_with_tree
                 robot.next_tree += 1
         elif robot.next_location == 3:
             if robot.forward:
                 # print("Forward to location 3")
-                navigation.forwardTo3()
+                # navigation.forwardTo3()
+                navigation.navigate(robot)
             else:
                 # print("Reverse to location 3")
-                navigation.reverseTo3()
+                # navigation.reverseTo3()
+                navigation.navigate(robot)
             if robot.catapult_loaded:
                 robot.state = detect_net
         elif robot.next_location == 4:
             if robot.forward:
                 # print("Turn1")
-                navigation.turn1()
+                # navigation.turn1()
+                navigation.navigate(robot)
             else:
                 # print("Turn2 (Turn1 in reverse)")
-                navigation.turn2()
+                # navigation.turn2()
+                navigation.navigate(robot)
         elif robot.next_location == 5:
             if robot.forward:
                 # print("Forward to location 5")
-                navigation.forwardTo5()
+                # navigation.forwardTo5()
+                navigation.navigate(robot)
             else:
                 # print("Reverse to location 5")
-                navigation.reverseTo5()
+                # navigation.reverseTo5()
+                navigation.navigate(robot)
             if robot.catapult_loaded:
                 robot.state = detect_net
         elif robot.next_location == 6:
             if robot.forward:
                 # print("Forward to location 6")
-                navigation.forwardTo6()
+                # navigation.forwardTo6()
+                navigation.navigate(robot)
             # else:
                 # print("Robot is going backwards and is already at position 6")
             if robot.catapult_loaded:
@@ -233,22 +243,26 @@ class Navigation():
             # else:
             if not robot.forward:
                 # print("Reverse to location 7")
-                navigation.reverseTo7()
+                # navigation.reverseTo7()
+                navigation.navigate(robot)
             if robot.catapult_loaded:
                 robot.state = look_at_right_side
         elif robot.next_location == 8:
             if robot.forward:
                 # print("Forward to tree 1")
-                navigation.forwardTree2()
+                # navigation.forwardTree2()
+                navigation.navigate(robot)
             else:
-                navigation.reverseTree2()
+                # navigation.reverseTree2()
+                navigation.navigate(robot)
             if robot.next_tree < 3:
                 robot.state = align_with_tree
                 robot.next_tree += 1
         elif robot.next_location == 9:
             if robot.forward:
                 # print("Forward to location 9")
-                navigation.forwardTo9()
+                # navigation.forwardTo9()
+                navigation.navigate(robot)
             # else:
                 # print("Robot already at location 9, do nothing")
             if robot.catapult_loaded:
