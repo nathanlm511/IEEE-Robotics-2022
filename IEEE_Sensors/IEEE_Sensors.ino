@@ -349,6 +349,10 @@ void loop() {
         // do nothing
       }
       else {
+        while (sonar1.ping_cm() <= 66 || sonar2.ping_cm() <= 66) {
+          Serial.println("B");
+          delay(50);
+        }
         while (sonar5.ping_cm() > 58 || sonar6.ping_cm() > 58) {
           Serial.println("B");
           delay(50);
@@ -357,7 +361,11 @@ void loop() {
     }
     else if (pos == '8') {
       if (dir == 'F') {
-        while (sonar5.ping_cm() <= 142 || sonar6.ping_cm() <= 142) {
+        while (sonar5.ping_cm() <= 109 || sonar6.ping_cm() <= 109) {
+          Serial.println("F");
+          delay(50);
+        }
+        while (sonar1.ping_cm() > 33 || sonar2.ping_cm() > 33) {
           Serial.println("F");
           delay(50);
         }
