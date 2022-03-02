@@ -3,6 +3,7 @@ import threading
 import os
 import time
 import steppermotortest
+import arm
 
 global time_expired
 global robot_activeS
@@ -114,6 +115,9 @@ try:
 
 except KeyboardInterrupt:
    time_expired = True
+   arm.captapultSwingRight()
+   time.sleep(1)
+   arm.startPosition()
    arm.deinitialize()
    steppermotortest.turnOffMotors()
    print("\nCtrl-C pressed. Stopping PIGPIO and exiting...")

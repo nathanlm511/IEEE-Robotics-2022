@@ -22,6 +22,7 @@ P = powerline pole
 '''
 
 
+from time import sleep
 import camera
 import navigation
 import arm
@@ -258,7 +259,7 @@ class Navigation():
             else:
                 # navigation.reverseTree2()
                 navigation.navigate(robot)
-            if robot.next_tree < 3:
+            if robot.next_tree < 2:
                 robot.state = align_with_tree
                 robot.next_tree += 1
         elif robot.next_location == 9:
@@ -324,5 +325,8 @@ def main(time_expired, robot_active):
             print("Success!")
             robot_active = False
             break
+    arm.captapultSwingRight()
+    sleep(1)
+    arm.startPosition()
     arm.deinitialize()
     steppermotortest.turnOffMotors()
