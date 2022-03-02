@@ -60,7 +60,7 @@ pi.write(EN4, 0)
 
 
 def forwards():
-	frequency = 1000
+	frequency = 1500
 	duty_cycle = 500000
 	pi.hardware_PWM(STEP1, frequency, duty_cycle)
 
@@ -80,7 +80,7 @@ def forwardSmall():
     stopMoving()
 
 def clockwise():
-	frequency = 750
+	frequency = 1000
 	duty_cycle = 500000
 	pi.hardware_PWM(STEP1, frequency, duty_cycle)
 
@@ -90,7 +90,7 @@ def clockwise():
 	pi.write(DIR4, 0)
 
 def counterClockwise():
-	frequency = 750
+	frequency = 1000
 	duty_cycle = 500000
 	pi.hardware_PWM(STEP1, frequency, duty_cycle)
 
@@ -100,7 +100,7 @@ def counterClockwise():
 	pi.write(DIR4, 1)
 
 def backwards():
-	frequency = 1000
+	frequency = 1500
 	duty_cycle = 500000
 	pi.hardware_PWM(STEP1, frequency, duty_cycle)
 

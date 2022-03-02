@@ -318,24 +318,24 @@ def navigate(robot):
     stringToSend = ''
     if robot.next_location == 1:
         stringToSend += '1'
-    elif robot.next_location == 1:
+    elif robot.next_location == 2:
         stringToSend += '2'
-    elif robot.next_location == 1:
+    elif robot.next_location == 3:
         stringToSend += '3'
-    elif robot.next_location == 1:
+    elif robot.next_location == 4:
         stringToSend += '4'
-    elif robot.next_location == 1:
+    elif robot.next_location == 5:
         stringToSend += '5'
-    elif robot.next_location == 1:
+    elif robot.next_location == 6:
         stringToSend += '6'
-    elif robot.next_location == 1:
+    elif robot.next_location == 7:
         stringToSend += '7'
-    elif robot.next_location == 1:
+    elif robot.next_location == 8:
         stringToSend += '8'
-    elif robot.next_location == 1:
+    elif robot.next_location == 9:
         stringToSend += '9'
 
-    if robot.forwards:
+    if robot.forward:
         stringToSend += 'F'
     else:
         stringToSend += 'B'
@@ -346,7 +346,7 @@ def navigate(robot):
     
     while reading:
         ser.write(stringToSend.encode('utf-8'))
-        ser.reset_input_buffer()
+        # ser.reset_input_buffer()
         line = ser.readline().decode('utf-8').rstrip()
         # print(f'received from arduino: {line}')
         # print(line)
