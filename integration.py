@@ -24,7 +24,7 @@ P = powerline pole
 
 import camera
 import navigation
-import arm
+# import arm
 import steppermotortest
 
 # variables to be used for readability when changing states
@@ -55,10 +55,10 @@ class GrabBeads():
 
     def execute(self, robot):
         # move arm to grab beads and loads catapult
-        if robot.forwards:
-            arm.retrieveBracelets()
-        else:
-            arm.retrieveBracelets2()
+        # if robot.forwards:
+        #     arm.retrieveBracelets()
+        # else:
+        #     arm.retrieveBracelets2()
         robot.catapult_loaded = True
         # print("Grab Beads")
         robot.state = nav
