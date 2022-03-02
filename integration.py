@@ -88,15 +88,18 @@ class FireCatapult():
         if robot.net_on_right:
             # rotate catapult to right side
             pass
-        if robot.net_on_right:
-            arm.captapultSwingRight()
-        else:
+        if not robot.net_on_right:
             arm.catapultSwingLeft()
+
         # print("Fire catapult")
         # arm.launchBracelets()
         # swing catapult back to the left??
-        arm.lookLeft()
-        robot.arm_on_right = False
+        if robot.arm_on_right:
+            arm.lookLeft()
+            robot.arm_on_right = False
+
+        if not robot.net_on_right:
+            arm.captapultSwingRight()
 
         robot.catapult_loaded = False
         robot.state = nav
@@ -108,7 +111,7 @@ class LookAtRightSide():
 
     def execute(self, robot):
         # aim arm at right side of robot for camera to detect net
-        # arm.lookRight()
+        arm.lookRight()
         robot.arm_on_right = True
         
         robot.state = detect_net

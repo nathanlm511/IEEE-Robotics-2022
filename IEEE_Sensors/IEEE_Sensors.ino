@@ -141,9 +141,9 @@ void checkRotation() {
 }
 
 void centerForwards() {
-//  if (abs(sonar3.ping_cm() - sonar8.ping_cm()) > 1.5 || abs(sonar4.ping_cm() - sonar7.ping_cm()) > 1.5) {
-//    if (sonar3.ping_cm() > sonar8.ping_cm() || sonar4.ping_cm() > sonar7.ping_cm()) {
-      if (sonar3.ping_cm() > 4 || sonar4.ping_cm() > 4) {
+  if (abs(sonar3.ping_cm() - sonar8.ping_cm()) > 1.5 || abs(sonar4.ping_cm() - sonar7.ping_cm()) > 1.5) {
+    if (sonar3.ping_cm() > sonar8.ping_cm() || sonar4.ping_cm() > sonar7.ping_cm()) {
+//      if (sonar3.ping_cm() > 4 || sonar4.ping_cm() > 4) {
       Serial.println("CC");
       delay(1000);
       Serial.println("F");
@@ -154,8 +154,8 @@ void centerForwards() {
       delay(100);
 //      Serial.println("S");
     }
-//    else if (sonar3.ping_cm() < sonar8.ping_cm() || sonar4.ping_cm() < sonar7.ping_cm()) {
-    else if (sonar3.ping_cm() < 3 || sonar4.ping_cm() < 3) {
+    else if (sonar3.ping_cm() < sonar8.ping_cm() || sonar4.ping_cm() < sonar7.ping_cm()) {
+//    else if (sonar3.ping_cm() < 3 || sonar4.ping_cm() < 3) {
       Serial.println("C");
       delay(1000);
       Serial.println("F");
@@ -166,14 +166,14 @@ void centerForwards() {
       delay(100);
 //      Serial.println("S");
     }
-//  }
+  }
 }
 
 void centerBackwards() {
-//  if (abs(sonar3.ping_cm() - sonar8.ping_cm()) > 1.5 || abs(sonar4.ping_cm() - sonar7.ping_cm()) > 1.5) {
+  if (abs(sonar3.ping_cm() - sonar8.ping_cm()) > 1.5 || abs(sonar4.ping_cm() - sonar7.ping_cm()) > 1.5) {
       
-      if (sonar3.ping_cm() > 4 || sonar4.ping_cm() > 4) {
-//    if (sonar3.ping_cm() > sonar8.ping_cm() || sonar4.ping_cm() > sonar7.ping_cm()) {
+//      if (sonar3.ping_cm() > 4 || sonar4.ping_cm() > 4) {
+    if (sonar3.ping_cm() > sonar8.ping_cm() || sonar4.ping_cm() > sonar7.ping_cm()) {
       Serial.println("C");
       delay(1000);
       Serial.println("B");
@@ -184,8 +184,8 @@ void centerBackwards() {
       delay(100);
 //      Serial.println("S");
     }
-//    else if (sonar3.ping_cm() < sonar8.ping_cm() || sonar4.ping_cm() < sonar7.ping_cm()) {
-      else if (sonar3.ping_cm() < 3 || sonar4.ping_cm() < 3) {
+    else if (sonar3.ping_cm() < sonar8.ping_cm() || sonar4.ping_cm() < sonar7.ping_cm()) {
+//      else if (sonar3.ping_cm() < 3 || sonar4.ping_cm() < 3) {
       Serial.println("CC");
       delay(1000);
       Serial.println("B");
@@ -196,28 +196,28 @@ void centerBackwards() {
       delay(100);
 //      Serial.println("S");
     }
-//  }
+  }
 }
 
 void centerAfterTurn(int dir) {
   if (dir == 'F') {
-    Serial.println("C");
+    Serial.println("CC");
     delay(1000);
     Serial.println("F");
     delay(100);
-    Serial.println("CC");
+    Serial.println("C");
     delay(1000);
     Serial.println("B");
     delay(100);
   }
   else {
-    Serial.println("CC");
-    delay(1000);
-    Serial.println("F");
-    delay(100);
     Serial.println("C");
     delay(1000);
     Serial.println("B");
+    delay(100);
+    Serial.println("CC");
+    delay(1000);
+    Serial.println("F");
     delay(100);
   }
 }
