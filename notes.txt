@@ -1,3 +1,1 @@
-need to work on arduino/navigation code for turning and positions after turns
-
-commented out while loop from steppermotortest.py, where do we need to put motor turn off function
+alter arduino code to check left/right alignment before moving to next positions
