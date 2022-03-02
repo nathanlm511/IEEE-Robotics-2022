@@ -55,7 +55,10 @@ class GrabBeads():
 
     def execute(self, robot):
         # move arm to grab beads and loads catapult
-        arm.retrieveBracelets()
+        if robot.forwards:
+            arm.retrieveBracelets()
+        else:
+            arm.retrieveBracelets2()
         robot.catapult_loaded = True
         # print("Grab Beads")
         robot.state = nav
@@ -137,9 +140,9 @@ class AlignWithTree():
         while dir != "Good":
             print("Stuck in loop?")
             if dir == "F":
-                pass
+                steppermotortest.forwardSmall()
             elif dir == "B":
-                pass
+                steppermotortest.backwardsSmall()
         # print("Align with tree")
         robot.state = grab_beads
 
