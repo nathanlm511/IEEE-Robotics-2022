@@ -56,10 +56,38 @@ class GrabBeads():
 
     def execute(self, robot):
         # move arm to grab beads and loads catapult
+        print(f"robot tree: {robot.next_tree}")
         if robot.next_tree == 1:
-            arm.retrieveBracelets()
+            print("arm aligned pre cam")
+            arm.retrieveBraceletsPreCam()
+            print("arm aligned pre cam")
+            direction = camera.treeAlign()
+            print("camera aligning arm")
+            while direction != "G":
+                print(direction)
+                if direction == "L":
+                    stepperMotorTest.forwardsSmall()
+                if direction == "R":
+                    stepperMotorTest.backwardsSmall()
+                time.sleep(0.25)
+                direction = camera.treeAlign()
+            print("Camera aligned")
+            
+            arm.retrieveBraceletsPostCam()
         elif robot.next_tree == 2:
-            arm.retrieveBracelets2()
+            arm.retrieveBracelets2PreCam()
+            direction = camera.treeAlign()
+            while direction != "G":
+                print(direction)
+                if direction == "L":
+                    stepperMotorTest.forwardsSmall()
+                if direction == "R":
+                    stepperMotorTest.backwardsSmall()
+                time.sleep(0.25)
+                direction = camera.treeAlign()
+            print("Camera aligned")
+            
+            arm.retrieveBracelets2PostCam()
         robot.catapult_loaded = True
         # print("Grab Beads")
         robot.state = nav
@@ -201,8 +229,8 @@ class Navigation():
             else:
                 # navigation.reverseTree1()
                 navigation.navigate(robot)
-            if robot.next_tree < 3:
-                robot.state = align_with_tree
+            if robot.next_tree < 2:
+                robot.state = grab_beads
                 robot.next_tree += 1
         elif robot.next_location == 3:
             if robot.forward:
@@ -315,7 +343,7 @@ class RobotFSM():
         self.next_location = 2
         self.arm_on_right = False
         self.net_on_right = False
-        self.next_tree = 1
+        self.next_tree = 0
         self.forward = True
         self.state = 0
 
@@ -328,8 +356,8 @@ def main(time_expired, robot_active):
             print("Success!")
             robot_active = False
             break
-    arm.captapultSwingRight()
-    sleep(1)
-    arm.startPosition()
-    arm.deinitialize()
+#     arm.captapultSwingRight()
+#     sleep(1)
+#     arm.startPosition()
+#     arm.deinitialize()
     steppermotortest.turnOffMotors()

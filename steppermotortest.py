@@ -74,7 +74,7 @@ def stopMoving():
 	duty_cycle = 0
 	pi.hardware_PWM(STEP1, frequency, duty_cycle)
 	
-def forwardSmall():
+def forwardsSmall():
     forwards()
     sleep(0.25)
     stopMoving()

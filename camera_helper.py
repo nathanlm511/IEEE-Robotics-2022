@@ -8,8 +8,6 @@ import time
 from threading import Thread
 import importlib.util
 
-from sqlalchemy import true
-
 # Define VideoStream class to handle streaming of video from webcam in separate processing thread
 # Source - Adrian Rosebrock, PyImageSearch: https://www.pyimagesearch.com/2015/12/28/increasing-raspberry-pi-fps-with-python-and-opencv/
 class VideoStream:
@@ -137,15 +135,14 @@ bracelet_floating_model = (bracelet_input_details[0]['dtype'] == np.float32)
 
 input_mean = 127.5
 input_std = 127.5
+# Initialize video stream
+videostream = VideoStream(resolution=(imW,imH),framerate=30).start()
+# time.sleep(1)
 
 def isNet():
-    # Initialize video stream
-    videostream = VideoStream(resolution=(imW,imH),framerate=30).start()
-    time.sleep(1)
 
     # Grab frame from video stream
     frame1 = videostream.read()
-    videostream.stop()
 
     # Acquire frame and resize to expected shape [1xHxWx3]
     frame = frame1.copy()
@@ -171,18 +168,15 @@ def isNet():
     for i in range(len(scores)):
         if ((scores[i] > min_conf_threshold) and (scores[i] <= 1.0)):
             # NET DETECTED
+            print("Net detected")
             return True
     # NET NOT DETECTED
+    print("Net NOT detected")
     return False
 
-def directionOfNet():
-    # Initialize video stream
-    videostream = VideoStream(resolution=(imW,imH),framerate=30).start()
-    time.sleep(1)
-
+def directionOfBracelet():
     # Grab frame from video stream
     frame1 = videostream.read()
-    videostream.stop()
 
     # Acquire frame and resize to expected shape [1xHxWx3]
     frame = frame1.copy()
@@ -191,17 +185,17 @@ def directionOfNet():
     input_data = np.expand_dims(frame_resized, axis=0)
 
     # Normalize pixel values if using a floating model (i.e. if model is non-quantized)
-    if net_floating_model:
+    if bracelet_floating_model:
         input_data = (np.float32(input_data) - input_mean) / input_std
 
     # Perform the actual detection by running the model with the image as input
-    net_interpreter.set_tensor(net_input_details[0]['index'],input_data)
-    net_interpreter.invoke()
+    bracelet_interpreter.set_tensor(bracelet_input_details[0]['index'],input_data)
+    bracelet_interpreter.invoke()
 
     # Retrieve detection results
-    boxes = net_interpreter.get_tensor(net_output_details[1]['index'])[0] # Bounding box coordinates of detected objects
-    classes = net_interpreter.get_tensor(net_output_details[3]['index'])[0] # Class index of detected objects
-    scores = net_interpreter.get_tensor(net_output_details[0]['index'])[0] # Confidence of detected objects
+    boxes = bracelet_interpreter.get_tensor(bracelet_output_details[1]['index'])[0] # Bounding box coordinates of detected objects
+    classes = bracelet_interpreter.get_tensor(bracelet_output_details[3]['index'])[0] # Class index of detected objects
+    scores = bracelet_interpreter.get_tensor(bracelet_output_details[0]['index'])[0] # Confidence of detected objects
     #num = interpreter.get_tensor(output_details[3]['index'])[0]  # Total number of detected objects (inaccura
     
     # Loop over all detections and draw detection box if confidence is above minimum threshold
@@ -219,9 +213,9 @@ def directionOfNet():
             ycenter = ymin+(int(round((ymax - ymin) / 2)))
 
             # TODO: output differently depending on result THIS DOES NOT WORK RIGHT NOW
-            if (xcenter < 4):
+            if (xcenter > 145):
                 return "L"
-            if (xcenter > 4):
+            if (xcenter < 155):
                 return "R"
             return "G"
     # NET NOT DETECTED

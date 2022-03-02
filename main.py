@@ -113,12 +113,12 @@ try:
       time_expired = True
       print("Time expired!")
 
-except KeyboardInterrupt:
+except:
    time_expired = True
-   arm.captapultSwingRight()
-   time.sleep(1)
-   arm.startPosition()
-   arm.deinitialize()
+#    arm.captapultSwingRight()
+#    time.sleep(1)
+#    arm.startPosition()
+#    arm.deinitialize()
    steppermotortest.turnOffMotors()
    print("\nCtrl-C pressed. Stopping PIGPIO and exiting...")
    print('motors off')

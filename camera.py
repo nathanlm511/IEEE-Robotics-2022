@@ -1,9 +1,10 @@
-def detectNet():
-    return True
+import camera_helper
 
+def detectNet():
+    return camera_helper.isNet()
 
 def treeAlign():
-    return "Good"
+    return camera_helper.directionOfBracelet()
 
 def netAlign():
     return "Good"
