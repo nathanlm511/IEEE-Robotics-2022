@@ -128,7 +128,7 @@ float* ping_sensors() {
 */
 
 void checkRotation() {
-  while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 1) {
+  while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 0.75) {
     if (sonar3.ping_cm() > sonar4.ping_cm()) {
       Serial.println("CC");
     }
@@ -136,61 +136,89 @@ void checkRotation() {
       Serial.println("C");
     }
   }
-  Serial.println("S");
+//  Serial.println("S");
   delay(50);
 }
 
 void centerForwards() {
-  if (abs(sonar3.ping_cm() - sonar8.ping_cm()) > 1.5 || abs(sonar4.ping_cm() - sonar7.ping_cm()) > 1.5) {
-    if (sonar3.ping_cm() > sonar8.ping_cm() || sonar4.ping_cm() > sonar7.ping_cm()) {
+//  if (abs(sonar3.ping_cm() - sonar8.ping_cm()) > 1.5 || abs(sonar4.ping_cm() - sonar7.ping_cm()) > 1.5) {
+//    if (sonar3.ping_cm() > sonar8.ping_cm() || sonar4.ping_cm() > sonar7.ping_cm()) {
+      if (sonar3.ping_cm() > 4 || sonar4.ping_cm() > 4) {
       Serial.println("CC");
       delay(1000);
       Serial.println("F");
-      delay(500);
+      delay(100);
       Serial.println("C");
       delay(1000);
       Serial.println("B");
-      delay(500);
-      Serial.println("S");
+      delay(100);
+//      Serial.println("S");
     }
-    else if (sonar3.ping_cm() < sonar8.ping_cm() || sonar4.ping_cm() < sonar7.ping_cm()) {
+//    else if (sonar3.ping_cm() < sonar8.ping_cm() || sonar4.ping_cm() < sonar7.ping_cm()) {
+    else if (sonar3.ping_cm() < 3 || sonar4.ping_cm() < 3) {
       Serial.println("C");
       delay(1000);
       Serial.println("F");
-      delay(500);
+      delay(100);
       Serial.println("CC");
       delay(1000);
       Serial.println("B");
-      delay(500);
-      Serial.println("S");
+      delay(100);
+//      Serial.println("S");
     }
-  }
+//  }
 }
 
 void centerBackwards() {
-  if (abs(sonar3.ping_cm() - sonar8.ping_cm()) > 1.5 || abs(sonar4.ping_cm() - sonar7.ping_cm()) > 1.5) {
-    if (sonar3.ping_cm() > sonar8.ping_cm() || sonar4.ping_cm() > sonar7.ping_cm()) {
-      Serial.println("CC");
-      delay(1000);
-      Serial.println("B");
-      delay(500);
-      Serial.println("C");
-      delay(1000);
-      Serial.println("F");
-      delay(500);
-      Serial.println("S");
-    }
-    else if (sonar3.ping_cm() < sonar8.ping_cm() || sonar4.ping_cm() < sonar7.ping_cm()) {
+//  if (abs(sonar3.ping_cm() - sonar8.ping_cm()) > 1.5 || abs(sonar4.ping_cm() - sonar7.ping_cm()) > 1.5) {
+      
+      if (sonar3.ping_cm() > 4 || sonar4.ping_cm() > 4) {
+//    if (sonar3.ping_cm() > sonar8.ping_cm() || sonar4.ping_cm() > sonar7.ping_cm()) {
       Serial.println("C");
       delay(1000);
       Serial.println("B");
-      delay(500);
+      delay(100);
       Serial.println("CC");
       delay(1000);
       Serial.println("F");
-      delay(500);
-      Serial.println("S");
+      delay(100);
+//      Serial.println("S");
     }
+//    else if (sonar3.ping_cm() < sonar8.ping_cm() || sonar4.ping_cm() < sonar7.ping_cm()) {
+      else if (sonar3.ping_cm() < 3 || sonar4.ping_cm() < 3) {
+      Serial.println("CC");
+      delay(1000);
+      Serial.println("B");
+      delay(100);
+      Serial.println("C");
+      delay(1000);
+      Serial.println("F");
+      delay(100);
+//      Serial.println("S");
+    }
+//  }
+}
+
+void centerAfterTurn(int dir) {
+  if (dir == 'F') {
+    Serial.println("C");
+    delay(1000);
+    Serial.println("F");
+    delay(100);
+    Serial.println("CC");
+    delay(1000);
+    Serial.println("B");
+    delay(100);
+  }
+  else {
+    Serial.println("CC");
+    delay(1000);
+    Serial.println("F");
+    delay(100);
+    Serial.println("C");
+    delay(1000);
+    Serial.println("B");
+    delay(100);
   }
 }
 
@@ -218,18 +246,21 @@ void loop() {
     //    Serial.println(dir);
     checkRotation();
     
-    if (dir == 'F') {
+    if (dir == 'F' && pos != 5) {
       centerForwards();
     }
-    else if (dir == 'B') {
+    else if (dir == 'B' && pos != 3) {
       centerBackwards();
+    }
+    else {
+      centerAfterTurn(dir);
     }
     
     checkRotation();
     
     if (pos == '1') {
       if (dir == 'B') {
-        while (sonar4.ping_cm() > 10 && sonar5.ping_cm() > 10) {
+        while (sonar4.ping_cm() > 10 || sonar5.ping_cm() > 10) {
           Serial.println("B");
           delay(50);
         }
@@ -237,13 +268,13 @@ void loop() {
     }
     else if (pos == '2') {
       if (dir == 'F') {
-        while (sonar1.ping_cm() > 13 && sonar2.ping_cm() > 13) {
+        while (sonar1.ping_cm() > 13 || sonar2.ping_cm() > 13) {
           Serial.println("F");
           delay(50);
         }
       }
       else {
-        while (sonar1.ping_cm() <= 13 && sonar2.ping_cm() <= 13) {
+        while (sonar1.ping_cm() <= 13 || sonar2.ping_cm() <= 13) {
           Serial.println("B");
           delay(50);
         }
@@ -251,13 +282,13 @@ void loop() {
     }
     else if (pos == '3') {
       if (dir == 'F') {
-        while (sonar1.ping_cm() > 12 && sonar2.ping_cm() > 12) {
+        while (sonar1.ping_cm() > 12 || sonar2.ping_cm() > 12) {
           Serial.println("F");
           delay(50);
         }
       }
       else {
-        while (sonar1.ping_cm() > 12 && sonar2.ping_cm() > 12) {
+        while (sonar1.ping_cm() > 12 || sonar2.ping_cm() > 12) {
           Serial.println("F");
           delay(50);
         }
@@ -266,23 +297,23 @@ void loop() {
     else if (pos == '4') {
       int turn_signals = 0;
       if (dir == 'F') {
-        while (sonar1.ping_cm() <= 17 && sonar2.ping_cm() <= 17) {
+        while (sonar1.ping_cm() <= 17 || sonar2.ping_cm() <= 17) {
           Serial.println("B");
           delay(50);
         }
         Serial.println("C");
-        delay(4000);
+        delay(6000);
         while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 1) {
           // wait for robot to turn
         }
       }
       else {
-        while (sonar5.ping_cm() <= 14 && sonar6.ping_cm() <= 14) {
-          Serial.println("B");
+        while (sonar5.ping_cm() <= 14 || sonar6.ping_cm() <= 14) {
+          Serial.println("F");
           delay(50);
         }
         Serial.println("CC");
-        delay(4000);
+        delay(6000);
         while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 1) {
           // wait for robot to turn
         }
@@ -290,13 +321,13 @@ void loop() {
     }
     else if (pos == '5') {
       if (dir == 'F') {
-        while (sonar5.ping_cm() > 3 && sonar6.ping_cm() > 3) {
+        while (sonar5.ping_cm() > 3 || sonar6.ping_cm() > 3) {
           Serial.println("B");
           delay(50);
         }
       }
       else {
-        while (sonar5.ping_cm() > 3 && sonar6.ping_cm() > 3) {
+        while (sonar5.ping_cm() > 3 || sonar6.ping_cm() > 3) {
           Serial.println("B");
           delay(50);
         }
@@ -304,7 +335,7 @@ void loop() {
     }
     else if (pos == '6') {
       if (dir == 'F') {
-        while (sonar5.ping_cm() <= 58 && sonar6.ping_cm() <= 58) {
+        while (sonar5.ping_cm() <= 58 || sonar6.ping_cm() <= 58) {
           Serial.println("F");
           delay(50);
         }
@@ -318,7 +349,7 @@ void loop() {
         // do nothing
       }
       else {
-        while (sonar5.ping_cm() > 58 && sonar6.ping_cm() > 58) {
+        while (sonar5.ping_cm() > 58 || sonar6.ping_cm() > 58) {
           Serial.println("B");
           delay(50);
         }
@@ -326,13 +357,13 @@ void loop() {
     }
     else if (pos == '8') {
       if (dir == 'F') {
-        while (sonar1.ping_cm() > 33 && sonar2.ping_cm() > 33) {
+        while (sonar5.ping_cm() <= 142 || sonar6.ping_cm() <= 142) {
           Serial.println("F");
           delay(50);
         }
       }
       else {
-        while (sonar1.ping_cm() <= 33 && sonar2.ping_cm() <= 33) {
+        while (sonar1.ping_cm() <= 33 || sonar2.ping_cm() <= 33) {
           Serial.println("B");
           delay(50);
         }
@@ -340,7 +371,7 @@ void loop() {
     }
     else if (pos == '9') {
       if (dir == 'F') {
-        while (sonar1.ping_cm() > 24 && sonar2.ping_cm() > 24) {
+        while (sonar1.ping_cm() > 24 || sonar2.ping_cm() > 24) {
           Serial.println("F");
           delay(50);
         }
