@@ -3,7 +3,7 @@ import threading
 import os
 import time
 import steppermotortest
-import arm
+# import arm
 
 global time_expired
 global robot_activeS
@@ -120,6 +120,7 @@ except:
 #    arm.startPosition()
 #    arm.deinitialize()
    steppermotortest.turnOffMotors()
+   integration.stopCamera()
    print("\nCtrl-C pressed. Stopping PIGPIO and exiting...")
    print('motors off')
 

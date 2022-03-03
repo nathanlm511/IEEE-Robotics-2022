@@ -360,4 +360,9 @@ def main(time_expired, robot_active):
 #     sleep(1)
 #     arm.startPosition()
 #     arm.deinitialize()
+    camera.stopCameraThread()
     steppermotortest.turnOffMotors()
+
+
+def stopCamera():
+    camera.stopCameraThread()
