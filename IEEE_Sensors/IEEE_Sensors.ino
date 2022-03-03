@@ -222,6 +222,29 @@ void centerAfterTurn(int dir) {
   }
 }
 
+void movingCenter(int dir) {
+  if (sonar3.ping_cm() < 3 || sonar4.ping_cm() < 3) {
+    if (dir == 'F') {
+      Serial.println("C");
+      delay(500);
+    }
+    else {
+      Serial.println("CC");
+      delay(500);
+    }
+  }
+  if (sonar7.ping_cm() < 3 || sonar8.ping_cm() < 3) {
+    if (dir == 'F') {
+      Serial.println("CC");
+      delay(500);
+    }
+    else {
+      Serial.println("C");
+      delay(500);
+    }
+  }
+}
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -246,7 +269,7 @@ void loop() {
     //    Serial.println(dir);
     checkRotation();
     
-    if (dir == 'F' && pos != 5) {
+    if (dir == 'F' && pos != 5 && pos != 2) {
       centerForwards();
     }
     else if (dir == 'B' && pos != 3) {
@@ -302,7 +325,11 @@ void loop() {
           delay(50);
         }
         Serial.println("C");
-        delay(6000);
+        delay(3000);
+        Serial.println("F");
+        delay(400);
+        Serial.println("C");
+        delay(3000);
         while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 1) {
           // wait for robot to turn
         }
@@ -313,7 +340,11 @@ void loop() {
           delay(50);
         }
         Serial.println("CC");
-        delay(6000);
+        delay(3000);
+        Serial.println("B");
+        delay(400);
+        Serial.println("CC");
+        delay(3000);
         while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 1) {
           // wait for robot to turn
         }
