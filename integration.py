@@ -47,6 +47,7 @@ class Startup():
 
     def execute(self, robot):
         # print("Start")
+        arm.startPosition()
         robot.state = nav
 
 # arm
@@ -122,12 +123,12 @@ class FireCatapult():
         # print("Fire catapult")
         # arm.launchBracelets()
         # swing catapult back to the left??
+        if not robot.net_on_right:
+            arm.captapultSwingRight()
+        
         if robot.arm_on_right:
             arm.lookLeft()
             robot.arm_on_right = False
-
-        if not robot.net_on_right:
-            arm.captapultSwingRight()
 
         robot.catapult_loaded = False
         robot.state = nav
@@ -160,6 +161,7 @@ class DetectNet():
             # move to next cup/net location?
             if robot.arm_on_right:
                 arm.lookLeft()
+                robot.arm_on_right = False
             robot.state = nav
 
 # camera/navigation
