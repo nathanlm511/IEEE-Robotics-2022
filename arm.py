@@ -79,11 +79,18 @@ def straightUp():
     servoTest(0, 0, 0)
     
 def lookLeft():
-    servoTest(4, 20, 125)
+    servoTest(4, 20, 105)
+    servoTest(3, 80, 40)
+    servoTest(2, 85, 135)
+    servoTest(1, 90, 180)
+    servoTest(0, 0, 0)  
+
+def lookRight():
+    servoTest(4, 20, 0)
     servoTest(3, 80, 30)
     servoTest(2, 85, 135)
     servoTest(1, 90, 180)
-    servoTest(0, 0, 0)    
+    servoTest(0, 0, 0)
 
 def lineUpBracelets():
     servoTest(4, 125, 125)

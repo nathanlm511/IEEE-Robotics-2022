@@ -291,7 +291,7 @@ class Navigation():
                 # navigation.reverseTree2()
                 navigation.navigate(robot)
             if robot.next_tree < 2:
-                robot.state = align_with_tree
+                robot.state = grab_beads
                 robot.next_tree += 1
         elif robot.next_location == 9:
             if robot.forward:
