@@ -139,6 +139,9 @@ input_std = 127.5
 videostream = VideoStream(resolution=(imW,imH),framerate=30).start()
 # time.sleep(1)
 
+def stopVideoThread():
+    videostream.stop()
+
 def isNet():
 
     # Grab frame from video stream

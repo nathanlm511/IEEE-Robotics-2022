@@ -9,3 +9,6 @@ def treeAlign():
 def netAlign():
     return "Good"
 
+def stopCameraThread():
+    camera_helper.stopVideoThread()
+
