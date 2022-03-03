@@ -117,11 +117,11 @@ net_floating_model = (net_input_details[0]['dtype'] == np.float32)
 # Load the Tensorflow Lite model.
 # If using Edge TPU, use special load_delegate argument
 if use_TPU:
-    bracelet_interpreter = Interpreter(model_path=PATH_TO_NET_CKPT,
+    bracelet_interpreter = Interpreter(model_path=PATH_TO_BRACELET_CKPT,
                               experimental_delegates=[load_delegate('libedgetpu.so.1.0')])
     print(PATH_TO_BRACELET_CKPT)
 else:
-    bracelet_interpreter = Interpreter(model_path=PATH_TO_NET_CKPT)
+    bracelet_interpreter = Interpreter(model_path=PATH_TO_BRACELET_CKPT)
 
 bracelet_interpreter.allocate_tensors()
 
@@ -213,10 +213,10 @@ def directionOfBracelet():
             ycenter = ymin+(int(round((ymax - ymin) / 2)))
 
             # TODO: output differently depending on result THIS DOES NOT WORK RIGHT NOW
-            if (xcenter > 145):
-                return "L"
-            if (xcenter < 155):
+            if (xcenter < 145):
                 return "R"
+            if (xcenter > 155):
+                return "L"
             return "G"
-    # NET NOT DETECTED
+    # BRACELET NOT DETECTED
     return "N"

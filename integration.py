@@ -66,10 +66,10 @@ class GrabBeads():
             while direction != "G":
                 print(direction)
                 if direction == "L":
-                    stepperMotorTest.forwardsSmall()
+                    steppermotortest.forwardsSmall()
                 if direction == "R":
-                    stepperMotorTest.backwardsSmall()
-                time.sleep(0.25)
+                    steppermotortest.backwardsSmall()
+                sleep(0.25)
                 direction = camera.treeAlign()
             print("Camera aligned")
             
@@ -80,10 +80,10 @@ class GrabBeads():
             while direction != "G":
                 print(direction)
                 if direction == "L":
-                    stepperMotorTest.forwardsSmall()
+                    steppermotortest.forwardsSmall()
                 if direction == "R":
-                    stepperMotorTest.backwardsSmall()
-                time.sleep(0.25)
+                    steppermotortest.backwardsSmall()
+                sleep(0.25)
                 direction = camera.treeAlign()
             print("Camera aligned")
             
