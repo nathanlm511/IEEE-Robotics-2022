@@ -246,6 +246,11 @@ def retrieveBracelets2PostCam():
     lookLeft()
     time.sleep(1)
 
+# turn off the servos
+def servosOff():
+    for i in range(8):
+        pca.channels[i].duty_cycle = 0
+
 # deinitialize the i2c PCA9685
 def deinitialize():
     pca.deinit()
