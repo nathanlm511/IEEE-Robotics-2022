@@ -325,11 +325,15 @@ void loop() {
           delay(50);
         }
         Serial.println("C");
-        delay(3000);
+        delay(2000);
         Serial.println("F");
-        delay(400);
+        delay(450);
         Serial.println("C");
-        delay(3000);
+        delay(2000);
+        Serial.println("F");
+        delay(450);
+        Serial.println("C");
+        delay(2000);
         while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 1) {
           // wait for robot to turn
         }
@@ -340,11 +344,15 @@ void loop() {
           delay(50);
         }
         Serial.println("CC");
-        delay(3000);
+        delay(2000);
         Serial.println("B");
-        delay(400);
+        delay(450);
         Serial.println("CC");
-        delay(3000);
+        delay(2000);
+        Serial.println("B");
+        delay(450);
+        Serial.println("CC");
+        delay(2000);
         while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 1) {
           // wait for robot to turn
         }
@@ -396,13 +404,13 @@ void loop() {
           Serial.println("F");
           delay(50);
         }
-        while (sonar1.ping_cm() > 33 || sonar2.ping_cm() > 33) {
+        while (sonar1.ping_cm() > 33 || sonar2.ping_cm() > 31) {
           Serial.println("F");
           delay(50);
         }
       }
       else {
-        while (sonar1.ping_cm() <= 33 || sonar2.ping_cm() <= 33) {
+        while (sonar1.ping_cm() <= 33 || sonar2.ping_cm() <= 31) {
           Serial.println("B");
           delay(50);
         }
