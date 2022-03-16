@@ -349,22 +349,36 @@ class RobotFSM():
         self.forward = True
         self.state = 0
 
-def main(time_expired, robot_active):
+def main():
     robot = RobotFSM()
     
-    while not time_expired:
+    while True:
         robot.states[robot.state].execute(robot)
         if robot.state == return_to_start:
             print("Success!")
-            robot_active = False
             break
+
 #     arm.captapultSwingRight()
 #     sleep(1)
 #     arm.startPosition()
 #     arm.deinitialize()
+
     camera.stopCameraThread()
     steppermotortest.turnOffMotors()
+    arm.servosOff()
 
 
 def stopCamera():
     camera.stopCameraThread()
+
+
+# try:
+#    OLED()
+#    main()
+
+# except:
+#     steppermotortest.turnOffMotors()
+#     camera.stopCameraThread()
+#     arm.servosOff()
+#     print("\nCtrl-C pressed. Stopping PIGPIO and exiting...")
+#     print('motors off')

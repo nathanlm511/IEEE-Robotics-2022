@@ -1,12 +1,10 @@
 import integration
-import threading
 import os
 import time
 import steppermotortest
+import arm
 # import arm
 
-global time_expired
-global robot_activeS
 start_time = time.time()
 
 def OLED():
@@ -69,58 +67,14 @@ def OLED():
    disp.image(image)
    disp.display()
 
-   while not time_expired:
-      # wait until time expires
-      pass
-
-
-class OLEDThread(threading.Thread):
-   def __init__(self, name):
-      threading.Thread.__init__(self)
-      self.name = name
-
-   def run(self):
-      print("Starting " + self.name)
-      # OLED()
-
-class IntegrationThread(threading.Thread):
-   def __init__(self, name):
-      threading.Thread.__init__(self)
-      self.name = name
-
-   def run(self):
-      print("Starting " + self.name)
-      integration.main(time_expired, robot_active)
-      print("Exiting "+ self.name)
-
-robot_active=True
-time_expired = False
-
-# thread1 = IntegrationThread("integration thread")
-# thread2 = OLEDThread("OLED thread")
-
-# thread1.start()
-# thread2.start()
-
-# The timer probably wont work***********************
-# currently set to 10 seconds for testing purposes
 try:
-   integration.main(time_expired, robot_active)
-   while time.time() - start_time < 10 and robot_active:
-      pass
-
-   if robot_active and time.time() - start_time >= 10:
-      time_expired = True
-      print("Time expired!")
+   OLED()
+   integration.main()
 
 except:
-   time_expired = True
-#    arm.captapultSwingRight()
-#    time.sleep(1)
-#    arm.startPosition()
-#    arm.deinitialize()
    steppermotortest.turnOffMotors()
    integration.stopCamera()
+   arm.servosOff()
    print("\nCtrl-C pressed. Stopping PIGPIO and exiting...")
    print('motors off')
 
