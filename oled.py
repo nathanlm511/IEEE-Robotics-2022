@@ -7,7 +7,8 @@ from PIL import Image
 #disp = Adafruit_SSD1306.SSD1306_128_32(rst=None)
 
 # 128x64 display with hardware I2C:
-disp = Adafruit_SSD1306.SSD1306_128_64(rst=None)
+#disp = Adafruit_SSD1306.SSD1306_128_64(rst=None, i2c, addr=0x3D)
+disp = Adafruit_SSD1306.SSD1306_I2C(128, 64, rst=None, i2c, addr=0x3D)
 
 # Initialize library.
 disp.begin()
