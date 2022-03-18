@@ -86,12 +86,26 @@ def lookLeft():
     servoTest(1, 90, 180)
     servoTest(0, 0, 0)  
 
+def lookLeftInstant():
+    servos[4].angle = 105
+    servos[3].angle = 40
+    servos[2].angle = 135
+    servos[1].angle = 180
+    servos[0].angle = 0
+
 def lookRight():
     servoTest(4, 20, 0)
     servoTest(3, 80, 30)
     servoTest(2, 85, 135)
     servoTest(1, 90, 180)
     servoTest(0, 0, 0)
+
+def lookRightInstant():
+    servos[4].angle = 0
+    servos[3].angle = 30
+    servos[2].angle = 135
+    servos[1].angle = 180
+    servos[0].angle = 0
 
 def lineUpBracelets():
     servoTest(4, 125, 125)
@@ -194,12 +208,13 @@ def launchBracelets():
 
 # Arm sequence to retreive bracelets
 def retrieveBraceletsPreCam():
-    startPosition()
-    time.sleep(1)
+    # startPosition()
+    # time.sleep(1)
     straightUp()
-    time.sleep(1)
-    lookLeft()
-    time.sleep(1)
+    time.sleep(0.5)
+    # lookLeft()
+    lookLeftInstant()
+    time.sleep(0.5)
     lineUpBracelets()
     time.sleep(1)
     
@@ -226,7 +241,8 @@ def retrieveBraceletsPostCam():
     time.sleep(1)
     
 def retrieveBracelets2PreCam():    
-    lookLeft()
+    # lookLeft()
+    lookLeftInstant()
     time.sleep(1)
     lineUpBracelets()
     time.sleep(1)
