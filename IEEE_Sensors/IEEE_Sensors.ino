@@ -327,11 +327,11 @@ void loop() {
         Serial.println("C");
         delay(2000);
         Serial.println("F");
-        delay(450);
+        delay(250);
         Serial.println("C");
         delay(2000);
         Serial.println("F");
-        delay(450);
+        delay(250);
         Serial.println("C");
         delay(2000);
         while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 1) {
@@ -346,11 +346,11 @@ void loop() {
         Serial.println("CC");
         delay(2000);
         Serial.println("B");
-        delay(450);
+        delay(250);
         Serial.println("CC");
         delay(2000);
         Serial.println("B");
-        delay(450);
+        delay(250);
         Serial.println("CC");
         delay(2000);
         while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 1) {
