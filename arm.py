@@ -7,7 +7,7 @@ from adafruit_pca9685 import PCA9685
 i2c = busio.I2C(SCL, SDA)
 
 #pca = PCA9685(i2c)
-pca = PCA9685(address=0x40)
+pca = PCA9685(i2c)
 
 pca.frequency = 50
 
@@ -20,7 +20,7 @@ servos.append(servo.Servo(pca.channels[3], min_pulse = 500, max_pulse = 2500))
 servos.append(servo.Servo(pca.channels[4], min_pulse = 500, max_pulse = 2500))
 
 # settings for MG955S servos
-baseServo = servo.Servo(pca.channels[5], min_pulse = 500, max_pulse = 2500)
+baseServo = servo.Servo(pca.channels[8], min_pulse = 500, max_pulse = 2500)
 armServo = servo.Servo(pca.channels[6], min_pulse = 500, max_pulse = 2500)
 
 # settings for SG90 servos
@@ -76,7 +76,7 @@ def straightUp():
     servoTest(4, 20, 20)
     servoTest(3, 135, 80)
     servoTest(2, 80, 85)
-    servoTest(1, 165, 105)
+    servoTest(1, 165, 165)
     servoTest(0, 0, 0)
     
 def lookLeft():
@@ -189,7 +189,7 @@ def catapultSwingLeft():
     time.sleep(1)
 
 # swing catapult to launch right
-def captapultSwingRight():
+def catapultSwingRight():
     baseServo.angle = 180
     time.sleep(1)
 

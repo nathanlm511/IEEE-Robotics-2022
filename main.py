@@ -3,14 +3,14 @@ import os
 import time
 import steppermotortest
 import arm
-import oled
+#import oled
 # import arm
 
 start_time = time.time()
 
 
 try:
-   oled.dispVT()
+   #oled.dispVT()
    integration.main()
 
 except:

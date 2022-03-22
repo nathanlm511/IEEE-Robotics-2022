@@ -122,9 +122,9 @@ class FireCatapult():
 
         # print("Fire catapult")
         # arm.launchBracelets()
-        # swing catapult back to the left??
+        # swing catapult back to the left
         if not robot.net_on_right:
-            arm.captapultSwingRight()
+            arm.catapultSwingRight()
         
         if robot.arm_on_right:
             # arm.lookLeft()

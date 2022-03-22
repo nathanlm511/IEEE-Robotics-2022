@@ -64,10 +64,10 @@ def forwards():
 	duty_cycle = 500000
 	pi.hardware_PWM(STEP1, frequency, duty_cycle)
 
-	pi.write(DIR1, 0)
+	pi.write(DIR1, 1)
 	pi.write(DIR2, 1)
 	pi.write(DIR3, 0)
-	pi.write(DIR4, 1)
+	pi.write(DIR4, 0)
 
 def stopMoving():
 	frequency = 0
@@ -104,10 +104,10 @@ def backwards():
 	duty_cycle = 500000
 	pi.hardware_PWM(STEP1, frequency, duty_cycle)
 
-	pi.write(DIR1, 1)
+	pi.write(DIR1, 0)
 	pi.write(DIR2, 0)
 	pi.write(DIR3, 1)
-	pi.write(DIR4, 0)
+	pi.write(DIR4, 1)
 
 def backwardsSmall():
     backwards()
