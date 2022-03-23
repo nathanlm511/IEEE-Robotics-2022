@@ -73,8 +73,9 @@ class GrabBeads():
                 sleep(0.25)
                 direction = camera.treeAlign()
             print("Camera aligned")
-            
+            steppermotortest.forwardsSmall()
             arm.retrieveBraceletsPostCam()
+
         elif robot.next_tree == 2:
             arm.retrieveBracelets2PreCam()
             direction = camera.treeAlign()
@@ -87,8 +88,9 @@ class GrabBeads():
                 sleep(0.25)
                 direction = camera.treeAlign()
             print("Camera aligned")
-            
+            steppermotortest.forwardsSmall()
             arm.retrieveBracelets2PostCam()
+            
         robot.catapult_loaded = True
         # print("Grab Beads")
         robot.state = nav
