@@ -3,6 +3,7 @@ import integration
 import steppermotortest
 import arm
 import pigpio
+import signal
 # import oled
 # import os
 # import time
@@ -16,11 +17,11 @@ pi.set_mode(START_GPIO, pigpio.INPUT)
 pi.set_pull_up_down(START_GPIO, pigpio.PUD_UP)
 
 def stop_hander():
-   pass
+   signal.signal(signal.SIGINT)
 
 
 # declare handler for estop
-
+cb1 = pi.callback(STOP_GPIO, pigpio.EITHER_EDGE, stop_hander)
 
 try:
    arm.startPosition()
