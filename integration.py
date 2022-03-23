@@ -47,7 +47,7 @@ class Startup():
 
     def execute(self, robot):
         # print("Start")
-        arm.startPosition()
+        # arm.startPosition()
         robot.state = nav
 
 # arm
