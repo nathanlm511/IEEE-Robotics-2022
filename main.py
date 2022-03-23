@@ -4,6 +4,7 @@ import steppermotortest
 import arm
 import pigpio
 import signal
+import sys
 # import oled
 # import os
 # import time
@@ -23,6 +24,7 @@ def stop_hander():
    arm.servosOff()
    print("\nCtrl-C pressed. Stopping PIGPIO and exiting...")
    print('motors off')
+   sys.exit()
 
 
 # declare handler for estop
