@@ -2,6 +2,10 @@ import os
 import time
 import Adafruit_SSD1306
 from PIL import Image
+from board import SCL, SDA
+import busio
+
+i2c = busio.I2C(board.SCL, board.SDA)
 
 # 128x32 display with hardware I2C:
 #disp = Adafruit_SSD1306.SSD1306_128_32(rst=None)
