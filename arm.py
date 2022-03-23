@@ -1,4 +1,4 @@
-import time
+from time import sleep
 from board import SCL, SDA
 import busio
 from adafruit_motor import servo
@@ -30,7 +30,7 @@ holdServo = servo.Servo(pca.channels[7], min_pulse = 500, max_pulse = 2500)
 armServo.angle = 135
 holdServo.angle = 0
 baseServo.angle = 180
-time.sleep(1)
+sleep(1)
 
 # moves a servo from a start angle to a stop angle
 def servoTest(servoNum, startAngle, stopAngle):
@@ -45,7 +45,7 @@ def servoTest(servoNum, startAngle, stopAngle):
         for i in range(numSteps):
             newAngle = start + (i * 5)
             servos[servoNum].angle = newAngle
-            time.sleep(0.06)
+            sleep(0.06)
             print(newAngle)
         if newAngle != stop:
             servos[servoNum].angle = stop
@@ -54,7 +54,7 @@ def servoTest(servoNum, startAngle, stopAngle):
         for i in range(numSteps):
             newAngle = start - (i * 5)
             servos[servoNum].angle = newAngle
-            time.sleep(0.06)
+            sleep(0.06)
             print(newAngle)
         if newAngle != stop:
             servos[servoNum].angle = stop
@@ -65,7 +65,7 @@ def startPosition():
 #     servos[3].angle = 120
 #     servos[2].angle = 120
     servoTest(4, 25, 15)
-    time.sleep(1)
+    sleep(1)
     servoTest(3, 110, 120)
     servoTest(2, 100, 80)
     servoTest(1, 110, 165)
@@ -118,24 +118,22 @@ def intoBracelets():
     servoTest(0, 0, 0)   
     servoTest(2, 100, 80)
     servoTest(3, 60, 65)
-    time.sleep(0.5)
+    sleep(0.5)
     servoTest(1, 180, 175)
-    time.sleep(0.5)
+    sleep(0.5)
     servoTest(3, 65, 75)
-    time.sleep(0.5)
+    sleep(0.5)
     servoTest(1, 175, 170)
-    time.sleep(0.5)
+    sleep(0.5)
     servoTest(3, 75, 80)
-    time.sleep(0.5)
+    sleep(0.5)
     servoTest(1, 170, 165)
-    time.sleep(0.5)
+    sleep(0.5)
     servoTest(3, 80, 85)
-    time.sleep(0.5)
+    sleep(0.5)
     servoTest(1, 165, 165)
-    time.sleep(0.5)
+    sleep(0.5)
     servoTest(3, 85, 90)
-    time.sleep(0.5)
-    #servoTest(1, 165, 150)
     
 def grabBracelets():
     servoTest(4, 125, 115)
@@ -154,114 +152,83 @@ def removeBracelets():
 def rotateToCatapult():
     servoTest(4, 115, 50)
     servoTest(2, 80, 80)
-
-# def dropToCatapultStage1():
-#     #servoTest(4, 60, 60)
-#     servoTest(2, 80, 65)
-#     servoTest(3, 75, 90)
-#     servoTest(1, 150, 120)
-# 
-# def dropToCatapultStage2():
-#     #servoTest(4, 60, 60)
-#     servoTest(2, 65, 125)
  
 def dropToCatapult():
-    #servoTest(4, 60, 60)
     servoTest(2, 80, 160)
-    #servoTest(3, 90, 70)
-
-# def dropToCatapultStage4():
-#     #servoTest(4, 60, 60)
-#     #servoTest(2, 65, 160)
-#     #servoTest(3, 90, 70)
-#     servoTest(1, 120, 145)
     
-
 # drop braclets into the catapult
 def releaseBracelets():
     servoTest(0, 100,0)
-    time.sleep(1)
+    sleep(1)
     servoTest(2, 160, 80)
 
 # swing catapult to launch left
 def catapultSwingLeft():
     baseServo.angle = 0
-    time.sleep(1)
+    sleep(1)
 
 # swing catapult to launch right
 def catapultSwingRight():
     baseServo.angle = 180
-    time.sleep(1)
+    sleep(1)
 
 # launch bracelets into the net   
 def launchBracelets():
     holdServo.angle = 0
-    time.sleep(1)
+    sleep(1)
     armServo.angle = 20
-    time.sleep(1.5)
+    sleep(1.5)
     holdServo.angle = 90
     print("Bracelets have launched...returning to rest state")
-    time.sleep(1)
+    sleep(1)
     armServo.angle = 135
-    time.sleep(5)
+    sleep(5)
     holdServo.angle = 0
 
 # Arm sequence to retreive bracelets
 def retrieveBraceletsPreCam():
-    # startPosition()
-    # time.sleep(1)
     straightUp()
-    time.sleep(0.5)
-    # lookLeft()
+    sleep(0.5)
     lookLeftInstant()
-    time.sleep(0.5)
+    sleep(0.5)
     lineUpBracelets()
-    time.sleep(1)
+    sleep(0.5)
     
 def retrieveBraceletsPostCam():
     intoBracelets()
-    time.sleep(1)
+    sleep(0.5)
     grabBracelets()
-    time.sleep(1)
+    sleep(0.5)
     removeBracelets()
-    time.sleep(1)
+    sleep(0.5)
     rotateToCatapult()
-    time.sleep(1)
+    sleep(0.5)
     dropToCatapult()
-#     time.sleep(1)
-#     dropToCatapultStage2()
-#     time.sleep(1)
-#     dropToCatapultStage3()
-#     time.sleep(1)
-#     dropToCatapultStage4()
-    time.sleep(1)
+    sleep(0.5)
     releaseBracelets()
-    time.sleep(1)
+    sleep(0.5)
     lookLeft()
-    time.sleep(1)
     
-def retrieveBracelets2PreCam():    
-    # lookLeft()
+def retrieveBracelets2PreCam():
     lookLeftInstant()
-    time.sleep(1)
+    sleep(0.5)
     lineUpBracelets()
-    time.sleep(1)
+    sleep(0.5)
     
 def retrieveBracelets2PostCam():
     intoBracelets()
-    time.sleep(1)
+    sleep(1)
     grabBracelets()
-    time.sleep(1)
+    sleep(1)
     removeBracelets()
-    time.sleep(1)
+    sleep(1)
     rotateToCatapult()
-    time.sleep(1)
+    sleep(1)
     dropToCatapult()
-    time.sleep(1)
+    sleep(1)
     releaseBracelets()
-    time.sleep(1)
+    sleep(1)
     lookLeft()
-    time.sleep(1)
 
 # turn off the servos
 def servosOff():
