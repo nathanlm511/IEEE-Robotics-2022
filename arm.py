@@ -46,19 +46,19 @@ def servoTest(servoNum, startAngle, stopAngle):
             newAngle = start + (i * 5)
             servos[servoNum].angle = newAngle
             sleep(0.06)
-            print(newAngle)
+            #print(newAngle)
         if newAngle != stop:
             servos[servoNum].angle = stop
-            print(stop)
+            #print(stop)
     elif start > stop:
         for i in range(numSteps):
             newAngle = start - (i * 5)
             servos[servoNum].angle = newAngle
             sleep(0.06)
-            print(newAngle)
+            #print(newAngle)
         if newAngle != stop:
             servos[servoNum].angle = stop
-            print(stop)
+            #print(stop)
 
 def startPosition():
 #     servos[4].angle = 15
@@ -101,8 +101,8 @@ def lookRight():
     servoTest(0, 0, 0)
 
 def lookRightInstant():
-    servos[4].angle = 0
-    servos[3].angle = 30
+    servos[4].angle = 10
+    servos[3].angle = 40
     servos[2].angle = 135
     servos[1].angle = 180
     servos[0].angle = 0

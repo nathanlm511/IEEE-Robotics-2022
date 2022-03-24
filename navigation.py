@@ -334,6 +334,10 @@ def navigate(robot):
         stringToSend += '8'
     elif robot.next_location == 9:
         stringToSend += '9'
+    elif robot.next_location == 10:
+        stringToSend += 'A'
+    elif robot.next_location == 11:
+        stringToSend += 'B'
 
     if robot.forward:
         stringToSend += 'F'
