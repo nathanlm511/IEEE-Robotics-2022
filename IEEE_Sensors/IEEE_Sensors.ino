@@ -4,29 +4,29 @@
 #include "NewPing.h"
 
 // Hook up HC-SR04 with Trig to Arduino Pin 9, Echo to Arduino pin 10
-#define TRIGGER_PIN_1 23
+#define TRIGGER_PIN_1 24
 #define ECHO_PIN_1 22
 
-#define TRIGGER_PIN_2 24
-#define ECHO_PIN_2 25
+#define TRIGGER_PIN_2 27
+#define ECHO_PIN_2 29
 
-#define TRIGGER_PIN_3 27
-#define ECHO_PIN_3 26
+#define TRIGGER_PIN_3 23
+#define ECHO_PIN_3 25
 
-#define TRIGGER_PIN_4 29
-#define ECHO_PIN_4 28
+#define TRIGGER_PIN_4 33
+#define ECHO_PIN_4 31
 
-#define TRIGGER_PIN_5 31
-#define ECHO_PIN_5 30
+#define TRIGGER_PIN_5 37
+#define ECHO_PIN_5 35
 
-#define TRIGGER_PIN_6 33
-#define ECHO_PIN_6 32
+#define TRIGGER_PIN_6 34
+#define ECHO_PIN_6 36
 
-#define TRIGGER_PIN_7 35
-#define ECHO_PIN_7 34
+#define TRIGGER_PIN_7 30
+#define ECHO_PIN_7 32
 
-#define TRIGGER_PIN_8 37
-#define ECHO_PIN_8 36
+#define TRIGGER_PIN_8 28
+#define ECHO_PIN_8 26
 
 // Maximum distance we want to ping for (in centimeters).
 #define MAX_DISTANCE 400
@@ -104,7 +104,7 @@ double calculateRotationalError(double distSensor1, double distSensor2, double d
   return 0.0;
 }
 /*
-float* ping_sensors() {
+  float* ping_sensors() {
   distance1 = sonar1.ping_cm();
   distance2 = sonar2.ping_cm();
   distance3 = sonar3.ping_cm();
@@ -124,7 +124,7 @@ float* ping_sensors() {
                        };
 
   return distances;
-}
+  }
 */
 
 void checkRotation() {
@@ -136,14 +136,14 @@ void checkRotation() {
       Serial.println("C");
     }
   }
-//  Serial.println("S");
+  //  Serial.println("S");
   delay(50);
 }
 
 void centerForwards() {
   if (abs(sonar3.ping_cm() - sonar8.ping_cm()) > 1.5 || abs(sonar4.ping_cm() - sonar7.ping_cm()) > 1.5) {
     if (sonar3.ping_cm() > sonar8.ping_cm() || sonar4.ping_cm() > sonar7.ping_cm()) {
-//      if (sonar3.ping_cm() > 4 || sonar4.ping_cm() > 4) {
+      //      if (sonar3.ping_cm() > 4 || sonar4.ping_cm() > 4) {
       Serial.println("CC");
       delay(1000);
       Serial.println("F");
@@ -152,10 +152,10 @@ void centerForwards() {
       delay(1000);
       Serial.println("B");
       delay(100);
-//      Serial.println("S");
+      //      Serial.println("S");
     }
     else if (sonar3.ping_cm() < sonar8.ping_cm() || sonar4.ping_cm() < sonar7.ping_cm()) {
-//    else if (sonar3.ping_cm() < 3 || sonar4.ping_cm() < 3) {
+      //    else if (sonar3.ping_cm() < 3 || sonar4.ping_cm() < 3) {
       Serial.println("C");
       delay(1000);
       Serial.println("F");
@@ -164,15 +164,15 @@ void centerForwards() {
       delay(1000);
       Serial.println("B");
       delay(100);
-//      Serial.println("S");
+      //      Serial.println("S");
     }
   }
 }
 
 void centerBackwards() {
   if (abs(sonar3.ping_cm() - sonar8.ping_cm()) > 1.5 || abs(sonar4.ping_cm() - sonar7.ping_cm()) > 1.5) {
-      
-//      if (sonar3.ping_cm() > 4 || sonar4.ping_cm() > 4) {
+
+    //      if (sonar3.ping_cm() > 4 || sonar4.ping_cm() > 4) {
     if (sonar3.ping_cm() > sonar8.ping_cm() || sonar4.ping_cm() > sonar7.ping_cm()) {
       Serial.println("C");
       delay(1000);
@@ -182,10 +182,10 @@ void centerBackwards() {
       delay(1000);
       Serial.println("F");
       delay(100);
-//      Serial.println("S");
+      //      Serial.println("S");
     }
     else if (sonar3.ping_cm() < sonar8.ping_cm() || sonar4.ping_cm() < sonar7.ping_cm()) {
-//      else if (sonar3.ping_cm() < 3 || sonar4.ping_cm() < 3) {
+      //      else if (sonar3.ping_cm() < 3 || sonar4.ping_cm() < 3) {
       Serial.println("CC");
       delay(1000);
       Serial.println("B");
@@ -194,7 +194,7 @@ void centerBackwards() {
       delay(1000);
       Serial.println("F");
       delay(100);
-//      Serial.println("S");
+      //      Serial.println("S");
     }
   }
 }
@@ -253,7 +253,7 @@ void setup() {
 }
 
 void loop() {
-  if (Serial.available() > 0) {
+    if (Serial.available() > 0) {
     String something = Serial.readStringUntil('\n');
     pos = something.charAt(0);
     dir = something.charAt(1);
@@ -268,7 +268,7 @@ void loop() {
     //    Serial.print("dir ");
     //    Serial.println(dir);
     checkRotation();
-    
+
     if (dir == 'F' && pos != 5 && pos != 2) {
       centerForwards();
     }
@@ -278,9 +278,9 @@ void loop() {
     else {
       centerAfterTurn(dir);
     }
-    
+
     checkRotation();
-    
+
     if (pos == '1') {
       if (dir == 'B') {
         while (sonar4.ping_cm() > 10 || sonar5.ping_cm() > 10) {
@@ -339,7 +339,7 @@ void loop() {
         }
       }
       else {
-        while (sonar5.ping_cm() <= 14 || sonar6.ping_cm() <= 14) {
+        while (sonar5.ping_cm() <= 17 || sonar6.ping_cm() <= 17) {
           Serial.println("F");
           delay(50);
         }
@@ -427,22 +427,63 @@ void loop() {
         // do nothing
       }
     }
+    else if (pos == 'A') {
+      if (dir == 'F') {
+        
+      }
+      else {
+        while (sonar1.ping_cm() < 24 || sonar2.ping_cm() < 24) {
+          Serial.println("B");
+          delay(50);
+        }
+      }
+    }
+    else if (pos == 'B') {
+      if (dir == 'F') {
+        while (sonar1.ping_cm() > 12 || sonar2.ping_cm() > 12) {
+          Serial.println("F");
+          delay(50);
+        }
+      }
+      else {
+        // do nothing
+      }
+    }
     Serial.println("S");
-  }
+    }
+
+  /*
+
+  distance1 = sonar1.ping_cm();
+  distance2 = sonar2.ping_cm();
+  distance3 = sonar3.ping_cm();
+  distance4 = sonar4.ping_cm();
+  distance5 = sonar5.ping_cm();
+  distance6 = sonar6.ping_cm();
+  distance7 = sonar7.ping_cm();
+  distance8 = sonar8.ping_cm();
+
+  Serial.print("Sensor1: ");
+  Serial.println(distance1);
+  Serial.print("Sensor2: ");
+  Serial.println(distance2);
+  Serial.print("Sensor3: ");
+  Serial.println(distance3);
+  Serial.print("Sensor4: ");
+  Serial.println(distance4);
+  Serial.print("Sensor5: ");
+  Serial.println(distance5);
+  Serial.print("Sensor6: ");
+  Serial.println(distance6);
+  Serial.print("Sensor7: ");
+  Serial.println(distance7);
+  Serial.print("Sensor8: ");
+  Serial.println(distance8);
+  Serial.println("/////////////////////////////////////");
+  delay(2000);
+  */
 }
 
-/*
-    // put your main code here, to run repeatedly:
-    Send ping, get distance in cm
-    distance1 = sonar1.ping_cm();
-    distance2 = sonar2.ping_cm();
-    distance3 = sonar3.ping_cm();
-    distance4 = sonar4.ping_cm();
-    distance5 = sonar5.ping_cm();
-    distance6 = sonar6.ping_cm();
-    distance7 = sonar7.ping_cm();
-    distance8 = sonar8.ping_cm();
-*/
 
 // Send results to Serial Monitor
 /*
@@ -562,27 +603,6 @@ void loop() {
 //Calculate the error (translational and rotational, depending on state)
 //Calculate the speed per wheel with errors and T_Base
 //output speed, set T_Last to T_E
-
-/*
-  Serial.print("Sensor1: ");
-  Serial.println(distance1);
-  Serial.print("Sensor2: ");
-  Serial.println(distance2);
-  Serial.print("Sensor3: ");
-  Serial.println(distance3);
-  Serial.print("Sensor4: ");
-  Serial.println(distance4);
-  Serial.print("Sensor5: ");
-  Serial.println(distance5);
-  Serial.print("Sensor6: ");
-  Serial.println(distance6);
-  Serial.print("Sensor7: ");
-  Serial.println(distance7);
-  Serial.print("Sensor8: ");
-  Serial.println(distance8);
-  Serial.println("/////////////////////////////////////");
-  delay(5000);
-*/
 
 /*
   if (distance1 < 15) {
