@@ -64,20 +64,39 @@ def startPosition():
 #     servos[4].angle = 15
 #     servos[3].angle = 120
 #     servos[2].angle = 120
-    servoTest(4, 25, 15)
-    sleep(1)
-    servoTest(3, 110, 120)
-    servoTest(2, 100, 80)
-    servoTest(1, 110, 165)
-    servoTest(0, 1, 0)
-    servoTest(3, 120, 135)
+    #servoTest(4, 25, 15)
+    #sleep(1)
+    #servoTest(3, 110, 120)
+    #servoTest(2, 100, 80)
+    #servoTest(1, 110, 165)
+    #servoTest(0, 1, 0)
+    #servoTest(3, 120, 135)
+    
+    servos[4].angle = 10
+    servos[3].angle = 80
+    servos[2].angle = 85
+    servos[1].angle = 165
+    servos[0].angle = 0
+    servoTest(0, 0, 90)
+    servoTest(4, 10, 15)
+    servoTest(1, 165, 180)
+    servoTest(2, 85, 125)
+    servoTest(3, 80, 110)
+    servoTest(2, 125, 120)
+    servoTest(3, 110, 130)
     
 def straightUp():
-    servoTest(4, 20, 20)
-    servoTest(3, 135, 80)
-    servoTest(2, 80, 85)
-    servoTest(1, 165, 165)
-    servoTest(0, 0, 0)
+    servoTest(3, 90, 80)
+    sleep(0.5)
+    servoTest(2, 120, 85)
+    servoTest(1, 180, 165)
+    servoTest(0, 90, 0)
+    servoTest(4, 15, 20)
+    #servoTest(4, 20, 20)
+    #servoTest(3, 135, 80)
+    #servoTest(2, 80, 85)
+    #servoTest(1, 165, 165)
+    #servoTest(0, 0, 0)
     
 def lookLeft():
     servoTest(4, 20, 105)
@@ -165,6 +184,10 @@ def releaseBracelets():
 # swing catapult to launch left
 def catapultSwingLeft():
     baseServo.angle = 0
+    sleep(1)
+    
+def catapultSwingPos5():
+    baseServo.angle = 20
     sleep(1)
 
 # swing catapult to launch right
