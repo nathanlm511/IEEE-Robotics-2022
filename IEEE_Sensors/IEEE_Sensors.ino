@@ -42,7 +42,7 @@ NewPing sonar7(TRIGGER_PIN_7, ECHO_PIN_7, MAX_DISTANCE);
 NewPing sonar8(TRIGGER_PIN_8, ECHO_PIN_8, MAX_DISTANCE);
 float duration, distance1, distance2, distance3, distance4, distance5, distance6, distance7, distance8;
 // int stopper, tree1Bit;
-int pos, dir;
+int pos, dir, initialCheck, pos5Check, robotPast5;
 
 double calculatePD(double error_now, double error_last) {
   //P(error_now) + D(error_now-error_last)
@@ -149,7 +149,7 @@ void centerForwards() {
       Serial.println("F");
       delay(100);
       Serial.println("C");
-      delay(1000);
+      delay(800);
       Serial.println("B");
       delay(100);
       //      Serial.println("S");
@@ -161,7 +161,7 @@ void centerForwards() {
       Serial.println("F");
       delay(100);
       Serial.println("CC");
-      delay(1000);
+      delay(800);
       Serial.println("B");
       delay(100);
       //      Serial.println("S");
@@ -179,7 +179,7 @@ void centerBackwards() {
       Serial.println("B");
       delay(100);
       Serial.println("CC");
-      delay(1000);
+      delay(800);
       Serial.println("F");
       delay(100);
       //      Serial.println("S");
@@ -191,7 +191,7 @@ void centerBackwards() {
       Serial.println("B");
       delay(100);
       Serial.println("C");
-      delay(1000);
+      delay(800);
       Serial.println("F");
       delay(100);
       //      Serial.println("S");
@@ -200,17 +200,17 @@ void centerBackwards() {
 }
 
 void centerAfterTurn(int dir) {
-  if (dir == 'F') {
+  /*if (dir == 'F') {
     Serial.println("CC");
     delay(1000);
     Serial.println("F");
     delay(100);
     Serial.println("C");
-    delay(1000);
+    delay(800);
     Serial.println("B");
     delay(100);
-  }
-  else {
+    }
+    else {
     Serial.println("C");
     delay(1000);
     Serial.println("B");
@@ -219,6 +219,9 @@ void centerAfterTurn(int dir) {
     delay(1000);
     Serial.println("F");
     delay(100);
+    }*/
+  while (sonar3.ping_cm() > 3 || sonar4.ping_cm() > 4) {
+    Serial.println("L");
   }
 }
 
@@ -245,15 +248,71 @@ void movingCenter(int dir) {
   }
 }
 
+void centerLeftRight() {
+  //if (abs(sonar3.ping_cm() - sonar8.ping_cm()) > 1.5 || abs(sonar4.ping_cm() - sonar7.ping_cm()) > 1.5) {
+
+  if (sonar3.ping_cm() > 4 || sonar4.ping_cm() > 4) {
+    while (sonar3.ping_cm() > 4 || sonar4.ping_cm() > 4) {
+      Serial.println("L");
+      delay(50);
+    }
+  }
+  else if (sonar3.ping_cm() < 4 || sonar4.ping_cm() < 4) {
+    while (sonar3.ping_cm() < 4 || sonar4.ping_cm() < 4) {
+      Serial.println("R");
+      delay(50);
+    }
+  }
+}
+
+void centerLeftRight2() {
+  //if (abs(sonar3.ping_cm() - sonar8.ping_cm()) > 1.5 || abs(sonar4.ping_cm() - sonar7.ping_cm()) > 1.5) {
+
+  if (sonar4.ping_cm() < sonar7.ping_cm() || sonar3.ping_cm() < sonar8.ping_cm()) {
+    while (sonar4.ping_cm() < sonar7.ping_cm() || sonar3.ping_cm() < sonar8.ping_cm()) {
+      Serial.println("R");
+      delay(50);
+    }
+  }
+  else if (sonar4.ping_cm() > sonar7.ping_cm() || sonar3.ping_cm() > sonar8.ping_cm()) {
+    while (sonar4.ping_cm() > sonar7.ping_cm() || sonar3.ping_cm() > sonar8.ping_cm()) {
+      Serial.println("L");
+      delay(50);
+    }
+  }
+}
+
+// used when at tree position 2 as the ack sensors are looking at the gap. Need to rely soely on front sensors.
+void centerLeftRight3() {
+  //if (abs(sonar3.ping_cm() - sonar8.ping_cm()) > 1.5 || abs(sonar4.ping_cm() - sonar7.ping_cm()) > 1.5) {
+
+  if (sonar3.ping_cm() < sonar8.ping_cm()) {
+    while (sonar3.ping_cm() < sonar8.ping_cm()) {
+      Serial.println("R");
+      delay(50);
+    }
+  }
+  else if (sonar3.ping_cm() > sonar8.ping_cm()) {
+    while (sonar3.ping_cm() > sonar8.ping_cm()) {
+      Serial.println("L");
+      delay(50);
+    }
+  }
+}
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   // stopper = 0;
   // tree1Bit = 0;
+  initialCheck = 1;
+  pos5Check = 0;
+  robotPast5 = 0;
 }
 
 void loop() {
-    if (Serial.available() > 0) {
+
+  if (Serial.available() > 0) {
     String something = Serial.readStringUntil('\n');
     pos = something.charAt(0);
     dir = something.charAt(1);
@@ -267,27 +326,74 @@ void loop() {
     //    Serial.println(pos);
     //    Serial.print("dir ");
     //    Serial.println(dir);
-    checkRotation();
+    /*
+      if (initialCheck == 1) { /////////////////////////////// ADDED BY DENI TO FIX WEIRD BEHAVIOR AT START
+      //initialCheck = 0;
+      }
+      else if (pos5Check == 1) {
+      pos5Check = 0;
+      }
+      else {
+      checkRotation();
+      }
+    */
+    //    if (initialCheck == 0) {
+    //      if (dir == 'F' && pos != 5 && pos != 2) {
+    //        centerForwards();
+    //      }
+    //      else if (dir == 'B' && pos != 3) {
+    //        centerBackwards();
+    //      }
+    //      else {
+    //        centerAfterTurn(dir);
+    //      }
+    //    }
 
-    if (dir == 'F' && pos != 5 && pos != 2) {
-      centerForwards();
-    }
-    else if (dir == 'B' && pos != 3) {
-      centerBackwards();
-    }
-    else {
-      centerAfterTurn(dir);
+    if (initialCheck == 0) {
+      if (pos == 'N' || pos == 'C') {
+          // skip this edge case
+      }
+      else if (pos < '7') {
+        centerLeftRight();
+        delay(50);
+        centerLeftRight();
+      }
+      else {
+        if (pos == '8') {
+          centerLeftRight3();
+          delay(50);
+          centerLeftRight3();
+        }
+        else {
+          centerLeftRight2();
+          delay(50);
+          centerLeftRight2();
+        }
+      }
+      if ((pos == '8' && dir == 'B') ||  (pos == '9' && dir == 'F') || (pos == '7' && dir == 'B')) {
+        // do not rotate
+      }
+      else {
+        checkRotation();
+        delay(50);
+        checkRotation();
+      }
     }
 
-    checkRotation();
+    if (initialCheck == 1) { //////////////////////////////// ADDED THIS CONDITION BY DENI
+      initialCheck = 0;
+      robotPast5 = 0;
+    }
+
 
     if (pos == '1') {
       if (dir == 'B') {
-        while (sonar4.ping_cm() > 10 || sonar5.ping_cm() > 10) {
+        while (sonar6.ping_cm() > 10 || sonar5.ping_cm() > 4) {
           Serial.println("B");
           delay(50);
         }
       }
+      centerLeftRight2();
     }
     else if (pos == '2') {
       if (dir == 'F') {
@@ -318,63 +424,84 @@ void loop() {
       }
     }
     else if (pos == '4') {
-      int turn_signals = 0;
       if (dir == 'F') {
-        while (sonar1.ping_cm() <= 17 || sonar2.ping_cm() <= 17) {
+        /*while (sonar1.ping_cm() <= 17 || sonar2.ping_cm() <= 17) {
           Serial.println("B");
+          delay(50);
+          }
+          Serial.println("C");
+          delay(2000);
+          Serial.println("F");
+          delay(250);
+          Serial.println("C");
+          delay(2000);
+          Serial.println("F");
+          delay(250);
+          Serial.println("C");
+          delay(2000);
+        */
+        while (sonar3.ping_cm() < 7 || sonar4.ping_cm() < 7) {
+          Serial.println("R");
           delay(50);
         }
         Serial.println("C");
-        delay(2000);
-        Serial.println("F");
-        delay(250);
-        Serial.println("C");
-        delay(2000);
-        Serial.println("F");
-        delay(250);
-        Serial.println("C");
-        delay(2000);
+        delay(8000);
         while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 1) {
           // wait for robot to turn
         }
       }
       else {
-        while (sonar5.ping_cm() <= 17 || sonar6.ping_cm() <= 17) {
+        /*while (sonar5.ping_cm() <= 17 || sonar6.ping_cm() <= 17) {
+          Serial.println("F");
+          delay(50);
+          }
+          Serial.println("CC");
+          delay(2000);
+          Serial.println("B");
+          delay(250);
+          Serial.println("CC");
+          delay(2000);
+          Serial.println("B");
+          delay(250);
+          Serial.println("CC");
+          delay(2000);
+          while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 1) {
+          // wait for robot to turn
+          }
+          }*/
+        while (sonar5.ping_cm() <= 12 || sonar6.ping_cm() <= 12) {
           Serial.println("F");
           delay(50);
         }
+        while (sonar3.ping_cm() < 7 || sonar4.ping_cm() < 7) {
+          Serial.println("R");
+        }
         Serial.println("CC");
-        delay(2000);
-        Serial.println("B");
-        delay(250);
-        Serial.println("CC");
-        delay(2000);
-        Serial.println("B");
-        delay(250);
-        Serial.println("CC");
-        delay(2000);
+        delay(8000);
         while (abs(sonar3.ping_cm() - sonar4.ping_cm()) > 1) {
           // wait for robot to turn
         }
       }
     }
     else if (pos == '5') {
+      pos5Check = 1;
       if (dir == 'F') {
-        while (sonar5.ping_cm() > 3 || sonar6.ping_cm() > 3) {
+        while (sonar5.ping_cm() > 2 || sonar6.ping_cm() > 2) {
           Serial.println("B");
           delay(50);
         }
       }
       else {
-        while (sonar5.ping_cm() > 3 || sonar6.ping_cm() > 3) {
+        while (sonar5.ping_cm() > 2 || sonar6.ping_cm() > 2) {
           Serial.println("B");
           delay(50);
         }
       }
     }
     else if (pos == '6') {
+      robotPast5 = 1;
       if (dir == 'F') {
-        while (sonar5.ping_cm() <= 58 || sonar6.ping_cm() <= 58) {
+        while (sonar5.ping_cm() <= 56 || sonar6.ping_cm() <= 56) {
           Serial.println("F");
           delay(50);
         }
@@ -388,6 +515,7 @@ void loop() {
         // do nothing
       }
       else {
+        robotPast5 = 0;
         while (sonar1.ping_cm() <= 66 || sonar2.ping_cm() <= 66) {
           Serial.println("B");
           delay(50);
@@ -404,10 +532,12 @@ void loop() {
           Serial.println("F");
           delay(50);
         }
-        while (sonar1.ping_cm() > 33 || sonar2.ping_cm() > 31) {
+        while (sonar1.ping_cm() > 33 || sonar2.ping_cm() > 33) {
           Serial.println("F");
           delay(50);
         }
+        centerLeftRight();
+        checkRotation();
       }
       else {
         while (sonar1.ping_cm() <= 33 || sonar2.ping_cm() <= 31) {
@@ -429,7 +559,7 @@ void loop() {
     }
     else if (pos == 'A') {
       if (dir == 'F') {
-        
+
       }
       else {
         while (sonar1.ping_cm() < 24 || sonar2.ping_cm() < 24) {
@@ -449,38 +579,73 @@ void loop() {
         // do nothing
       }
     }
-    Serial.println("S");
+    else if (pos == 'C') {
+      /*if (dir == 'R') {
+        while (sonar3.ping_cm() > 4 || sonar4.ping_cm() > 4) {
+          Serial.println("L");
+          delay(50);
+        }
+      }
+      else if (dir == 'L') {
+        while (sonar7.ping_cm() > 4 || sonar8.ping_cm() > 4) {
+          Serial.println("R");
+          delay(50);
+        }
+      }*/
+      if (robotPast5 == 0) {
+        centerLeftRight();
+      }
+      else {
+        centerLeftRight2();
+      }
     }
+    else if (pos == 'N') {
+      if (dir == 'L') {
+        while (sonar3.ping_cm() > 2 && sonar4.ping_cm() > 2) {
+          Serial.println("L");
+          delay(50);
+        }
+      }
+      else if (dir == 'R') {
+        while (sonar7.ping_cm() > 2 && sonar8.ping_cm() > 2) {
+          Serial.println("R");
+          delay(50);
+        }
+      }
+    }
+    Serial.println("S");
+  }
+
 
   /*
 
-  distance1 = sonar1.ping_cm();
-  distance2 = sonar2.ping_cm();
-  distance3 = sonar3.ping_cm();
-  distance4 = sonar4.ping_cm();
-  distance5 = sonar5.ping_cm();
-  distance6 = sonar6.ping_cm();
-  distance7 = sonar7.ping_cm();
-  distance8 = sonar8.ping_cm();
+    distance1 = sonar1.ping_cm();
+    distance2 = sonar2.ping_cm();
+    distance3 = sonar3.ping_cm();
+    distance4 = sonar4.ping_cm();
+    distance5 = sonar5.ping_cm();
+    distance6 = sonar6.ping_cm();
+    distance7 = sonar7.ping_cm();
+    distance8 = sonar8.ping_cm();
 
-  Serial.print("Sensor1: ");
-  Serial.println(distance1);
-  Serial.print("Sensor2: ");
-  Serial.println(distance2);
-  Serial.print("Sensor3: ");
-  Serial.println(distance3);
-  Serial.print("Sensor4: ");
-  Serial.println(distance4);
-  Serial.print("Sensor5: ");
-  Serial.println(distance5);
-  Serial.print("Sensor6: ");
-  Serial.println(distance6);
-  Serial.print("Sensor7: ");
-  Serial.println(distance7);
-  Serial.print("Sensor8: ");
-  Serial.println(distance8);
-  Serial.println("/////////////////////////////////////");
-  delay(2000);
+    Serial.print("Sensor1: ");
+    Serial.println(distance1);
+    Serial.print("Sensor2: ");
+    Serial.println(distance2);
+    Serial.print("Sensor3: ");
+    Serial.println(distance3);
+    Serial.print("Sensor4: ");
+    Serial.println(distance4);
+    Serial.print("Sensor5: ");
+    Serial.println(distance5);
+    Serial.print("Sensor6: ");
+    Serial.println(distance6);
+    Serial.print("Sensor7: ");
+    Serial.println(distance7);
+    Serial.print("Sensor8: ");
+    Serial.println(distance8);
+    Serial.println("/////////////////////////////////////");
+    delay(2000);
   */
 }
 

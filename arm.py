@@ -27,7 +27,7 @@ armServo = servo.Servo(pca.channels[6], min_pulse = 500, max_pulse = 2500)
 holdServo = servo.Servo(pca.channels[7], min_pulse = 500, max_pulse = 2500)
 
 # initialize servos to starting positions
-armServo.angle = 135
+armServo.angle = 155
 holdServo.angle = 0
 baseServo.angle = 180
 sleep(1)
@@ -101,85 +101,103 @@ def straightUp():
 def lookLeft():
     servoTest(4, 20, 105)
     servoTest(3, 80, 40)
-    servoTest(2, 85, 135)
+    servoTest(2, 85, 145)
     servoTest(1, 90, 180)
     servoTest(0, 0, 0)  
 
 def lookLeftInstant():
     servos[4].angle = 105
     servos[3].angle = 40
-    servos[2].angle = 135
+    servos[2].angle = 145
     servos[1].angle = 180
     servos[0].angle = 0
 
 def lookRight():
     servoTest(4, 20, 0)
     servoTest(3, 80, 30)
-    servoTest(2, 85, 135)
+    servoTest(2, 85, 145)
     servoTest(1, 90, 180)
     servoTest(0, 0, 0)
 
 def lookRightInstant():
     servos[4].angle = 10
     servos[3].angle = 40
-    servos[2].angle = 135
+    servos[2].angle = 145
     servos[1].angle = 180
     servos[0].angle = 0
 
 def lineUpBracelets():
     servoTest(4, 125, 125)
-    servoTest(2, 135, 100)
+    servoTest(2, 135, 110)
     servoTest(3, 30, 60)
     servoTest(1, 180, 180)
     servoTest(0, 0, 0)
     
 def intoBracelets():
-    servoTest(0, 0, 0)   
-    servoTest(2, 100, 80)
-    servoTest(3, 60, 65)
-    sleep(0.5)
-    servoTest(1, 180, 175)
-    sleep(0.5)
-    servoTest(3, 65, 75)
-    sleep(0.5)
-    servoTest(1, 175, 170)
-    sleep(0.5)
-    servoTest(3, 75, 80)
-    sleep(0.5)
+#     servoTest(0, 0, 0)   
+#     servoTest(2, 110, 80)
+#     servoTest(3, 60, 65)
+#     sleep(0.5)
+#     servoTest(1, 180, 175)
+#     sleep(0.5)
+#     servoTest(3, 65, 75)
+#     sleep(0.5)
+#     servoTest(1, 175, 170)
+#     sleep(0.5)
+#     servoTest(3, 75, 80)
+#     sleep(0.5)
+#     servoTest(1, 170, 165)
+#     sleep(0.5)
+#     servoTest(3, 80, 85)
+#     sleep(0.5)
+#     servoTest(1, 165, 165)
+#     sleep(0.5)
+#     servoTest(3, 85, 90)
+    servoTest(3, 60, 50)
+    servoTest(1, 180, 170)
+    servoTest(3, 50, 60)
     servoTest(1, 170, 165)
-    sleep(0.5)
-    servoTest(3, 80, 85)
-    sleep(0.5)
-    servoTest(1, 165, 165)
-    sleep(0.5)
-    servoTest(3, 85, 90)
+    servoTest(3, 60, 65)
+    servoTest(1, 165, 160)
+    servoTest(3, 60, 70)
+    servoTest(2, 110, 105)
+    servoTest(3, 70, 75)
+    servoTest(1, 160, 155)
+    servoTest(3, 75, 80)
+    sleep(0.25)
+    servoTest(4, 125, 120)
+    sleep(0.25)
+    servoTest(3, 80, 90)
+    sleep(0.25)
     
 def grabBracelets():
-    servoTest(4, 125, 115)
-    servoTest(2, 80, 80)
+    
+    servoTest(2, 105, 105)
     servoTest(3, 90, 90)
-    servoTest(1, 150, 150)
-    servoTest(0, 0,100)   
+    servoTest(1, 155, 155)
+    servoTest(0, 0,100)
+    servoTest(4, 120, 115)
 
 def removeBracelets():
     servoTest(4, 115, 115)
-    servoTest(2, 80, 80)
-    servoTest(3, 90, 75)
-    servoTest(1, 150, 150)
-    servoTest(0, 100,100)
+    servoTest(2, 105, 105)
+    servoTest(3, 80, 65)
+    servoTest(1, 155, 155)
+    servoTest(0, 100, 100)
 
 def rotateToCatapult():
-    servoTest(4, 115, 50)
+    servoTest(4, 115, 55)
     servoTest(2, 80, 80)
  
 def dropToCatapult():
     servoTest(2, 80, 160)
+    servoTest(3, 65, 80)
     
 # drop braclets into the catapult
 def releaseBracelets():
     servoTest(0, 100,0)
     sleep(1)
-    servoTest(2, 160, 80)
+    servoTest(2, 160, 85)
 
 # swing catapult to launch left
 def catapultSwingLeft():
@@ -199,13 +217,13 @@ def catapultSwingRight():
 def launchBracelets():
     holdServo.angle = 0
     sleep(1)
-    armServo.angle = 20
+    armServo.angle = 60
     sleep(1.5)
     holdServo.angle = 90
     print("Bracelets have launched...returning to rest state")
     sleep(1)
-    armServo.angle = 135
-    sleep(5)
+    armServo.angle = 155
+    sleep(2)
     holdServo.angle = 0
 
 # Arm sequence to retreive bracelets
@@ -230,7 +248,7 @@ def retrieveBraceletsPostCam():
     sleep(0.5)
     releaseBracelets()
     sleep(0.5)
-    lookLeft()
+    lookLeftInstant()
     
 def retrieveBracelets2PreCam():
     lookLeftInstant()
@@ -251,7 +269,7 @@ def retrieveBracelets2PostCam():
     sleep(1)
     releaseBracelets()
     sleep(1)
-    lookLeft()
+    lookLeftInstant()
 
 # turn off the servos
 def servosOff():

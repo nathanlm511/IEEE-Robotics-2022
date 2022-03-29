@@ -42,5 +42,7 @@ try:
     print('STARTING INTEGRATION MAIN')
     sleep(2)
     integration.main()
-except:
+except Exception as e:
+    print('The following error occured: ')
+    print(e)
     stop_handler()

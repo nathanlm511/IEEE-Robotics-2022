@@ -67,28 +67,30 @@ class GrabBeads():
             while direction != "G":
                 print(direction)
                 if direction == "L":
-                    steppermotortest.forwardsSmall()
+                    steppermotortest.forwardsSmaller()
                 if direction == "R":
-                    steppermotortest.backwardsSmall()
-                sleep(0.25)
+                    steppermotortest.backwardsSmaller()
+                sleep(0.5)
                 direction = camera.treeAlign()
             print("Camera aligned")
-            steppermotortest.forwardsSmall()
+            # steppermotortest.forwardsSmall()
             arm.retrieveBraceletsPostCam()
 
         elif robot.next_tree == 2:
+            print("arm aligned pre cam")            
             arm.retrieveBracelets2PreCam()
             direction = camera.treeAlign()
+            print("camera aligning arm")
             while direction != "G":
                 print(direction)
                 if direction == "L":
-                    steppermotortest.forwardsSmall()
+                    steppermotortest.forwardsSmaller()
                 if direction == "R":
-                    steppermotortest.backwardsSmall()
-                sleep(0.25)
+                    steppermotortest.backwardsSmaller()
+                sleep(0.5)
                 direction = camera.treeAlign()
             print("Camera aligned")
-            steppermotortest.forwardsSmall()
+            # steppermotortest.forwardsSmall()
             arm.retrieveBracelets2PostCam()
             
         robot.catapult_loaded = True
@@ -116,14 +118,21 @@ class FireCatapult():
         pass
 
     def execute(self, robot):
+        navigation.moveCloseToNet(robot)
         if not robot.net_on_right:
             arm.catapultSwingLeft()
+#             if robot.next_location == 6:
+#                 arm.catapultSwingPos5()
+#             else:
+#                 arm.catapultSwingLeft()
 
         # print("Fire catapult")
         arm.launchBracelets()
         # swing catapult back to the left
         if not robot.net_on_right:
             arm.catapultSwingRight()
+            
+        navigation.moveCenter(robot)
         
         if robot.arm_on_right:
             # arm.lookLeft()
@@ -304,14 +313,14 @@ class Navigation():
                 navigation.navigate(robot)
             # else:
                 # print("Robot already at location 9, do nothing")
-            if robot.catapult_loaded:
+            if robot.catapult_loaded and robot.forward:
                 robot.state = detect_net
         elif robot.next_location == 10:
             # print("If catapult is loaded, check for net at location 10")
             if not robot.forward:
                 navigation.navigate(robot)
                 
-            if robot.catapult_loaded:
+            if robot.catapult_loaded and robot.forward:
                 robot.state = look_at_right_side
         elif robot.next_location == 11:
             navigation.navigate(robot)

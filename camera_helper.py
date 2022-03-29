@@ -51,7 +51,8 @@ class VideoStream:
         self.stopped = True
 
 
-min_conf_threshold = 0.5
+min_conf_threshold_net = 0.7
+min_conf_threshold_bracelet = 0.5
 resW, resH = 640, 480
 imW, imH = int(300), int(300)
 use_TPU = False
@@ -169,7 +170,7 @@ def isNet():
     
     # Loop over all detections and draw detection box if confidence is above minimum threshold
     for i in range(len(scores)):
-        if ((scores[i] > min_conf_threshold) and (scores[i] <= 1.0)):
+        if ((scores[i] > min_conf_threshold_net) and (scores[i] <= 1.0)):
             # NET DETECTED
             print("Net detected")
             return True
@@ -203,7 +204,7 @@ def directionOfBracelet():
     
     # Loop over all detections and draw detection box if confidence is above minimum threshold
     for i in range(len(scores)):
-        if ((scores[i] > min_conf_threshold) and (scores[i] <= 1.0)):
+        if ((scores[i] > min_conf_threshold_bracelet) and (scores[i] <= 1.0)):
             # Get bounding box coordinates and draw box
             # Interpreter can return coordinates that are outside of image dimensions, need to force them to be within image using max() and min()
             ymin = int(max(1,(boxes[i][0] * imH)))
@@ -216,9 +217,9 @@ def directionOfBracelet():
             ycenter = ymin+(int(round((ymax - ymin) / 2)))
 
             # TODO: output differently depending on result THIS DOES NOT WORK RIGHT NOW
-            if (xcenter < 145):
+            if (xcenter < 147):
                 return "R"
-            if (xcenter > 155):
+            if (xcenter > 153):
                 return "L"
             return "G"
     # BRACELET NOT DETECTED
