@@ -8,6 +8,7 @@ import sys
 # import oled
 # import os
 # import time
+# git access token: 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
 
 pi = pigpio.pi()
 

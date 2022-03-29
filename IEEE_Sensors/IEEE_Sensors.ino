@@ -520,7 +520,7 @@ void loop() {
           Serial.println("B");
           delay(50);
         }
-        while (sonar5.ping_cm() > 58 || sonar6.ping_cm() > 58) {
+        while (sonar5.ping_cm() > 56 || sonar6.ping_cm() > 56) {
           Serial.println("B");
           delay(50);
         }
